@@ -1,0 +1,422 @@
+---
+title: "DPLYR functions. Part 1"
+output:
+---
+
+
+The **tidyverse** package includes several packages for data transformation and visualization. One of the most widely used tidyverse package is the **dplyr**, which includes many functions for data transformation.
+
+The dplyr functions are organized into four groups based on what they operate on: rows, columns, groups, or tables.
+
+
+Let's install the tidyverse package (which will in turn install other packages, including dplyr). 
+
+```{r}
+
+# install.packages("tidyverse")
+
+```
+
+
+
+After installing it, we need to load the package:
+
+```{r}
+
+library (tidyverse)
+
+```
+
+
+
+
+Now let's install and load the palmerpenguins package, which will allow us to access the data set we will use in this notebook: the penguins data set.
+
+```{r}
+
+# install.packages("palmerpenguins")
+
+```
+
+
+```{r}
+
+library(palmerpenguins)
+
+```
+
+
+
+
+Let's take a look at the "penguins" data set (available after installing palmerpenguins):
+
+```{r}
+
+penguins |> str()
+
+```
+
+
+
+
+Fragment from the "R for Data Science" book: " A tibble, a special type of data frame used by the tidyverse ... The most important difference between tibbles and data frames is the way tibbles print; they are designed for large datasets, so they only show the first few rows and only the columns that fit on one screen."
+
+
+
+
+**TWO BASIC DPLYR FUNCTIONS: COUNT() AND SUMMARISE()**
+
+Use count() to summarize qualitative columns and summarise() for quantitative ones.
+
+
+**Example**: Let's use count() with species and island (both qualitative columns).
+
+```{r}
+
+penguins |> count (species)
+
+```
+
+
+```{r}
+
+penguins|> count (island)
+
+```
+
+
+
+```{r}
+
+penguins |> count (island, species)
+
+```
+
+
+
+
+**Example**: Let's use summarise() to get summary stats for one quantitative column: bill_length_mm:
+
+```{r}
+
+penguins |> summarise( mean(bill_length_mm) )
+
+```
+
+
+
+
+```{r}
+
+penguins |> summarise(average_bill_length = mean(bill_length_mm, na.rm = TRUE))
+
+```
+
+
+
+
+```{r}
+
+penguins |> summarise(average_bill_length = mean(bill_length_mm, na.rm = TRUE), median_bill_length = median(bill_length_mm, na.rm = TRUE) )
+
+```
+
+
+
+
+
+
+**DPLYR FUNCTIONS APPLIED TO ROWS**
+
+**The filter() function**
+
+
+**Example**: Get a data set with with the penguins from the "Adelie" species.
+
+```{r}
+
+penguins |> filter (species == "Adelie")
+
+```
+
+
+
+**Example**: Get a data set with with the penguins from the "Adelie" and "Chinstrap" species.
+
+```{r}
+
+penguins |> filter(species %in% c("Adelie", "Chinstrap"))
+
+```
+
+
+
+
+**Example**: Get a count of how many "Adelie" penguins on each island.
+
+```{r}
+
+penguins |> filter(species == "Adelie") |> count (island)
+
+```
+
+
+
+
+
+**Example**: Get the average and standard deviation of flipper length for the "Adelie" penguins
+
+
+TRY IT BY YOURSELF
+
+
+
+
+
+
+
+
+
+**Example**:
+
+First, get a count of how many penguins were recorded each year on each island. Then, select the island count in 2007 only.
+
+```{r}
+
+penguins |> count (year, island)
+
+```
+
+
+
+
+
+
+```{r}
+
+# OPTION 1
+
+penguins |> count (year, island) |> filter (year == 2007)
+
+
+```
+
+
+
+
+
+```{r}
+
+# OPTION 1
+
+penguins |> filter (year == 2007) |> count (island)
+
+```
+
+
+
+
+
+**Example**: Get the average bill length, bill depth, and flipper length for the female "Gentoo" penguins.
+
+TRY IT BY YOURSELF
+
+HINT: To filter by two conditions **simultaneously**, you can use this syntax: 
+
+filter (condition_1 == "value_condition_1", condition_2 == "value_condition_2")
+
+
+
+
+
+
+
+
+
+**The arrange() function**
+
+It changes the order of rows based on the values of the columns. Thus, it can be used to:
+
+a) Sort the rows of the whole data frame.
+
+b) Sort the rows of some columns of the data frame.
+
+c) Sort the values of a single column.
+
+It takes a data frame and a set of column names (or more complicated expressions) to order by. If you provide more than one column name, each additional column will be used to break ties in the values of preceding columns.
+
+
+
+**Example**: Sort the species according to their count (both in ascending and descending order)
+
+Without sorting: 
+
+```{r}
+
+penguins |> count (species)
+
+```
+
+
+
+Sorting in ascending order:
+
+```{r}
+
+penguins |> count (species) |> arrange (n)
+
+```
+
+
+
+
+Sorting in descending order:
+
+```{r}
+
+penguins |> count (species) |> arrange (desc(n))
+
+```
+
+
+
+
+
+
+
+**Example**: Get a summary with the average body mass for each penguin species. Display the heavier species first.
+
+
+TRY IT BY YOURSELF
+
+
+HINT: To get a summary with the average body mass for each penguin species, use this code:
+
+penguins |> group_by (species) |> summarise(average_body_mass = mean (body_mass_g, na.rm = TRUE)) 
+
+
+
+
+
+
+
+
+
+
+**The distinct() function**
+
+It can be used to remove the duplicated rows in a data frame, to retrieve the unique combinations of values for a group of cols in a data frame, or retrieve the unique values that a single column can take.
+
+
+**Example**: Get a list of the years when the data was collected.
+
+```{r}
+
+penguins |> distinct(year)
+
+```
+
+
+
+
+
+Sometimes it is useful (or even needed) to transform the result from dplyr into a vector. We can use the pull() function to do this:
+
+```{r}
+
+
+penguins |> distinct(year) |> pull()
+
+```
+
+
+
+
+
+**MORE about the count() function**
+
+**Example**: Use count() and rename the "n" column
+
+```{r}
+
+penguins |> count (species)
+
+```
+
+
+
+
+```{r}
+
+penguins |> count (species, name = "numb_of_penguins")
+
+```
+
+
+
+```{r}
+
+penguins |> count (species, name = "numb_of_penguins") |> arrange(numb_of_penguins)
+
+```
+
+
+
+
+
+
+
+
+**Exercises practicing the previously learned functions**
+
+
+**Question 1**: The average body mass of a male penguin in this data set was 4546. Retrieve a data set with the female penguins whose body mass exceeds the average male body mass.
+
+
+TRY IT BY YOURSELF
+
+
+
+
+
+
+
+
+
+
+**Question 2**: Select only Adelie penguins from the Dream island whose bill length is greater than 40 mm. Sort in ascending order by bill length.
+
+
+TRY IT BY YOURSELF
+
+
+
+
+
+
+
+
+**Question 3**: Can every species of penguins be found on each island? Use the count function to answer this question.
+
+
+TRY IT BY YOURSELF
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
