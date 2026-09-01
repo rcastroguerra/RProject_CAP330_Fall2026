@@ -40,3 +40,12 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    # ✅ NUEVO PASO: Configurar GitHub Pages automáticamente
+    - name: Configure GitHub Pages
+      uses: peaceiris/actions-github-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_branch: gh-pages
+        publish_dir: ./
+        keep_files: false
+        force_orphan: true

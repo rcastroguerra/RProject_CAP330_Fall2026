@@ -9,4 +9,7 @@
 use_github_pages()
 
 
-#
+#commits
+git add .
+git commit -m "Agregando cambios"
+git push
