@@ -13,7 +13,15 @@ Let's install the tidyverse package (which will in turn install other packages, 
 
 ```{r}
 
-# install.packages("tidyverse")
+#install.packages("tidyverse")
+
+# Instalar conflicted (opcional)
+install.packages("conflicted")
+
+# Usarlo para especificar qué función usar
+library(conflicted)
+conflict_prefer("filter", "dplyr")
+conflict_prefer("lag", "dplyr")
 
 ```
 
@@ -100,6 +108,7 @@ penguins |> count (island, species)
 ```{r}
 
 penguins |> summarise( mean(bill_length_mm) )
+# the value is missing value because the table have NA values inside the column
 
 ```
 
@@ -109,6 +118,7 @@ penguins |> summarise( mean(bill_length_mm) )
 ```{r}
 
 penguins |> summarise(average_bill_length = mean(bill_length_mm, na.rm = TRUE))
+#na.rm means na values will be remove
 
 ```
 
@@ -144,11 +154,16 @@ penguins |> filter (species == "Adelie")
 **Example**: Get a data set with with the penguins from the "Adelie" and "Chinstrap" species.
 
 ```{r}
+# alternative 1
 
 penguins |> filter(species %in% c("Adelie", "Chinstrap"))
 
 ```
 
+```{r}
+#alternative 2
+penguins |> filter(species %in% c("Adelie", "Chinstrap"))
+```
 
 
 
@@ -170,6 +185,16 @@ penguins |> filter(species == "Adelie") |> count (island)
 TRY IT BY YOURSELF
 
 
+```{r}
+
+penguins |>
+  filter(species == "Adelie") |>
+  summarise(
+    avg_flipper = mean(flipper_length_mm, na.rm = TRUE),
+    sd_flipper = sd(flipper_length_mm, na.rm = TRUE)
+  )
+
+```
 
 
 
@@ -183,7 +208,8 @@ First, get a count of how many penguins were recorded each year on each island. 
 
 ```{r}
 
-penguins |> count (year, island)
+penguins |> 
+  count (year, island)
 
 ```
 
@@ -196,7 +222,9 @@ penguins |> count (year, island)
 
 # OPTION 1
 
-penguins |> count (year, island) |> filter (year == 2007)
+penguins |> 
+  count (year, island) |> 
+  filter (year == 2007)
 
 
 ```
@@ -209,7 +237,9 @@ penguins |> count (year, island) |> filter (year == 2007)
 
 # OPTION 1
 
-penguins |> filter (year == 2007) |> count (island)
+penguins |> 
+  filter (year == 2007) |> 
+  count (island)
 
 ```
 
@@ -226,6 +256,16 @@ HINT: To filter by two conditions **simultaneously**, you can use this syntax:
 filter (condition_1 == "value_condition_1", condition_2 == "value_condition_2")
 
 
+```{r}
+penguins |> 
+  filter(species == "Gentoo", sex == "female") |> 
+  summarise(
+    avg_bill_length = mean(bill_length_mm, na.rm = TRUE),
+    avg_bill_depth = mean(bill_depth_mm, na.rm = TRUE),
+    avg_flipper_length = mean(flipper_length_mm, na.rm = TRUE)
+  ) 
+
+```
 
 
 
@@ -253,7 +293,8 @@ Without sorting:
 
 ```{r}
 
-penguins |> count (species)
+penguins |> 
+  count (species)
 
 ```
 
@@ -263,7 +304,9 @@ Sorting in ascending order:
 
 ```{r}
 
-penguins |> count (species) |> arrange (n)
+penguins |> 
+  count(species, name = "qty") |> 
+  arrange (qty)
 
 ```
 
@@ -274,7 +317,9 @@ Sorting in descending order:
 
 ```{r}
 
-penguins |> count (species) |> arrange (desc(n))
+penguins |> 
+  count (species) |> 
+  arrange (desc(n))
 
 ```
 
@@ -295,6 +340,13 @@ HINT: To get a summary with the average body mass for each penguin species, use 
 penguins |> group_by (species) |> summarise(average_body_mass = mean (body_mass_g, na.rm = TRUE)) 
 
 
+```{r}
+penguins |> 
+  group_by(species) |> 
+  summarise(average_body_mass = mean(body_mass_g, na.rm = TRUE)) |> 
+  arrange(desc(average_body_mass))
+
+```
 
 
 
@@ -376,6 +428,17 @@ penguins |> count (species, name = "numb_of_penguins") |> arrange(numb_of_pengui
 TRY IT BY YOURSELF
 
 
+```{r}
+# 1. Calcular el promedio de masa de los machos
+avg_male_mass <- penguins |> 
+  filter(sex == "male") |> 
+  pull(body_mass_g) |> 
+  mean(na.rm = TRUE)
+
+# 2. Filtrar hembras con masa mayor al promedio de machos
+penguins |> 
+  filter(sex == "female", body_mass_g > avg_male_mass)
+```
 
 
 
@@ -390,6 +453,11 @@ TRY IT BY YOURSELF
 TRY IT BY YOURSELF
 
 
+```{r}
+penguins |> 
+  filter(species == "Adelie", island == "Dream", bill_length_mm > 40) |> 
+  arrange(bill_length_mm)
+```
 
 
 
@@ -403,6 +471,10 @@ TRY IT BY YOURSELF
 
 
 
+```{r}
+penguins |> 
+  count(species, island)
+```
 
 
 
