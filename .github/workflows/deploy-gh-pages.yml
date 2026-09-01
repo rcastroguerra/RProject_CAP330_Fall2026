@@ -40,12 +40,3 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    # ✅ AHORA CON LA VERSIÓN CORRECTA (v4)
-    - name: Configure GitHub Pages
-      uses: peaceiris/actions-github-pages@v4  # 🔥 Cambio clave: v3 → v4
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_branch: gh-pages
-        publish_dir: ./
-        keep_files: false
-        force_orphan: true
