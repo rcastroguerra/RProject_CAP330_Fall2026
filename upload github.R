@@ -11,5 +11,5 @@ use_github_pages()
 
 #commits
 git add .
-git commit -m "Agregando cambios"
+git commit -m "Agregando cambios muy nuevos"
 git push
