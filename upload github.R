@@ -13,3 +13,10 @@ use_github_pages()
 git add .
 git commit -m "Agregando cambios muy nuevos"
 git push
+
+# ... (tu código anterior para configurar GitHub Pages) ...
+
+# --- Ejecutar comandos de Git ---
+system("git add .")
+system('git commit -m "Agregando cambios muy nuevos"')
+system("git push")
