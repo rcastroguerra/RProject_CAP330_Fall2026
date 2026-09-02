@@ -1,0 +1,225 @@
+---
+title: "Boxplots using ggplot"
+output:
+---
+
+```{r}
+
+library(tidyverse)
+
+```
+
+
+
+
+The "mpg" data set:
+
+```{r}
+
+mpg |> str()
+
+```
+
+
+
+
+
+
+**BOXPLOT FOR A SINGLE QUANTITATIVE VARIABLE**
+
+
+**A boxplot of highway miles per gallon (hwy)**
+
+```{r}
+
+mpg |> ggplot(aes(y = hwy)) + geom_boxplot() + labs(y = "Highway MPG")
+
+```
+
+
+
+
+To make the box narrower:
+
+```{r}
+
+mpg |> ggplot(aes(y = hwy)) + geom_boxplot(width = 0.3) + labs(y = "Highway MPG")
+
+```
+
+
+
+
+Setting the width to 0.3 reduced the width of the box to be 0.3 (now the box extends for a length of 0.3 units in the x axis). But the box plot is still too wide. See another alternative next:
+
+```{r}
+
+mpg |> ggplot(aes(y = hwy)) + geom_boxplot() + labs(y = "Highway MPG") + xlim(-1, 1)
+
+```
+
+
+
+
+Increasing the limits of the x axis does not make the box narrower. It keeps the box size constant and makes the canvas wider (it adds spaces on both sides of the box), so, the box looks narrower.
+
+
+Having a numeric x axis in a box plot is confusing (an unnecessary), so, it is a good (but optional idea) to remove the axis. See next:
+
+```{r}
+
+mpg |> ggplot(aes(y = hwy)) + geom_boxplot() + labs(y = "Highway MPG") + xlim(-1, 1) + theme(axis.text.x = element_blank(), axis.ticks.x = element_blank())
+
+```
+
+
+
+
+
+
+An alternative to a **box plot** is a **dot plot** (or **strip plot**), which in contrast to the box plot which depicts a summarized version of the data, presents a raw depiction of all the data points. See next:
+
+```{r}
+
+mpg |> ggplot(aes(x = 0, y = hwy)) + geom_point() + labs(y = "Highway MPG") 
+
+```
+
+
+
+
+```{r}
+
+mpg |> ggplot(aes(x = 0, y = hwy)) + geom_point() + labs(y = "Highway MPG") + theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.title.x = element_blank() )
+
+```
+
+
+
+
+
+
+
+**BOXPLOT FOR ONE QUANTITATIVE VARIABLE SPLIT ACROSS A QUALITATIVE VARIABLE**
+
+
+**A boxplot of highway MPG for each vehicle class**
+
+```{r}
+
+mpg |> ggplot(aes(x = class, y = hwy)) + geom_boxplot() + labs(x = "Vehicle Class", y = "Highway MPG")
+
+```
+
+
+
+
+
+
+
+To add a different color for each vehicle class:
+
+```{r}
+
+mpg |> ggplot(aes(x = class, y = hwy)) + geom_boxplot(aes(fill = class)) + labs(x = "Vehicle Class", y = "Highway MPG")
+
+```
+
+
+
+
+
+
+To sort the boxplots by the median highway MPG (ascending order):
+
+```{r}
+
+mpg |> ggplot(aes(x = reorder(class, hwy, FUN = median), y = hwy)) + geom_boxplot(aes(fill = class)) + labs(x = "Vehicle Class", y = "Highway MPG")
+
+```
+
+
+
+
+
+
+To sort the boxplots by the median highway MPG (descending order):
+
+```{r}
+
+mpg |> ggplot(aes(x = reorder(class, -hwy, FUN = median), y = hwy)) + geom_boxplot(aes(fill = class)) + labs(x = "Vehicle Class", y = "Highway MPG")
+
+```
+
+
+
+
+
+
+
+
+
+
+To a dot plot (strip plot) rather than a box plot:
+
+```{r}
+
+mpg |> ggplot(aes(x = class, y = hwy)) + geom_point() + labs(x = "Vehicle Class", y = "Highway MPG")
+
+```
+
+
+
+
+
+Plots sorted by the median hwy value:
+
+```{r}
+
+mpg |> ggplot(aes(x = reorder (class, hwy, FUN = median), y = hwy)) + geom_point() + labs(x = "Vehicle Class", y = "Highway MPG")
+
+```
+
+
+
+
+
+
+
+
+
+
+
+**EXERCISES TO PRACTICE**
+
+Exercise 1: Create a dot plot showing the distribution of highway MPG (hwy) for each drive type (drv). Sort the plots by the average highway MPG (lowest average first)
+
+
+WORK INDEPENDENTLY
+
+
+
+
+
+
+
+Exercise 2: 
+
+Find out how many different years have been recorded in the data set and how many cars for each of the different years.
+
+Then, create a boxplot showing the distribution of city miles per gallon (cty) for each year.
+
+Hint: If you do not get the expected output in the boxplot, try this code "x = factor(year)" when you do the mapping inside ggplot().
+
+
+WORK INDEPENDENTLY
+
+
+
+
+
+
+
+
+
+
