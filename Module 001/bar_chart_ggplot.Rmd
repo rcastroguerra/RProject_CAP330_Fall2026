@@ -1,0 +1,234 @@
+---
+title: "Bar Chart using ggplot"
+output:
+---
+
+
+```{r}
+
+library (tidyverse)
+
+library(palmerpenguins)
+
+```
+
+
+
+```{r}
+
+penguins |> str()
+
+```
+
+
+
+
+
+**BAR CHART FOR A SINGLE QUALITATIVE VARIABLE**
+
+
+**Bar chart** to display the **count of penguins for each species**
+
+
+**Difference between |> and +:**
+
+Use |> to pipe data into a function, whether that function is from dplyr, ggplot2, or base R. 
+
+Use + only to add components together within a ggplot() call. Once you are inside the plot-building expression, everything after ggplot() (e.g., geoms, labs, scales, themes, facets) gets joined with +.
+
+
+
+```{r}
+
+penguins |> ggplot(aes(x = species)) + geom_bar() + labs (x = "Species")
+
+```
+
+
+
+
+
+Sort the previous bar chart by the count (descending order):
+
+```{r}
+
+penguins |> ggplot(aes(x = fct_infreq(species) )) + geom_bar() + labs (x = "Species")
+
+```
+
+
+
+
+
+
+
+Sort the previous bar chart by the count (ascending order):
+
+```{r}
+
+penguins |> ggplot(aes(x = fct_rev( fct_infreq(species) )  )) + geom_bar() + labs (x = "Species")
+
+```
+
+
+
+
+
+
+
+To add a different color for each species:
+
+```{r}
+
+penguins |> ggplot(aes(x = fct_rev( fct_infreq(species) )  )) + geom_bar(aes(color = species)) + labs (x = "Species")
+
+```
+
+
+
+
+
+
+
+
+
+```{r}
+
+penguins |> ggplot(aes(x = fct_rev( fct_infreq(species) )  )) + geom_bar(aes(fill = species)) + labs (x = "Species")
+
+```
+
+
+
+
+
+
+
+
+
+
+
+**BAR CHART FOR THE RELATIONSHIP BETWEEN TWO QUALITATIVE VARIABLES**
+
+
+**Show the distribution (the frequency) of species (VARIABLE 1) within each island (VARIABLE 2)**
+
+```{r}
+
+penguins |> ggplot(aes(x = island)) + geom_bar(aes(fill = species)) + labs (x = "Island")
+
+```
+
+
+
+```{r}
+
+penguins |> ggplot(aes(x = island)) + geom_bar(aes(fill = species), position = "dodge") + labs (x = "Island")
+
+```
+
+
+
+
+
+To add more ticks to the y axis:
+
+```{r}
+
+penguins |> ggplot(aes(x = island)) + geom_bar(aes(fill = species), position = "dodge") + labs (x = "Island") + scale_y_continuous(breaks = seq (0, 140, 20))
+
+```
+
+
+
+
+
+
+Show the % of penguin species on each island instead of the count:
+
+```{r}
+
+penguins |> ggplot(aes(x = island)) + geom_bar( aes( y = after_stat(count/sum(count))*100 , fill = species), position = "dodge") + labs (x = "Island", y = "Percentage")
+
+```
+
+
+
+
+
+
+
+
+Show the % of penguins species within each island:
+
+```{r}
+
+penguins |> ggplot(aes(x = island)) + geom_bar( aes( y = after_stat(count/sum(count))*100 , fill = species), position = "fill" ) + labs (x = "Island", y = "Percentage") + scale_y_continuous(labels = scales::percent)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+**EXERCISES**
+
+The auto data set (i.e., the "mpg" data set) is part of the ggplot2 package.
+
+```{r}
+
+mpg |> str()
+
+```
+
+
+
+
+
+
+**Exercise 1**: Create a bar chart showing how many car models each manufacturer has in the mpg dataset. Display the bars in descending order.
+
+
+WORK INDEPENDENTLY
+
+
+
+
+
+
+
+
+
+
+
+
+
+**Exercise 2**: Create a bar chart showing how many cars have each drive type (drv) within each vehicle class (class).
+
+
+WORK INDEPENDENTLY
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

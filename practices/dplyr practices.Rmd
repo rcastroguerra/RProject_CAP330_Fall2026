@@ -1,0 +1,66 @@
+---
+title: "dplyr practices"
+output: html_notebook
+---
+
+# Verbos de una sola tabla en dplyr
+
+dplyr proporciona una función para cada verbo básico de manipulación de datos. Estos verbos se organizan en tres categorías según el componente del conjunto de datos con el que trabajan:
+
+## Filas (Rows):
+- **filter()** - selecciona filas basándose en los valores de las columnas.
+- **slice()** - selecciona filas basándose en su ubicación.
+- **arrange()** - cambia el orden de las filas.
+
+## Columnas (Columns):
+- **select()** - cambia si una columna está incluida o no.
+- **rename()** - cambia el nombre de las columnas.
+- **mutate()** - cambia los valores de las columnas y crea nuevas columnas.
+- **relocate()** - cambia el orden de las columnas.
+
+## Grupos de filas (Groups of rows):
+- **summarise()** - colapsa un grupo en una sola fila.
+
+### cargando libreria palmerpenguins
+
+```{r}
+library(palmerpenguins)
+penguins
+```
+
+# Ejemplos
+
+### filter()
+
+sintaxis
+
+datos |> 
+  filter(
+    ...,           # Condiciones lógicas
+    .by = NULL,    # Agrupación temporal (opcional)
+    .preserve = FALSE  # Mantener estructura de grupos (opcional)
+  )
+
+
+## condiciones logicas
+
+
+```{r}
+
+penguins |> 
+  filter(
+    species == "Adelie", 
+    island == "Dream", 
+    body_mass_g > 4000
+  )
+
+
+```
+```{r}
+# Una sola condición
+penguins |> 
+  filter(species == "Adelie", island == "Dream")
+
+# Resultado: Solo pingüinos Adelie
+```
+

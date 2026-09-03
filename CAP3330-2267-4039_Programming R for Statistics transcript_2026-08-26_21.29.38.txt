@@ -1,0 +1,2772 @@
+[Jobany Heredia Rico] 19:56:21
+How do we create a project in Fossic Cloud? Well, we use this option new project. Okay.
+
+[Jobany Heredia Rico] 19:56:27
+new project. And I noticed that we have a few options. And the options that the option that we're going to use is this one. We want to create a new RStudio project. Okay.
+
+[Jobany Heredia Rico] 19:56:37
+And then click.
+
+[Jobany Heredia Rico] 19:56:42
+And, uh, a new project will be created, okay? Takes some time, but a new project will be created. And the first thing that we need to do is we need to name that project, okay? So we need to give this project a good name.
+
+[Jobany Heredia Rico] 19:56:59
+Okay, so the first thing that we should do is…
+
+[Jobany Heredia Rico] 19:57:02
+rename that project, okay? So right now, the project is titled Untitled Project. That's a bad name, right? So we should call this something better. So I'm gonna call this, uh…
+
+[Jobany Heredia Rico] 19:57:14
+or…
+
+[Jobany Heredia Rico] 19:57:17
+2026.
+
+[Jobany Heredia Rico] 19:57:20
+course, something like that. Okay.
+
+[Jobany Heredia Rico] 19:57:22
+All 2026 scores. You can, you can call it differently, you can call it, I don't know, like.
+
+[Jobany Heredia Rico] 19:57:28
+Fall 2026, maybe you can call it, like, R…
+
+[Jobany Heredia Rico] 19:57:31
+Course, whatever you want to call it. Just give it a good name.
+
+[Jobany Heredia Rico] 19:57:35
+And notice something, notice that if we come back to our space, your space, now you see two projects, you know?
+
+[Jobany Heredia Rico] 19:57:43
+You see two projects, all right? The one that I had for the summer, and now the one that I have for this class, okay?
+
+[Jobany Heredia Rico] 19:57:49
+So, but yeah, you should always start by doing that. Create a project and include all the material inside that project, okay?
+
+[Jobany Heredia Rico] 19:57:59
+Um, I want to show you how to do that in RStudio Desktop, because again.
+
+[Jobany Heredia Rico] 19:58:04
+Well, let me ask you… let me… let me ask that question. Is anyone using RStudio Desktop, or everyone is using PosiCloud?
+
+[Jobany Heredia Rico] 19:58:10
+Anyone use it?
+
+[Maria Jordan] 19:58:11
+I am using…
+
+[Yarelyn Suarez] 19:58:12
+RS Studio.
+
+[Jobany Heredia Rico] 19:58:14
+RStudio, okay.
+
+[Jobany Heredia Rico] 19:58:14
+Press your desktop, okay.
+
+[Jobany Heredia Rico] 19:58:16
+Okay, okay, let me show you then how to do this same thing in RStudio Desktop, okay? So, if you're using RSt.
+
+[Maria Jordan] 19:58:17
+The app, yeah.
+
+[Jobany Heredia Rico] 19:58:25
+You open RStudio Desktop.
+
+[Jobany Heredia Rico] 19:58:28
+And, um…
+
+[Jobany Heredia Rico] 19:58:30
+Okay, takes a few seconds to open.
+
+[Jobany Heredia Rico] 19:58:33
+You have it.
+
+[Jobany Heredia Rico] 19:58:34
+So, you know, this way you have the option of either using PulsiCloud or RStudio Desktop, whichever you prefer.
+
+[Jobany Heredia Rico] 19:58:47
+To create a project here, I like to do something. If I'm creating a project using RStudio desktop, this is what I like to do, guys. I like to create first a folder for the project, you know what I mean? So there is a way of doing it.
+
+[Jobany Heredia Rico] 19:59:02
+like, you can start creating a project without the folder, but I prefer to create the folder first. It's my personal preference. So, if you are creating a project in RStudio Desktop, I advise you to go ahead.
+
+[Jobany Heredia Rico] 19:59:14
+Okay.
+
+[Jobany Heredia Rico] 19:59:16
+Go to whatever folder that you want. So whatever folder that you want to create the project on. In my case, I'm going to create the project right here.
+
+[Jobany Heredia Rico] 19:59:26
+Right there. But again, it could be anywhere. So in documents, in downloads, downloads is not a good location. So in documents, somewhere in documents, just create a folder for your project, okay?
+
+[Jobany Heredia Rico] 19:59:39
+And what you're going to do is you're going to create a new folder, new.
+
+[Jobany Heredia Rico] 19:59:45
+folder and give it a name. Okay. Notice that I always use the same name.
+
+[Jobany Heredia Rico] 19:59:50
+like that, you know.
+
+[Jobany Heredia Rico] 19:59:54
+our project, blah, blah, blah, blah, blah. Okay.
+
+[Jobany Heredia Rico] 19:59:57
+So our project fall twenty five, summer twenty five, summer twenty six. I guess I'm gonna call this.
+
+[Jobany Heredia Rico] 20:00:05
+You can call it differently, guys, okay? So… but I'm gonna call the folder…
+
+[Jobany Heredia Rico] 20:00:12
+for my project like that. Our project. Cap.
+
+[Jobany Heredia Rico] 20:00:16
+You maybe call it our project, our class, summer 20, I'm sorry, fall 26, whatever you want.
+
+[Jobany Heredia Rico] 20:00:27
+2026. That's what I'd like to do first.
+
+[Jobany Heredia Rico] 20:00:31
+I create a folder where my project will live. My project will live inside that folder, okay?
+
+[Jobany Heredia Rico] 20:00:36
+Once I do that, I open RStudio Desktop, okay?
+
+[Jobany Heredia Rico] 20:00:39
+And what do I do? I go to file.
+
+[Jobany Heredia Rico] 20:00:43
+And then I say, um…
+
+[Jobany Heredia Rico] 20:00:46
+New project. See this option right here?
+
+[Jobany Heredia Rico] 20:00:51
+New project.
+
+[Jobany Heredia Rico] 20:00:53
+Select that option.
+
+[Jobany Heredia Rico] 20:00:56
+And then let's see what happens now.
+
+[Jobany Heredia Rico] 20:00:58
+I think it's going to ask me, do you want to do it in an existing folder or not? Now it's asking me, where do you want to create a project? In a new directory, in a new folder, or in an existing directory? Well, I have an existing directory, I have an existing folder, I created a folder already. So I'm going to select the second option, existing directory, because I already have this folder.
+
+[Jobany Heredia Rico] 20:01:18
+for the project, okay? So, I'm gonna say existing directory.
+
+[Jobany Heredia Rico] 20:01:22
+And I'm gonna browse.
+
+[Jobany Heredia Rico] 20:01:24
+And I'm gonna find that folder, whatever it is, okay? Find the folder, whatever it is.
+
+[Jobany Heredia Rico] 20:01:30
+And just simply select it.
+
+[Jobany Heredia Rico] 20:01:34
+Just simply select it. That's all. The only thing you have to do is select it and click open. Okay.
+
+[Jobany Heredia Rico] 20:01:39
+And now, after that, the folder was selected, and then you're gonna, um, select Create Project.
+
+[Jobany Heredia Rico] 20:01:50
+Okay, project.
+
+[Jobany Heredia Rico] 20:01:52
+And that's it. Now…
+
+[Jobany Heredia Rico] 20:01:53
+If you go back to our folder, you will see that inside our folder.
+
+[Jobany Heredia Rico] 20:01:59
+an icon… this is the icon for our project, okay? So a project was created inside that folder, you know what I mean? And uh… that's it. Now, everything that you're going to do, you're going to do it here.
+
+[Jobany Heredia Rico] 20:02:10
+Okay? Everything that you're going to do, you're going to do it here. And by that, I mean, like, you know, if you download, guys, if you download a file, a notebook for this class, it's going to be in downloads, okay? But you're gonna…
+
+[Jobany Heredia Rico] 20:02:25
+move it from downloads to that folder, you know what I mean? Like, if you need to download something from Canvas, it's gonna be downloaded, downloaded, and downloaded, okay? That's fine. You're gonna move it from downloads to…
+
+[Jobany Heredia Rico] 20:02:38
+folder for this project. Okay, I'm going to paste it here. Okay, so everything about this class will be right there.
+
+[Jobany Heredia Rico] 20:02:44
+In that folder.
+
+[Jobany Heredia Rico] 20:02:44
+Okay. Is that clear?
+
+[Bobby Munir] 20:02:53
+Yes, sir.
+
+[Jobany Heredia Rico] 20:02:56
+Good. Now, if you're using RStudio Desktop, don't close RStudio. I'm gonna close RStudio Desktop 'cause I'm gonna be using Posit Cloud, okay? And what I'm gonna explain right now in terms of the interface applies to both, okay?
+
+[Jobany Heredia Rico] 20:03:12
+this desktop, I'm going to use PolicyCloud. So I'm going to go ahead and delete this. Not delete, but close this. Okay.
+
+[Jobany Heredia Rico] 20:03:20
+Anyway, so… and by the way.
+
+[Jobany Heredia Rico] 20:03:24
+There is a safe way for you to leave a project. So whenever you're working on a project, you should always leave safely.
+
+[Jobany Heredia Rico] 20:03:34
+And the way of living safely is by going to file and then closing the project. And when you close a project, what happens is that R Studio takes you to the original work environment.
+
+[Jobany Heredia Rico] 20:03:45
+Okay? This is your original work environment. Okay? So that that's a kind of a safe way of of of.
+
+[Jobany Heredia Rico] 20:03:51
+of exiting a project. And if you want to open the project again, you go to file.
+
+[Jobany Heredia Rico] 20:03:57
+Open project.
+
+[Jobany Heredia Rico] 20:04:00
+And you find the project.
+
+[Jobany Heredia Rico] 20:04:02
+Here.
+
+[Jobany Heredia Rico] 20:04:04
+Select it and open the project. Okay.
+
+[Jobany Heredia Rico] 20:04:07
+And then the project opens again. But always try to.
+
+[Jobany Heredia Rico] 20:04:11
+leave the project safely, okay?
+
+[Jobany Heredia Rico] 20:04:14
+5. Point to file.
+
+[Jobany Heredia Rico] 20:04:16
+Close project, right?
+
+[Jobany Heredia Rico] 20:04:20
+And in my case, I'm going to even close RStudio Desktop, okay, because again, I'm going to be using Posit Cloud.
+
+[Jobany Heredia Rico] 20:04:28
+Imposi Cloud, things are a little bit simpler, if that makes sense.
+
+[Jobany Heredia Rico] 20:04:34
+Although, as I told you, RStudio Desktop is more reliable, but PosiCloud is kind of simpler, in.
+
+[Jobany Heredia Rico] 20:04:40
+To use Posit Cloud, all you have to do is log into Posit Cloud, and then click your project, and that's it. Click your project, and then your project opens, right?
+
+[Jobany Heredia Rico] 20:04:49
+to leave your project, you go back to your workspace, and then boom, you go back to your workspace. You wanna select specific project, select it, click it, and then the project opens, okay? So very straightforward.
+
+[Jobany Heredia Rico] 20:05:00
+Pace it forward, okay?
+
+[Jobany Heredia Rico] 20:05:04
+Okay, so a super, like, one-minute tour of RStudio interface. And the interface, again, the interface is the same.
+
+[Jobany Heredia Rico] 20:05:13
+there might be a minor difference, but it's very similar. The interface of RStudio in Posit Cloud and in the desktop app is very similar, okay? So, we mainly have three sections, okay?
+
+[Jobany Heredia Rico] 20:05:27
+So this is the console, right? The console is where all the code gets executed, okay? So all the code that you write and run will get executed in the console.
+
+[Jobany Heredia Rico] 20:05:37
+You can write the code directly in the console, but nobody does that. People write the code in notebooks mostly, okay? And then you write the code in the notebooks and then you run them from there, okay?
+
+[Jobany Heredia Rico] 20:05:51
+But, uh, in principle, you can write the code directly here in the console, okay?
+
+[Jobany Heredia Rico] 20:05:58
+But we're not going to be using the console at all.
+
+[Jobany Heredia Rico] 20:06:01
+Another thing is, um…
+
+[Jobany Heredia Rico] 20:06:06
+The environment tab, see this section right here? So here we have the environment tab, history, connections, tutorial. Here we actually only need to know about the environment tab. So don't even worry about history, connections, tutorial.
+
+[Jobany Heredia Rico] 20:06:21
+in the environment tab, that's useful, because here we can… we can use this tab to read external files. So, like, if you have a file.
+
+[Jobany Heredia Rico] 20:06:32
+in your in your downloads folder. Okay.
+
+[Jobany Heredia Rico] 20:06:37
+you can read it into RStudio using the Environments tab, okay? So, I'm gonna illustrate how to do that once we need to do it, okay? But, um, yeah, I mean, all of these tabs are fine, but…
+
+[Jobany Heredia Rico] 20:06:50
+let's not waste time, like, explaining things that we're not gonna even use, right? So…
+
+[Jobany Heredia Rico] 20:06:55
+No, no, no, that the environment tab…
+
+[Jobany Heredia Rico] 20:06:58
+Will allow us to, um…
+
+[Jobany Heredia Rico] 20:07:01
+to interact with external files, okay? So, to upload external files. Another thing is, right now, your environment tab is, um, empty. But as soon as you start creating.
+
+[Jobany Heredia Rico] 20:07:14
+uh, data, like, as soon as you start creating, uh, data frames, vectors, and all of that, this environment tag gets populated, okay? So, for example, if I create a vector.
+
+[Jobany Heredia Rico] 20:07:25
+Don't worry about this syntax, okay?
+
+[Jobany Heredia Rico] 20:07:35
+Okay, let me just people wait. I'm I'm just making this up. So people wait. Let's say this is a vector that is stored the weight for for 5 people on around 60.
+
+[Jobany Heredia Rico] 20:07:45
+One hundred and thirty, one hundred and thirty-four.
+
+[Jobany Heredia Rico] 20:07:49
+I'm just making this…
+
+[Jobany Heredia Rico] 20:07:51
+Oh, one point five, one six to seven.
+
+[Jobany Heredia Rico] 20:07:55
+175, 12345. Okay, so this is a vector that stores.
+
+[Jobany Heredia Rico] 20:08:00
+The the weight in pounds for five people. Okay.
+
+[Jobany Heredia Rico] 20:08:04
+Notice that once I hit edit don't worry about the code, the syntax what does that mean We're gonna explain that.
+
+[Jobany Heredia Rico] 20:08:12
+soon. But once I hit enter, look what happens. Now we see that the variable people way gets shown in the environment tab. You know what I mean? So the environment tab is also useful to know, you know, all the variables that you have created, all the data frames and all of that. Okay.
+
+[Jobany Heredia Rico] 20:08:29
+So, if you want to replicate the same thing in your…
+
+[Jobany Heredia Rico] 20:08:32
+RStudio environment, I can share this in the chat if you want to, okay? But again, don't worry about the syntax.
+
+[Jobany Heredia Rico] 20:08:39
+I share that code in the shot just in case you want to do it in your.
+
+[Jobany Heredia Rico] 20:08:46
+You're welcome.
+
+[Jobany Heredia Rico] 20:08:48
+So…
+
+[Jobany Heredia Rico] 20:08:52
+Yeah, and…
+
+[Jobany Heredia Rico] 20:08:54
+this last section, so here we have, like, you know, files, and plots, and packages, the help, uh, tab, viewer, presentation. Um, guys, here, we're gonna use…
+
+[Jobany Heredia Rico] 20:09:11
+The files tab for sure. Any file that, like in PulsiCloud, any file that you're going to upload will get uploaded to that.
+
+[Jobany Heredia Rico] 20:09:22
+To that, to that.
+
+[Jobany Heredia Rico] 20:09:25
+directory, okay? So, any file that you upload to PulsiCloud will be right here, okay?
+
+[Jobany Heredia Rico] 20:09:31
+And, uh, here you can create folders if you want to. You will see that I'm gonna start creating folders, like, I'm gonna create a folder for Module 1 files, and then another folder for Module 2 files. So you can create folders here and store your files, okay? So that's the Files tab, okay?
+
+[Jobany Heredia Rico] 20:09:49
+Uh, plots, we don't, we don't, we don't really use that, uh.
+
+[Jobany Heredia Rico] 20:09:55
+Tab at all. And packages, not really, but packages allows you to install and update packages, okay? Every now and then we might need to install a package, but the thing is to install a package, we don't even use this option.
+
+[Jobany Heredia Rico] 20:10:09
+We use… we install the packages directly.
+
+[Jobany Heredia Rico] 20:10:13
+from the notebook, okay? So, yeah, in principle, you can use that option, packages, to install packages, update packages.
+
+[Jobany Heredia Rico] 20:10:20
+But in this class, we're not really gonna do it like this. Okay?
+
+[Jobany Heredia Rico] 20:10:24
+And help, I think we're gonna use help every now and then. This is just, like, to find help for specific functions, okay? So we'll show you how to do that once we need it, okay? And, uh, viewer and presentation, don't worry about that, okay?
+
+[Jobany Heredia Rico] 20:10:36
+Um… oh yeah, you don't need to really know a lot about…
+
+[Jobany Heredia Rico] 20:10:40
+Like, they are studio desktop.
+
+[Jobany Heredia Rico] 20:10:43
+It's for this class, okay? So, because you have a lot of options here, but for this class.
+
+[Jobany Heredia Rico] 20:10:51
+you don't really need to know a lot about all the different things in the RStudio interface, right?
+
+[Jobany Heredia Rico] 20:11:01
+Yeah, okay. What you need to know, guys, is how to create a notebook, how to use a notebook, okay? And that's actually what I want to show you right now, okay?
+
+[Jobany Heredia Rico] 20:11:09
+So I'm going to show you how to open.
+
+[Jobany Heredia Rico] 20:11:12
+An R notebook.
+
+[Jobany Heredia Rico] 20:11:14
+And, uh…
+
+[Jobany Heredia Rico] 20:11:17
+I'm gonna show you in that notebook how to add text, how to add code, how to run code, okay? And uh… and that's it. It will be a super brief introduction to our notebooks.
+
+[Jobany Heredia Rico] 20:11:28
+And then after that, we can start…
+
+[Jobany Heredia Rico] 20:11:33
+learning about vectors. Remember that one of my goals today is to show you what vectors are, how to create vectors and all of that.
+
+[Jobany Heredia Rico] 20:11:44
+Well, is everyone ready to create an Anoop?
+
+[Lucas Lisboa Alves] 20:11:56
+Yeah, that's true.
+
+[Jobany Heredia Rico] 20:12:01
+Good.
+
+[Jobany Heredia Rico] 20:12:03
+Again, this notebook I'm going to create will be a very simple one. I'm going to do a couple of things, and that's it. We're going to save it, close it, and that'.
+
+[Jobany Heredia Rico] 20:12:12
+This is very basic. What you need to know about notebooks is very basic, okay?
+
+[Jobany Heredia Rico] 20:12:16
+How do you create a notebook whenever you need to create a notebook? Well, you go to file.
+
+[Jobany Heredia Rico] 20:12:22
+And this is the same thing in RStudio Desktop, okay? You go to File, New File, and you are going to select this option.
+
+[Jobany Heredia Rico] 20:12:31
+Our notebook.
+
+[Jobany Heredia Rico] 20:12:32
+The options might not coincide in RStudio Desktop, but I know that in RStudio Desktop, you're going to find that option, okay? R Notebook.
+
+[Jobany Heredia Rico] 20:12:40
+Okay, so again, file…
+
+[Jobany Heredia Rico] 20:12:44
+New file, select this option, R notebook. One thing, guys, once you select that option, it might ask you something like, oh, to use R notebooks, you need to install some packages. Do you want to install the packages? You're going to say yes.
+
+[Jobany Heredia Rico] 20:12:58
+And all the packages will be installed, okay?
+
+[Jobany Heredia Rico] 20:13:02
+Sometimes when you create.
+
+[Jobany Heredia Rico] 20:13:05
+Like, if you're using RStudio Desktop for the first time.
+
+[Jobany Heredia Rico] 20:13:10
+Um, in order to use our notebooks, you need to have certain packages installed, okay?
+
+[Jobany Heredia Rico] 20:13:16
+Again, sometimes when you click our notebook for the first time, it's gonna… it's gonna tell you, hey, to use notebooks, you need these packages. Do you want to install them? You say yes, packages get installed, and that's it, okay? Uh, let's see what happens if I click this here.
+
+[Jobany Heredia Rico] 20:13:31
+In my case, it might not ask me to do anything.
+
+[Jobany Heredia Rico] 20:13:34
+Yeah, there you go. See? What is that?
+
+[Jobany Heredia Rico] 20:13:39
+Window sane.
+
+[Jobany Heredia Rico] 20:13:41
+Okay, Create Our Notebooks requires updated versions of the following packages, blah blah blah, blah blah blah, all of those packages. Do you want to install these packages now? Yes! That's it.
+
+[Jobany Heredia Rico] 20:13:53
+And then those packages will be installed, okay? So you're gonna…
+
+[Jobany Heredia Rico] 20:13:55
+Take a few seconds, but the package will be installed. Okay, wait, wait, wait, wait.
+
+[Jobany Heredia Rico] 20:14:01
+And after a few seconds, less than a minute for sure.
+
+[Jobany Heredia Rico] 20:14:05
+The packages will be installed, okay?
+
+[Jobany Heredia Rico] 20:14:08
+Let's wait.
+
+[Jobany Heredia Rico] 20:14:18
+Yeah, every time you open a new project, um…
+
+[Jobany Heredia Rico] 20:14:22
+So this is required, like the installation of the packages is required.
+
+[Jobany Heredia Rico] 20:14:32
+There you go. So, how do you know the installation finished? Because a new notebook opens. See that right there? See that file that says Untitled? That's a notebook, okay? So, once you see the notebook popping up, that means that.
+
+[Jobany Heredia Rico] 20:14:43
+The packages required for the notebook were installed. Okay?
+
+[Jobany Heredia Rico] 20:14:48
+So, did the notebook show up like that?
+
+[Jobany Heredia Rico] 20:14:52
+Did an empty notebook show up like that?
+
+[Farid Namen Correa] 20:14:53
+Yes, Professor.
+
+[Jobany Heredia Rico] 20:14:55
+Very good.
+
+[Jobany Heredia Rico] 20:14:59
+Very good.
+
+[Jobany Heredia Rico] 20:15:03
+Great.
+
+[Jobany Heredia Rico] 20:15:03
+So, first… first thing I'm gonna ask you to do, guys, is… remember I told you the console, right? We're not gonna use the console right now, so I like to usually minimize it. So, you can leave it like that, it doesn't hurt, but I like to minimize it, okay? Just… just click here, minimize it, so we can have…
+
+[Jobany Heredia Rico] 20:15:19
+like a full novel, okay? And whenever you need the console, again, like, if you need the console, just, you know, restore it, okay? There you have it. But I don't need it. We're not gonna use the console, so just…
+
+[Jobany Heredia Rico] 20:15:30
+Minimize it, okay?
+
+[Jobany Heredia Rico] 20:15:33
+All right, guys. So that is an R notebook right there. That is an R notebook. Okay.
+
+[Jobany Heredia Rico] 20:15:40
+a few things. First thing I'm gonna ask you to do is, let's save the notebook. Before doing anything, let's save the notebook. And what is going to happen is, when we save the notebook, the notebook will show up right here, okay? So any new… any new note… any new notebook that you create.
+
+[Jobany Heredia Rico] 20:15:56
+will show up right here in the Files tab, okay? And the same thing in RStudio Desktop, okay?
+
+[Jobany Heredia Rico] 20:16:00
+So let's go ahead and save this notebook. So save. And obviously, we should give this notebook a good name, right? Right now it's on title one.
+
+[Jobany Heredia Rico] 20:16:11
+how do you want to call this notebook? Let's call this notebook First Notebook, or My First Notebook, something like that. My.
+
+[Jobany Heredia Rico] 20:16:17
+on the score first.st.
+
+[Jobany Heredia Rico] 20:16:19
+Notebook.
+
+[Jobany Heredia Rico] 20:16:22
+All right, my first notebook and click save and look what happens.
+
+[Jobany Heredia Rico] 20:16:27
+There you have it.
+
+[Jobany Heredia Rico] 20:16:29
+You see a notebook, okay?
+
+[Jobany Heredia Rico] 20:16:32
+See a noble right there?
+
+[Jobany Heredia Rico] 20:16:34
+And now you see the new name right there. By the way, let me.
+
+[Jobany Heredia Rico] 20:16:38
+Maximize this like zoom. Man, this is much better. Sorry about that. So it was zoom 80%. No, this is much better.
+
+[Jobany Heredia Rico] 20:16:46
+Sorry about that. But anyways, now you see that the title.
+
+[Jobany Heredia Rico] 20:16:51
+of the notebook changed from untitled to my first notebook. Okay. And what do you see?
+
+[Jobany Heredia Rico] 20:16:56
+and notebook right here, okay?
+
+[Jobany Heredia Rico] 20:16:59
+You also see something that is a little… something that is a little bit annoying, I don't like that. Every notebook gets an HTML file. So, by the way, the notebook is the .rmd file, that is the notebook.
+
+[Jobany Heredia Rico] 20:17:11
+The notebook itself is the dot RMD file. Look, that is the notebook. Okay.
+
+[Jobany Heredia Rico] 20:17:17
+That's the .rmd file, but you also see this HTML file. Why? Why? Because here, you have specified that for the output, you want an HTML notebook, and what that means is that.
+
+[Jobany Heredia Rico] 20:17:29
+Every time a notebook gets created.
+
+[Jobany Heredia Rico] 20:17:33
+A web page with all the notebook content gets created as well, okay?
+
+[Jobany Heredia Rico] 20:17:38
+And that's the HTML file. So every time a notebook gets created, a web page with all the content of that notebook gets created.
+
+[Jobany Heredia Rico] 20:17:47
+That is useful if you are sharing your notebook with someone who doesn't have RStudio, or R, okay? If you were sharing your notebook with someone who doesn't have RStudio, that would be helpful.
+
+[Jobany Heredia Rico] 20:17:59
+But guess what, guys, in this class, you're gonna be sharing the notebook with me, or maybe you'll be sharing the notebook with, like, you know, among yourself. All of you have RStudio, so the point is that this option is not really necessary, and I like to remove it.
+
+[Jobany Heredia Rico] 20:18:16
+You can leave it there, but I like to remove it. So when it says output, I just remove that.
+
+[Jobany Heredia Rico] 20:18:21
+Leave it blank. And what that means is that.
+
+[Jobany Heredia Rico] 20:18:25
+If I delete this, let me go ahead now, delete this HTML file.
+
+[Jobany Heredia Rico] 20:18:31
+uh… delete.
+
+[Jobany Heredia Rico] 20:18:35
+Now, if I say the notebook again, I'm not gonna see the HTML file again, okay?
+
+[Jobany Heredia Rico] 20:18:41
+It doesn't hurt, okay, but it gets a little bit clutter. That makes sense, you know, like for every notebook you have an HTML file. So if you have 10 notebooks, you're gonna have 10 notebooks and 10 HTML files. So, and for our purposes, it's kind of useless.
+
+[Jobany Heredia Rico] 20:18:59
+I prefer to not have it, okay?
+
+[Jobany Heredia Rico] 20:19:08
+That's a good question, um…
+
+[Jobany Heredia Rico] 20:19:13
+I've never tried that. I don't know, Maria. I've never tried that. I don't want to say no, because who knows if there is an app that allows you to do it.
+
+[Jobany Heredia Rico] 20:19:25
+But in principle, by the way, in principle, no. Like, in principle, the HTML file, you cannot edit it. It's just read-only, okay?
+
+[Jobany Heredia Rico] 20:19:34
+But I don't know if you can feed that HTML file to a specific app, and that app allows you to edit it, okay? But in principle, no. The HTML file is just, like.
+
+[Jobany Heredia Rico] 20:19:43
+read only text. Okay.
+
+[Jobany Heredia Rico] 20:19:47
+But maybe you can feed it to an app and then you can edit it.
+
+[Jobany Heredia Rico] 20:19:51
+But
+
+[Jobany Heredia Rico] 20:19:56
+Yeah.
+
+[Jobany Heredia Rico] 20:20:01
+Yeah.
+
+[Jobany Heredia Rico] 20:20:03
+So…
+
+[Jobany Heredia Rico] 20:20:06
+That's the idea, guys. So let's go back to a notebook.
+
+[Jobany Heredia Rico] 20:20:10
+Whenever you open a new notebook, you get all of this text. And this is a sample code cell. This is just kind of explaining what a notebook is. This is just explaining what a notebook is.
+
+[Jobany Heredia Rico] 20:20:26
+Uh, giving you…
+
+[Jobany Heredia Rico] 20:20:28
+tips about how to use a notebook. If you want to create more code, all of that is fine, but I don't use any of that. So this is what I do. Whenever I open a notebook, okay, whenever I open a new notebook, I change the name.
+
+[Jobany Heredia Rico] 20:20:43
+I remove the output, okay? I don't want to… I don't want the HTML option, and I delete all of this and leave it just completely blank. I do that, okay?
+
+[Jobany Heredia Rico] 20:20:51
+That's what I do. All right. I don't need any of that.
+
+[Jobany Heredia Rico] 20:20:55
+Okay? You should do the same.
+
+[Jobany Heredia Rico] 20:20:58
+Because all of that was just like, oh, you know, this is a notebook. This is what an art notebook is.
+
+[Jobany Heredia Rico] 20:21:05
+This is how you can use it.
+
+[Jobany Heredia Rico] 20:21:07
+You don't need it. You don't need any of that information.
+
+[Jobany Heredia Rico] 20:21:11
+Notice… notice one thing. Now, when I save the notebook, I'm not gonna see the HTML file anymore.
+
+[Jobany Heredia Rico] 20:21:17
+I save, and we don't see the HTML file anymore, okay, which is good.
+
+[Jobany Heredia Rico] 20:21:23
+Okay, so far so good.
+
+[Lucas Lisboa Alves] 20:21:31
+Yes, Professor, yes.
+
+[Jobany Heredia Rico] 20:21:35
+Good.
+
+[Jobany Heredia Rico] 20:21:39
+Very good, guys. Um…
+
+[Jobany Heredia Rico] 20:21:42
+Now…
+
+[Jobany Heredia Rico] 20:21:43
+I told you the introduction to notebooks was going to be very brief.
+
+[Jobany Heredia Rico] 20:21:49
+Uh, guess what? The only thing that you need to know about notebooks is that any blank space is a text section, okay? All of this is text section.
+
+[Jobany Heredia Rico] 20:21:59
+What is a text section for? To write text. What kind of text? Well, you kind of start explaining what you're doing in this notebook, okay? So, for example, I can start saying, like, in this notebook…
+
+[Jobany Heredia Rico] 20:22:10
+I'm making this up. In this notebook, I will illustrate… whatever you want to say, okay? And another thing, another use of text sections is, you will see that in a second.
+
+[Jobany Heredia Rico] 20:22:25
+When you… when you do…
+
+[Jobany Heredia Rico] 20:22:27
+when you run code, and you get an output, if you want to interpret the output, you can interpret the output right there, okay? You can interpret the output right there. So, text sections are to explain what you're doing, and to interpret the results that you're getting, okay?
+
+[Jobany Heredia Rico] 20:22:40
+That's it. And any blank space will be a text section.
+
+[Jobany Heredia Rico] 20:22:48
+Right. Exactly. Yeah. Yeah. You can add all the notes that you want. So, and the notes will be two types of notes, if you will.
+
+[Jobany Heredia Rico] 20:22:56
+1st note where you are explaining what you're doing right.
+
+[Jobany Heredia Rico] 20:22:59
+You know, like, oh, in this novel, we'll illustrate that this is… and then, next, I will…
+
+[Jobany Heredia Rico] 20:23:06
+And then you explain what you're doing next. Okay? But not only that, you will see in a second that once you run code and you get an output, you can explain what what the output is. So you'll see.
+
+[Jobany Heredia Rico] 20:23:18
+Anyway, so any blank space would be text section. But in our notebook, we also need code sections or code chunks. To add a code chunk, I guess there are a few options. One option is the following. You want to add a code chunk. By the way, what is a code chunk or code cell for?
+
+[Jobany Heredia Rico] 20:23:36
+to add code, to write code and run it, okay? So in a code chunk, you're gonna be able to write and run code, okay?
+
+[Jobany Heredia Rico] 20:23:43
+How do you add a code chunk? Well, I guess the easiest option is to use that option right there.
+
+[Jobany Heredia Rico] 20:23:48
+Select that option and notice that you can add code shown.
+
+[Jobany Heredia Rico] 20:23:53
+to write code in many different languages, okay? But of course, we only care about R, okay? So, you add a code chunk with R, with the R, uh, option, and uh…
+
+[Jobany Heredia Rico] 20:24:03
+that, that is a code chunk. And if you want to add more spaces, you can add more spaces. Like, if you plan to write a lot of code.
+
+[Jobany Heredia Rico] 20:24:10
+You can add a space, or make it, um…
+
+[Jobany Heredia Rico] 20:24:13
+Thinner, whatever you want, okay?
+
+[Jobany Heredia Rico] 20:24:17
+No, what do you do in that section?
+
+[Jobany Heredia Rico] 20:24:20
+as a code section. So you…
+
+[Jobany Heredia Rico] 20:24:22
+Type, type code. Okay.
+
+[Jobany Heredia Rico] 20:24:26
+So let me make something up here.
+
+[Jobany Heredia Rico] 20:24:33
+So, for example, let's say I want to…
+
+[Jobany Heredia Rico] 20:24:42
+I'm going to create two vectors. Again, don't worry about the syntax, okay? I'm going to create two vectors, x and y, and I'm going to plot the values of x and y, okay? So don't worry about the syntax. I will explain what this is in a second. So I'm going to create.
+
+[Jobany Heredia Rico] 20:25:00
+I want to create…
+
+[Jobany Heredia Rico] 20:25:02
+Erect or with a few numbers. Okay.
+
+[Jobany Heredia Rico] 20:25:06
+X.
+
+[Jobany Heredia Rico] 20:25:06
+And then I'm going to create another vector y.
+
+[Jobany Heredia Rico] 20:25:09
+Don't worry about the syntax.
+
+[Jobany Heredia Rico] 20:25:14
+2033.
+
+[Jobany Heredia Rico] 20:25:16
+44, 60, whatever, okay?
+
+[Jobany Heredia Rico] 20:25:19
+Fine numbers and fine numbers Okay So here I'm I'm creating two vectors x and y each with fine numbers Okay?
+
+[Jobany Heredia Rico] 20:25:26
+And, uh…
+
+[Jobany Heredia Rico] 20:25:28
+Let's run, now.
+
+[Jobany Heredia Rico] 20:25:29
+Here, I wrote a code, but…
+
+[Jobany Heredia Rico] 20:25:31
+any piece of code that you run, you need to run it, okay? You need to execute it. And when I execute this code cell, what is going to happen is that these two vectors, or these two variables, X and Y, will be created, and you're gonna see them right here.
+
+[Jobany Heredia Rico] 20:25:45
+Okay, we're going to see them right here. By the way, if you want to use my code.
+
+[Jobany Heredia Rico] 20:25:48
+Let me copy this. I'm gonna paste this in the chat, okay? So you can…
+
+[Jobany Heredia Rico] 20:25:52
+Use that code. So, once I run that code cell, um…
+
+[Jobany Heredia Rico] 20:25:59
+Yeah, once I run that code cell, you will see that these two variables will get created right here, okay?
+
+[Jobany Heredia Rico] 20:26:04
+Anyway, so how do we run a cold cell? I guess the simplest option is start option.
+
+[Jobany Heredia Rico] 20:26:11
+See that option? Run… run current chunk?
+
+[Jobany Heredia Rico] 20:26:15
+And then run it.
+
+[Jobany Heredia Rico] 20:26:16
+And then you see that the two.
+
+[Jobany Heredia Rico] 20:26:20
+uh, vectors or variables get created, okay?
+
+[Jobany Heredia Rico] 20:26:23
+Now what I want to do is I want to plot.
+
+[Jobany Heredia Rico] 20:26:27
+And again, forget about the…
+
+[Jobany Heredia Rico] 20:26:29
+The syntax here, don't worry about that. I'm going to add a second code cell where I'm going to plot the values of…
+
+[Jobany Heredia Rico] 20:26:37
+Y versus X, okay? I want to do a scatter plot. You know what a scatter plot is. So I want to do a scatter plot plotting the values of Y versus X, okay?
+
+[Jobany Heredia Rico] 20:26:47
+So…
+
+[Jobany Heredia Rico] 20:26:54
+No format for the commands. Not really. I'm not. No.
+
+[Jobany Heredia Rico] 20:27:00
+No, I'm not gonna be… I'm not going to be allowed into formatting, no.
+
+[Jobany Heredia Rico] 20:27:06
+If you're interested in formatting, you can, you know, do your research, but no, I'm not gonna be spending time.
+
+[Jobany Heredia Rico] 20:27:13
+I'm showing you formatted, okay?
+
+[Jobany Heredia Rico] 20:27:16
+Uh, but yeah, you can always, uh, learn that, uh.
+
+[Jobany Heredia Rico] 20:27:20
+If you want to. Um…
+
+[Jobany Heredia Rico] 20:27:23
+So, I want to add…
+
+[Jobany Heredia Rico] 20:27:26
+a new cold cell. Okay? Remember, cold cell, cold chunk, whatever you want.
+
+[Jobany Heredia Rico] 20:27:35
+How do we add a cold cell, guys? Everyone remembers?
+
+[Cristopher Tagliarini] 20:27:41
+Uh, yeah, you do that… well, I learned, because I used to also use it, you can also even do, um, control… what's it called? Control out? Uh, uh, yeah.
+
+[Jobany Heredia Rico] 20:27:41
+Like this.
+
+[Jobany Heredia Rico] 20:27:48
+Right, right.
+
+[Jobany Heredia Rico] 20:27:50
+Yeah, that's that's that's my preferred way, by the way. So you you feel free to always use it like whenever you want to add a cold cell, come to this option, select this option R, and there you have it. Okay? But I'm gonna delete it. I like to use the shortcut.
+
+[Jobany Heredia Rico] 20:28:06
+that Christopher was mentioning, okay? So to add a code chunk, there is a shortcut. Control, Alt, I.
+
+[Jobany Heredia Rico] 20:28:16
+Plus alt.
+
+[Jobany Heredia Rico] 20:28:17
+Sorry.
+
+[Jobany Heredia Rico] 20:28:19
+Control plus Alt.
+
+[Jobany Heredia Rico] 20:28:21
+plus I.
+
+[Jobany Heredia Rico] 20:28:23
+Okay? And, uh, that will give you a new code cell. Okay, so let me do it. Control, Alt, I, and Taran, I get a new code cell, okay?
+
+[Jobany Heredia Rico] 20:28:32
+So, but don't worry, if you don't want to memorize that, just always select that option, okay?
+
+[Jobany Heredia Rico] 20:28:38
+Anyways, what do I want that cold cell for? I told you I was gonna plot Y versus X, right? So there's a function in R for plotting.
+
+[Jobany Heredia Rico] 20:28:47
+For doing a scatterplot plot, and then you enter x, and then y, you run this.
+
+[Jobany Heredia Rico] 20:28:54
+And, uh…
+
+[Jobany Heredia Rico] 20:28:56
+And there you have it. You see the plot right there. And this is the beauty of — oh, by the way, guys, I don't know if I did that very quickly.
+
+[Jobany Heredia Rico] 20:29:05
+When I'm using a notebook, I don't want to see any of this. I don't want to see these two sections, so I will collapse this, or I will move this to the right, you know what I mean? Like, whenever you need it, you can, you know, move it to the left, but I usually collapse that, you know?
+
+[Jobany Heredia Rico] 20:29:18
+So you can leave it there if you want, but I don't like it. I just want to move it all the way to the right.
+
+[Jobany Heredia Rico] 20:29:28
+Um, what I was saying, oh, I was saying like, this is the beauty of the notebooks because in the notebook, guys, you plot something, you try to do a visualization and you get the plot right there in the notebook. Okay. So you don't need to see the plot somewhere else. It's right there. Look at the, look at the plot.
+
+[Jobany Heredia Rico] 20:29:42
+So this is the code to generate the plot, and then you see the plot right there. Okay?
+
+[Jobany Heredia Rico] 20:29:47
+That's lovely. All right.
+
+[Jobany Heredia Rico] 20:29:54
+Yeah, and this is what I was telling you, like, what else can we use text for well to interpret? Let's say, remember, what is…
+
+[Jobany Heredia Rico] 20:30:05
+any blank space will be text, a text section, right? If you want to interpret what that plot is telling you, right below the plot, whenever you see a blank space, you kind of start saying, like, in this plot.
+
+[Jobany Heredia Rico] 20:30:19
+We can see that their relationship relationship.
+
+[Jobany Heredia Rico] 20:30:27
+Uh… dot dot dot dot, whatever you want to say, you know what I mean? So…
+
+[Jobany Heredia Rico] 20:30:31
+Text cells are also useful for you to interpret the results that you're getting, okay?
+
+[Jobany Heredia Rico] 20:30:38
+Some students like to do this, which I really don't like, I think it's ugly, like, some students write all the text inside code cells, because you can write text inside code cells as comments. So, by the way, in R, to write comments, you need to use the hashtag, the.
+
+[Jobany Heredia Rico] 20:30:55
+The number symbol, and then you can write, you know.
+
+[Jobany Heredia Rico] 20:30:59
+a text inside a cold cell. Oh, this is a comment.
+
+[Jobany Heredia Rico] 20:31:05
+Okay. But why are you going to write your text as a comment? Like just write it as a text. You know what I mean?
+
+[Jobany Heredia Rico] 20:31:14
+Write us a text.
+
+[Jobany Heredia Rico] 20:31:20
+Good, good, good, good.
+
+[Jobany Heredia Rico] 20:31:26
+Yeah.
+
+[Jobany Heredia Rico] 20:31:33
+So, yeah, I don't like to write text.
+
+[Jobany Heredia Rico] 20:31:37
+like, if I'm doing an interpretation, I'm gonna do… I'm not gonna do an interpretation as a comment, okay? I do write comments, by the way, I'm not saying, like, don't write comments, but I write… I write a comment if it is actually a comment, something quick, but if it is an interpretation or an explanation where, like, I'm explaining what the notebook is about, I'm gonna write that in a text.
+
+[Jobany Heredia Rico] 20:31:57
+Section.
+
+[Jobany Heredia Rico] 20:31:58
+Okay?
+
+[Jobany Heredia Rico] 20:32:00
+Clear, nice. Everything is clear so far.
+
+[Cristopher Tagliarini] 20:32:04
+You're all good.
+
+[Bobby Munir] 20:32:08
+Yes, Professor.
+
+[Jobany Heredia Rico] 20:32:19
+Excellent.
+
+[Jobany Heredia Rico] 20:32:28
+Okay, guys, that's it.
+
+[Jobany Heredia Rico] 20:32:30
+That's all the introduction you needed to our notebook. That's it. The rest you're going to learn as we go. Okay. But that's just the basic introduction you need. Text sections, code sections, code cells. How do we use a code cell? We write the code and then we run it.
+
+[Jobany Heredia Rico] 20:32:46
+That's it. That's all you need. So at this point, I'm going to ask you to save this notebook. Go to the save button, save it, and close it. That's it. We're done with that notebook. Close it. And again.
+
+[Jobany Heredia Rico] 20:32:58
+Whenever you want to open that notebook again, it's gonna be right there. You click it, and then you open it, okay?
+
+[Jobany Heredia Rico] 20:33:05
+Whenever you want to open it, just find it there and click it and open it, okay?
+
+[Jobany Heredia Rico] 20:33:08
+But yeah, at this point, just go ahead and close it, okay?
+
+[Jobany Heredia Rico] 20:33:15
+So we're done with the first part of tonight's session. Now we can move on to the second part, which is I need to introduce you to R vectors. In R, like in many languages, there are many data structures.
+
+[Jobany Heredia Rico] 20:33:29
+In R, like, some of the common data structures will be vectors, lists, data frames, which are kind of list matrices, okay? But really, to get started with R.
+
+[Jobany Heredia Rico] 20:33:43
+uh, the one that you really need to know is vectors, okay? And that's the one that I want to discuss tonight, okay? So, knowing vectors, the rest is easy, okay? So, I prepared a notebook introducing you to basic ideas about vectors, like how do we create a vector in R, and uh…
+
+[Jobany Heredia Rico] 20:34:00
+How do we index effect or stuff like that? Okay? And, let's go with that. So.
+
+[Jobany Heredia Rico] 20:34:06
+That notebook.
+
+[Jobany Heredia Rico] 20:34:08
+The notebook is on Canvas. It's not published yet. I'm gonna go ahead and publish it.
+
+[Jobany Heredia Rico] 20:34:14
+And, uh, what you're going to do is, once I publish it, you are going to download it.
+
+[Jobany Heredia Rico] 20:34:20
+Once you download it, you have two options.
+
+[Jobany Heredia Rico] 20:34:22
+once you download it, if you are using, um, RStudio Desktop, you're gonna move it from the Downloads folder to the folder in your computer where you created the project for this class, okay? But if you're using, um.
+
+[Jobany Heredia Rico] 20:34:36
+Posi Cloud, you're gonna upload it. Okay? So if you're using Posi Cloud, once you download the notebook to your downloads folder, you're gonna upload it right here. Upload it right?
+
+[Jobany Heredia Rico] 20:34:46
+Okay, so…
+
+[Jobany Heredia Rico] 20:34:49
+First, let me publish the notebook, okay, because otherwise you don't have access to it. So the notebook is in module number one.
+
+[Jobany Heredia Rico] 20:35:19
+Why I have different options right below the save files?
+
+[Jobany Heredia Rico] 20:35:30
+Let's see… forget about those options right now. You mean, like, these options? Hold on.
+
+[Jobany Heredia Rico] 20:35:39
+What options? So…
+
+[Jobany Heredia Rico] 20:35:42
+What are presuming, like, these options?
+
+[Jobany Heredia Rico] 20:35:46
+Both options?
+
+[Jobany Heredia Rico] 20:35:48
+Yeah, don't worry about those options right now, okay? So let's go little by little. You don't need any of those options right now, okay?
+
+[Jobany Heredia Rico] 20:35:56
+You don't need any of those options right now. Okay. This is if you want to export, the notebook in a specific format, which we don't need. Okay. this is also to, how do you want to preview the notebook? We don't need any of that right now. Okay. So don't, don't get overwhelmed with that.
+
+[Jobany Heredia Rico] 20:36:14
+So…
+
+[Jobany Heredia Rico] 20:36:16
+On Canvas, I'm gonna go to module number one, our programming for the exploration visualization, and on the notebooks.
+
+[Jobany Heredia Rico] 20:36:24
+This is a notebook that we're going to work on. It says summer. That's okay. So it's the same notebook I use in summer. So this one is still valid. Okay? So I'm gonna publish that notebook.
+
+[Jobany Heredia Rico] 20:36:34
+Notice that it's a notebook because it's a dot RMD file. And I'm going to have you download the notebook. And then remember, if you're using RStudio desktop, you're going to move it to a folder where the project is. If you're using PosiCloud, you're going to upload it to Pos.
+
+[Jobany Heredia Rico] 20:36:48
+So let me publish it.
+
+[Jobany Heredia Rico] 20:36:52
+published. If you don't see it, you should see it right now, but if you don't, refresh Canvas, okay? Refresh Canvas.
+
+[Jobany Heredia Rico] 20:37:00
+And uh… I'm gonna download it as well, I need to download it, okay? So I'm gonna…
+
+[Jobany Heredia Rico] 20:37:05
+Liked it.
+
+[Jobany Heredia Rico] 20:37:06
+And download it, okay? Let's download it.
+
+[Jobany Heredia Rico] 20:37:28
+So everyone downloaded their notebook?
+
+[Jobany Heredia Rico] 20:37:38
+Excellent. So it's right here in my downloads folder. So since I'm using PulsiCloud today, I'm going to upload it.
+
+[Jobany Heredia Rico] 20:37:46
+Okay, so I'm gonna upload it. What I'm gonna do is I'm gonna go to PulsiCloud.
+
+[Jobany Heredia Rico] 20:37:51
+I'm going to click upload.
+
+[Jobany Heredia Rico] 20:37:54
+And then… choose file, okay?
+
+[Jobany Heredia Rico] 20:37:57
+Upload. Choose file.
+
+[Jobany Heredia Rico] 20:38:01
+Our vectors selected.
+
+[Jobany Heredia Rico] 20:38:04
+Okay, select it, okay, and ta-da, you should see it right there, okay?
+
+[Jobany Heredia Rico] 20:38:11
+And then what do we do? We open it. That notebook is full of content, so we're gonna go over that content. I'm gonna explain you what I did in that notebook, okay? And that notebook is all about vectors, okay? So let's open it.
+
+[Yarelyn Suarez] 20:38:22
+Professor?
+
+[Yarelyn Suarez] 20:38:23
+I can see in my RStudio the folder Outlook.
+
+[Jobany Heredia Rico] 20:38:23
+Yes.
+
+[Jobany Heredia Rico] 20:38:31
+Uh… further outlook…
+
+[Yarelyn Suarez] 20:38:32
+I just see files, plots, package.
+
+[Yarelyn Suarez] 20:38:35
+New folder down, new file, delete, but.
+
+[Jobany Heredia Rico] 20:38:37
+Oh, I know, I know, I know, I know, I know, no.
+
+[Jobany Heredia Rico] 20:38:40
+In RStudio Desktop, what you're going to do is the.
+
+[Jobany Heredia Rico] 20:38:44
+You're gonna do this.
+
+[Jobany Heredia Rico] 20:38:48
+The notebook is in downloads, right? So you're gonna maybe cut it from here or copy, let's say copy, control C, okay? Or right click, copy, okay? Just control C.
+
+[Jobany Heredia Rico] 20:38:57
+And then you're gonna find the folder where you created the project.
+
+[Jobany Heredia Rico] 20:39:01
+Okay.
+
+[Jobany Heredia Rico] 20:39:02
+And you're going to paste it right there. Paste it.
+
+[Yarelyn Suarez] 20:39:05
+Yes, yes, I already did it.
+
+[Jobany Heredia Rico] 20:39:08
+And now you see it, right?
+
+[Yarelyn Suarez] 20:39:09
+Mm-hmm.
+
+[Jobany Heredia Rico] 20:39:10
+Now when you open RStudio desktop, you should see the notebook, right?
+
+[Yarelyn Suarez] 20:39:16
+Let me see.
+
+[Yarelyn Suarez] 20:39:20
+Yes, already.
+
+[Jobany Heredia Rico] 20:39:21
+Okay, go ahead and open it.
+
+[Jobany Heredia Rico] 20:39:24
+Yeah.
+
+[Jobany Heredia Rico] 20:39:26
+Yeah, I didn't explain myself really.
+
+[Jobany Heredia Rico] 20:39:28
+Yeah, once you move, like, if you're using RStudio Desktop, once you move a notebook, a file to the folder where the project is.
+
+[Jobany Heredia Rico] 20:39:37
+You can see it from inside the project, okay? You're gonna be able to see it from inside the project, okay?
+
+[Yarelyn Suarez] 20:39:42
+Okay, thank you.
+
+[Jobany Heredia Rico] 20:39:44
+You're welcome.
+
+[Jobany Heredia Rico] 20:39:47
+Very good, very good, very good, very good.
+
+[Jobany Heredia Rico] 20:39:50
+Excellent. Yeah, yeah, yeah.
+
+[Jobany Heredia Rico] 20:39:58
+Okay, oh, by the way, notice that in my notebooks, I remove the HTML thing, right? I don't… I don't need to see that HTML, okay? You can leave it there, it's okay, it's harmless, but I don.
+
+[Jobany Heredia Rico] 20:40:09
+All right, guys, so let's start this, okay? This notebook is kind of short, okay? But, uh…
+
+[Jobany Heredia Rico] 20:40:15
+If I keep talking, it's going to take us forever.
+
+[Jobany Heredia Rico] 20:40:19
+Vectors, guys. What are R vectors? Well, brief definition, a vector is a type of object in R that allows us to store data in it. Very straightforward, okay? It's like a… it's like an array.
+
+[Jobany Heredia Rico] 20:40:31
+in Python, okay? So if you want to have an analogy with Python, it's like an.
+
+[Jobany Heredia Rico] 20:40:39
+And similarly to array, this applies. So all the data stored in a vector must have the same type. The same thing happens in arrays. In a Python array, all the data must be of the same type, meaning like in an array and in a vector, you cannot combine.
+
+[Jobany Heredia Rico] 20:40:55
+uh, textual data with numbers, or Boolean with numbers, okay, it has to be the same, same type of data, okay?
+
+[Jobany Heredia Rico] 20:41:01
+And the basic data types are integers, numeric, logical, and character. Logical is Boolean, okay? And character is just a string, right?
+
+[Jobany Heredia Rico] 20:41:12
+Okay, now, first let's learn how to create a vector. How do we create a vector?
+
+[Jobany Heredia Rico] 20:41:17
+And there are a few ways of creating vectors in R. The most straightforward way, which is the way I have been using, in the two examples that I did earlier, I used this way. I used the combined function. So to create a vector, the most straightforward way is to use the combined function.
+
+[Jobany Heredia Rico] 20:41:34
+which is, you know, short for combine, and then open and close parentheses, okay? And this is the way we do it.
+
+[Jobany Heredia Rico] 20:41:41
+Let's say we want to create a vector with this.
+
+[Jobany Heredia Rico] 20:41:46
+by numbers, okay? So we want to create a vector to store the numbers 3, 6, 7, 10, and 1, okay? How do we do that? Well, we combine, we use combine, open and close parentheses, we enter the numbers separated by comma, so we enter the elements.
+
+[Jobany Heredia Rico] 20:42:01
+of the vector separated by comma, and then we assign that, and this is the assignment operator, okay? We assign that to a variable, okay? And we can use whatever variable name that we want. I decided to call this variable A, okay?
+
+[Jobany Heredia Rico] 20:42:15
+So in that variable a, I'm storing this vector, okay?
+
+[Jobany Heredia Rico] 20:42:19
+The assignment operator is simply…
+
+[Jobany Heredia Rico] 20:42:23
+The less than less than simple and.
+
+[Jobany Heredia Rico] 20:42:26
+And that, you know, kind of dash.
+
+[Jobany Heredia Rico] 20:42:28
+That makes sense. Okay.
+
+[Jobany Heredia Rico] 20:42:31
+Okay?
+
+[Jobany Heredia Rico] 20:42:32
+So that's the assignment operator. Less than, less than.
+
+[Raydel Castro] 20:42:35
+Uh, Professor, uh, less than… less than…
+
+[Raydel Castro] 20:42:40
+And Dash is the same than equal in Python.
+
+[Raydel Castro] 20:42:44
+For this one.
+
+[Cristopher Tagliarini] 20:42:46
+No, no.
+
+[Jobany Heredia Rico] 20:42:46
+Actually, in R, we can… In R, we can also use… In R, we can also use equal. Okay, so…
+
+[Jobany Heredia Rico] 20:42:51
+Uh, that's a good, uh, observation. In R, we have two assignments operator. That…
+
+[Jobany Heredia Rico] 20:42:57
+Let me actually let me use a comment. Okay.
+
+[Jobany Heredia Rico] 20:43:00
+That's one assignment operator, the most widely used, but another one is just simply equal, okay?
+
+[Jobany Heredia Rico] 20:43:06
+The difference between these two assignments operators in R is a little bit esoteric. So there is a minor difference. By the way, I used to use equal all the time, but I got convinced. I don't even remember exactly why.
+
+[Jobany Heredia Rico] 20:43:21
+Truly, I don't remember why I got convinced to switch to this assignment operator. But you can also use equal in R. There is a minor difference, and the most widely accepted operator is this one. But in R, you can also use equal. In other words.
+
+[Jobany Heredia Rico] 20:43:38
+These two, these two…
+
+[Jobany Heredia Rico] 20:43:41
+these two pieces of code are equivalent.
+
+[Jobany Heredia Rico] 20:43:44
+Oops, sorry.
+
+[Jobany Heredia Rico] 20:43:46
+So you can do it like that as well.
+
+[Jorge Tavares] 20:43:47
+So. So, Professor, like both are.
+
+[Jobany Heredia Rico] 20:43:48
+You can do it like that as well.
+
+[Jorge Tavares] 20:43:50
+So, Professor, both are the, uh, so both are correct, but mostly, uh, they use, like, the less than sign, right? Basically.
+
+[Jobany Heredia Rico] 20:44:00
+Yeah, because of a very esoteric reason. And in most cases it doesn't matter which one you use. There are a few I just truly don't remember like those cases where this one is the right one. Not the right one, but like in certain cases, this might give you, yeah, kind of issues, okay?
+
+[Jobany Heredia Rico] 20:44:19
+But for like in 99% of the situations they are both exactly the same. Okay? But if you look at our code online, in most cases you're gonna be. You're gonna see that one. Okay, that's the one I use.
+
+[Jobany Heredia Rico] 20:44:35
+But yeah, there…
+
+[Cristopher Tagliarini] 20:44:36
+I also have a question, because I noticed, and I've been using it, um…
+
+[Cristopher Tagliarini] 20:44:41
+When you use the less than, I think it's more like a permanent vector than you have a temporary, so I think most people use it because it's permanent when you store it, right?
+
+[Cristopher Tagliarini] 20:44:50
+the data in…
+
+[Jobany Heredia Rico] 20:44:51
+No, if you use equal, it's the same thing. If you use equal, it's permanent vector as well. Yeah, that's not the difference. Yeah, equal will make it permanent as.
+
+[Cristopher Tagliarini] 20:44:53
+Okay.
+
+[Cristopher Tagliarini] 20:44:58
+Oh, okay. And vector, you said, is the same as array, or they're, like, similar?
+
+[Jobany Heredia Rico] 20:45:04
+Third, the… and now the…
+
+[Jobany Heredia Rico] 20:45:08
+Like in R, we don't have arrays, we have vectors, but they are similar kind of data structures, okay?
+
+[Cristopher Tagliarini] 20:45:13
+Okay.
+
+[Jobany Heredia Rico] 20:45:13
+In art, we don't have a race. Yeah.
+
+[Jobany Heredia Rico] 20:45:20
+So let's actually create a vector, okay? Let's actually create a vector.
+
+[Jobany Heredia Rico] 20:45:28
+Yeah, that's a good one. That's a different thing. Yeah, when you're using functions and you are assigning arguments to parameters, you need to use equal. Yeah, that's it.
+
+[Jobany Heredia Rico] 20:45:37
+That's a different kind of thing, yeah. When you are invoking functions and you're passing arguments to parameters, you need to use equal, yes.
+
+[Jobany Heredia Rico] 20:45:45
+But when you are creating variables, you can either use this one or equal. Okay?
+
+[Jobany Heredia Rico] 20:45:53
+Anyway, if we don't run that cold cell, that vector will never be created, okay? So I'm gonna run that cold cell, and as you will see.
+
+[Jobany Heredia Rico] 20:46:01
+You're going to see the variable a showing up right here. Okay? So let's run that.
+
+[Jobany Heredia Rico] 20:46:08
+And now we have a new vector in our space A, okay?
+
+[Jobany Heredia Rico] 20:46:11
+And now we have access to that A whenever we want to. For example, if we want to print the content of A, so, like, you know, want to print the content of A, uh, in R, you don't need to use the print function at all, okay?
+
+[Jobany Heredia Rico] 20:46:23
+To print the…
+
+[Jobany Heredia Rico] 20:46:26
+content of an object, all you have to type in is the name of the object, that's it. So if you want to print the content of A, type the name A, run it, and you see the content of A.
+
+[Jobany Heredia Rico] 20:46:37
+Um, print has certain uses, but…
+
+[Jobany Heredia Rico] 20:46:39
+I barely use it. Okay, so that's 1 of kind of a convenient feature in our like to print.
+
+[Jobany Heredia Rico] 20:46:46
+The content of vectors, uh…
+
+[Jobany Heredia Rico] 20:46:49
+To print the content of objects, not only vectors, just the name, you don't need to use print, right?
+
+[Jobany Heredia Rico] 20:46:57
+Um, once you create…
+
+[Raydel Castro] 20:46:58
+Professor, I have another question because I saw on the right side the variable people wait. If I want to delete this variable, how can I do that?
+
+[Jobany Heredia Rico] 20:47:10
+To delete that variable, there might be a, the last, the last word, the last, uh, way I remember is I know there might be a simpler way. I know you can use something like this, uh, RM remove.
+
+[Jobany Heredia Rico] 20:47:23
+And then, in quotes, you type the name of the variable you want to delete. What is it? People wait?
+
+[Jobany Heredia Rico] 20:47:30
+Yeah, people. There might be a simpler way. Hey, I remember this from like from ten years ago. So remove and then you specify in quotes the name of the variable that you want to delete, run it.
+
+[Jobany Heredia Rico] 20:47:40
+Um, boom, gone.
+
+[Jobany Heredia Rico] 20:47:43
+Okay? But there might be, like, a better way, okay? So you might need to look it up, like…
+
+[Jobany Heredia Rico] 20:47:48
+I don't think like I don't know. Let me try. I don't think if you right click.
+
+[Raydel Castro] 20:47:53
+Nope. I tried to do it, but…
+
+[Jobany Heredia Rico] 20:47:54
+Oh, no, yeah.
+
+[Jobany Heredia Rico] 20:47:56
+Yeah, that's just the way I remember, but there might be other ways, okay? So if you do a short research, it might tell you like a better way, right?
+
+[Raydel Castro] 20:48:03
+Thank you, Professor.
+
+[Jobany Heredia Rico] 20:48:05
+You're welcome.
+
+[Jobany Heredia Rico] 20:48:11
+Once you have created a vector, you can update it.
+
+[Jobany Heredia Rico] 20:48:14
+example, let's say, oh, now you decided that, oh, I want to store one more number in A, I want to store number 5. You don't need to repeat this again, you don't need to repeat the same vector, you don't need to recreate a vector, you can do something like this.
+
+[Jobany Heredia Rico] 20:48:29
+You want to add number five? So you say, oh, let me combine the current version of A with five and let me store it back to A. In R, like in Python.
+
+[Jobany Heredia Rico] 20:48:41
+code gets executed from right to left, okay? So, you want to add number 5 to 8? You don't need to repeat this again, like, oh, 3, 6, 7, 10, 1 and 5. No, no, no, no. You can say, oh, combine?
+
+[Jobany Heredia Rico] 20:48:53
+the current version of A with 5 and store it back in A. And sure enough, you do that, execute that.
+
+[Jobany Heredia Rico] 20:48:59
+Run that call cell and print A.
+
+[Jobany Heredia Rico] 20:49:03
+And now A will include five. Okay, so you can use combine to update the values of A and B.
+
+[Jobany Heredia Rico] 20:49:12
+Store in a vector. Okay.
+
+[Cristopher Tagliarini] 20:49:13
+Oh, so what that does, it updates the vector?
+
+[Cristopher Tagliarini] 20:49:17
+That's what it's doing.
+
+[Jobany Heredia Rico] 20:49:18
+Yep, it added a new element, yep. Because you reassigned… because you reassigned the result of that.
+
+[Jobany Heredia Rico] 20:49:27
+to A again.
+
+[Jobany Heredia Rico] 20:49:29
+Okay, so here you're saying combine A with 5.
+
+[Jobany Heredia Rico] 20:49:32
+But if you want to… if you want that combination to be the new A, you need to assign it back to A.
+
+[Jobany Heredia Rico] 20:49:41
+Right?
+
+[Raydel Castro] 20:49:54
+Professor.
+
+[Raydel Castro] 20:49:55
+We need to. We need to be careful with. Reassign the variable, because if we.
+
+[Jobany Heredia Rico] 20:49:56
+Yes.
+
+[Raydel Castro] 20:50:03
+Ron, the first…
+
+[Raydel Castro] 20:50:07
+Uh… Shank? Shank?
+
+[Raydel Castro] 20:50:10
+That will be reassigned again.
+
+[Raydel Castro] 20:50:12
+So…
+
+[Jobany Heredia Rico] 20:50:15
+No, this one?
+
+[Raydel Castro] 20:50:17
+Go to the first one.
+
+[Jobany Heredia Rico] 20:50:20
+That one.
+
+[Raydel Castro] 20:50:22
+Uh-huh, that one. If I run this chunk, that will be reassigned, again.
+
+[Jobany Heredia Rico] 20:50:25
+Yeah, of course, it will be again. Right? Right? Right? Right? Exactly. So, yeah, that's but that's a that's a risk in any computer.
+
+[Jobany Heredia Rico] 20:50:32
+Uh, language, right? Programming language, so…
+
+[Jobany Heredia Rico] 20:50:35
+If you have several reassignments, you need to be careful how you execute them. Okay?
+
+[Jobany Heredia Rico] 20:50:40
+Yeah.
+
+[Raydel Castro] 20:50:41
+Okay.
+
+[Jobany Heredia Rico] 20:50:41
+Yeah, yeah, yeah, yeah.
+
+[Jobany Heredia Rico] 20:50:44
+That's a risk that we need to take care of in any language.
+
+[Jobany Heredia Rico] 20:50:54
+Sometimes…
+
+[Jobany Heredia Rico] 20:50:55
+there is a function, which is this one, the colon function, that allows us to create sequences. So, if the vector that you want to create is a sequence of consecutive integers, one easy way is to use that, um, that column. For example, if we do this.
+
+[Jobany Heredia Rico] 20:51:11
+one column five, and we store that in B. B is going to have the numbers from one to five.
+
+[Jobany Heredia Rico] 20:51:17
+Or if we do from 5 to 1, we're gonna get the numbers from 5 to 1 in descending order, okay? So…
+
+[Jobany Heredia Rico] 20:51:23
+The column is a kind of easy way of creating a vector representing a sequence of consecutive integers. So if you want to store in a vector a sequence of consecutive integers, one easy way is using the column function.
+
+[Jobany Heredia Rico] 20:51:40
+And sure enough, you can try it right there.
+
+[Jobany Heredia Rico] 20:51:44
+Okay. And you can see the B.
+
+[Jobany Heredia Rico] 20:51:47
+It stores the number from 1 to 5, and D stores the number from 5 to 1, okay?
+
+[Jobany Heredia Rico] 20:51:54
+So…
+
+[Jobany Heredia Rico] 20:51:59
+Alright.
+
+[Jobany Heredia Rico] 20:52:01
+Make sense? So quick, quick way of creating.
+
+[Jobany Heredia Rico] 20:52:04
+a sequence of numbers.
+
+[Jobany Heredia Rico] 20:52:10
+I noticed that as we keep creating vectors, what happens?
+
+[Jobany Heredia Rico] 20:52:15
+They start showing up right here, okay?
+
+[Jobany Heredia Rico] 20:52:18
+Uh, something to, uh…
+
+[Jobany Heredia Rico] 20:52:22
+To be aware, right?
+
+[Jobany Heredia Rico] 20:52:30
+Good. Uh…
+
+[Jobany Heredia Rico] 20:52:32
+What else? Well, we also have the sequence function.
+
+[Jobany Heredia Rico] 20:52:37
+The sequence function, as the name indicates, allow us to create a sequence of numbers. So if you want your vector to store a sequence of number.
+
+[Jobany Heredia Rico] 20:52:45
+You can use this. Okay.
+
+[Jobany Heredia Rico] 20:52:47
+But you can also use Sequence, and as you will see, Sequence is a little bit more advanced, so Sequence allows you to create more advanced sequences.
+
+[Jobany Heredia Rico] 20:52:55
+So, for example, if we want to create a simple sequence from 1 to 5, this is the way you do it. Sequence from 1 to 5, you store that in E.
+
+[Jobany Heredia Rico] 20:53:03
+That's great. But you can create more advanced sequences, like something like this.
+
+[Jobany Heredia Rico] 20:53:08
+You can use the parameter by.
+
+[Jobany Heredia Rico] 20:53:11
+Okay, so in sequence, there is a parameter that is BY, and that allows you to create.
+
+[Jobany Heredia Rico] 20:53:16
+sequences of non-consecutive integers, like.
+
+[Jobany Heredia Rico] 20:53:20
+If you do this from 0 to 10 by 2, you're going to create the number 0, 2, 4. So you buy is kind of the jump, the jump in the consecutive numbers.
+
+[Jobany Heredia Rico] 20:53:34
+So that's what I said, sequence.
+
+[Jobany Heredia Rico] 20:53:37
+compared to the column allows you to create more advanced sequences, okay?
+
+[Jobany Heredia Rico] 20:53:43
+Run this and take a look.
+
+[Jobany Heredia Rico] 20:53:45
+And sure enough, that's a sequence that you get. 0, 2, 4, 6, 8, 10.
+
+[Jobany Heredia Rico] 20:53:54
+And I think what now let's hmm.
+
+[Jobany Heredia Rico] 20:53:58
+Let's come back to, uh…
+
+[Jobany Heredia Rico] 20:54:01
+Alejandro Garcia was mentioning in the chat, noticed that.
+
+[Jobany Heredia Rico] 20:54:05
+Sequence is a function, okay? Sequence is a function.
+
+[Jobany Heredia Rico] 20:54:09
+This function contains many parameters, okay?
+
+[Jobany Heredia Rico] 20:54:14
+Or you can specify many parameters for that function. For the sequence function, these are some of the parameters you can specify. There are more parameters, but some of the common parameters are from…
+
+[Jobany Heredia Rico] 20:54:25
+To and by. You specify a parameter by making the parameter equal to an argument, like specific value of the parameter. So in this case, zero is an argument.
+
+[Jobany Heredia Rico] 20:54:36
+passed to a parameter from, 10 is an argument passed to a parameter to, and 2 is an argument passed to a parameter by.
+
+[Jobany Heredia Rico] 20:54:44
+when you are making that assignment that that must be done with equal. Okay? So here you cannot use the less than equal. Okay? So you can use the less than with the dash when you are creating new objects. So when you are creating new vectors and new matrices. Okay?
+
+[Jobany Heredia Rico] 20:55:01
+But when you are passing arguments to parameters, you need to use equal, okay? So that's a good, uh, observation made by…
+
+[Lucas Lisboa Alves] 20:55:11
+Professor, is it optional? Like, I can use just… because from equal, can I use just the numbers in the right order?
+
+[Jobany Heredia Rico] 20:55:12
+Yeah, yeah, I'll have that.
+
+[Jobany Heredia Rico] 20:55:20
+Yes, if you're using the right orders, yes. That's like in any programming language, you can pass the arguments by…
+
+[Jobany Heredia Rico] 20:55:30
+positional arguments. So you can, you can, you can always use positional arguments, but you need to be clear of the, of the position. Okay? So.
+
+[Jobany Heredia Rico] 20:55:40
+That's important, okay?
+
+[Lucas Lisboa Alves] 20:55:41
+Yeah, is there another, is there another one besides buy?
+
+[Jobany Heredia Rico] 20:55:42
+Yeah.
+
+[Jobany Heredia Rico] 20:55:45
+Yeah, there are more, there are more, there are more. And if you want to know more about…
+
+[Lucas Lisboa Alves] 20:55:50
+Right.
+
+[Jobany Heredia Rico] 20:55:52
+about a specific function here, you can use this to help.
+
+[Jobany Heredia Rico] 20:55:56
+the help. Okay, so obviously, nowadays, nowadays, that's what I said, like, this is kind of obsolete, because nowadays, if I want to know about a function in R, I use, you know, Cloud, or ChatGPT, Cloud, Cloud, mostly, okay, or ChatGPT, I don't, I don't even use the help, okay, but.
+
+[Jobany Heredia Rico] 20:56:12
+In help, you can, for example, let's say sequence.
+
+[Jobany Heredia Rico] 20:56:16
+Type sequence.
+
+[Jobany Heredia Rico] 20:56:19
+See what happens.
+
+[Jobany Heredia Rico] 20:56:31
+You can actually type it here, sequence.
+
+[Lucas Lisboa Alves] 20:56:42
+Yeah, Claude would give me the code like 10 seconds ago.
+
+[Cristopher Tagliarini] 20:56:45
+Yes, I know, and yeah, Gen AI, they give you a definition very well.
+
+[Jobany Heredia Rico] 20:56:48
+Yeah, it's…
+
+[Bobby Munir] 20:56:50
+Rajan Avatar.
+
+[Jobany Heredia Rico] 20:56:50
+Very well, thank you.
+
+[Jobany Heredia Rico] 20:56:52
+You know, the way I use this, as a matter of fact, the way I use the help is actually like this, old school. If I want to get the help about a function.
+
+[Jobany Heredia Rico] 20:57:02
+I would do a following in a cold cell. I would do question mark.
+
+[Jobany Heredia Rico] 20:57:07
+And then the name of the function, like that. Question mark, the name of the function, and then I run that.
+
+[Jobany Heredia Rico] 20:57:13
+And then the help pops up right there, okay? Yeah, I really don't use the help tab directly, but there you have it. Here you can see all the default, you know, the default parameters from, to, by.
+
+[Jobany Heredia Rico] 20:57:28
+length out, along with… yeah, there are other parameters, okay? But yeah, I mean, like, if I want to know about a function, I don't even use this anymore. I just go to Claude.
+
+[Jobany Heredia Rico] 20:57:37
+Or it's ChatGPT, but I prefer Claude, so I will.
+
+[Cristopher Tagliarini] 20:57:41
+Um, but like you said, you know, SEC and Colin, there are all different ways of doing consecutive numbers, something like that.
+
+[Jobany Heredia Rico] 20:57:49
+Right, right, right. Exactly. So you can use sequence or the column function. Yes, yes, yes.
+
+[Jobany Heredia Rico] 20:57:54
+That is right.
+
+[Jobany Heredia Rico] 20:57:55
+That is correct.
+
+[Bobby Munir] 20:57:56
+Professor, I have a question.
+
+[Jobany Heredia Rico] 20:57:59
+Absolutely. I don't need it. Hold on. Let me move this to the right. Go ahead.
+
+[Bobby Munir] 20:58:03
+Uh, what is the difference between the vector and the matrices?
+
+[Jobany Heredia Rico] 20:58:10
+Matrices, it's a two-dimensional matrix.
+
+[Jobany Heredia Rico] 20:58:14
+Matrix is a two-dimensional object, so it's a… it's an object that have…
+
+[Jobany Heredia Rico] 20:58:20
+Well, it might have three dimensions, by the way. Okay, so, but, you know, most commonly, they have two dimensions, okay? So a matrix is just like a two-dimensional array. So think about in Python, we have one-dimensional arrays, we have two-dimensional arrays, right?
+
+[Jobany Heredia Rico] 20:58:35
+So a vector is like a one dimensional array.
+
+[Jobany Heredia Rico] 20:58:39
+A matrix is like a two-dimensional array. But actually, in a matrix, you can have several dimensions. But most commonly, a matrix is just simply rows and columns, but own name. They don't have names. The columns don't have names.
+
+[Jobany Heredia Rico] 20:58:54
+So if you want columns with names, then you need a data frame.
+
+[Jobany Heredia Rico] 20:58:59
+Okay.
+
+[Bobby Munir] 20:59:01
+Okay. Thank you, Professor.
+
+[Jobany Heredia Rico] 20:59:01
+That's another data structure.
+
+[Jobany Heredia Rico] 20:59:04
+You're welcome.
+
+[Jobany Heredia Rico] 20:59:08
+Good, good, good question, guys.
+
+[Jobany Heredia Rico] 20:59:15
+Oh, you can be more creative, like, if you go, oh…
+
+[Jobany Heredia Rico] 20:59:18
+What if I do this sequence from.
+
+[Jobany Heredia Rico] 20:59:22
+10 to 0 by negative 2, and you store that in G, well, that will give you the sequence from 10 to 0, reducing by 2, okay? But notice that in that case, so if you're doing a sequence that is decreasing, you need to use by with a negative integer, okay?
+
+[Jobany Heredia Rico] 20:59:37
+So if you use by two, you're gonna get an error.
+
+[Jobany Heredia Rico] 20:59:39
+Like, if you use by 2 like that, you get an error. Okay? See?
+
+[Jobany Heredia Rico] 20:59:44
+You get an error. So if your sequence is decreasing.
+
+[Jobany Heredia Rico] 20:59:47
+It has to be negative, okay?
+
+[Jobany Heredia Rico] 20:59:52
+There you have it. So yeah, so sequence allows you to be very creative.
+
+[Jobany Heredia Rico] 20:59:57
+And I'm showing you this sequence because every now and then I will share a notebook with you. And I use this sequence function. And if you want to understand the code, so it's important to understand what sequence does.
+
+[Jobany Heredia Rico] 21:00:11
+In statistics, we create a lot of sequences, okay?
+
+[Jobany Heredia Rico] 21:00:15
+We created a lot of sequences.
+
+[Jobany Heredia Rico] 21:00:20
+Another good one is repeat.
+
+[Jobany Heredia Rico] 21:00:23
+REP. Repeat, okay?
+
+[Jobany Heredia Rico] 21:00:27
+So, for example, let's say you want to create a vector H, okay, that contains the vector A, which we created earlier, repeated 3 times. Remember A?
+
+[Jobany Heredia Rico] 21:00:39
+What is A? That one. So I want A's to have A repeated three times like this, and then this again, and this again. Obviously, you can do it like this. Nothing wrong with that.
+
+[Jobany Heredia Rico] 21:00:51
+Nothing wrong with that. You don't need to use repeat, you can do it like this. Oh, combine A with A with A.
+
+[Jobany Heredia Rico] 21:00:56
+And I store that in H, and sure enough.
+
+[Jobany Heredia Rico] 21:00:59
+Then you get a.
+
+[Jobany Heredia Rico] 21:01:01
+Repeat it 3 times. Okay.
+
+[Jobany Heredia Rico] 21:01:04
+Like that. A…
+
+[Jobany Heredia Rico] 21:01:07
+A and A. But what if I tell you A contains a vector A repeated 20 times? Are you going to repeat A 20 times? Doesn't make any sense. So it's easier to use repeat. Repeat. It's very straightforward. Repeat A.
+
+[Jobany Heredia Rico] 21:01:21
+three times okay repeat a three times okay so that's much simpler okay.
+
+[Jobany Heredia Rico] 21:01:28
+So much simpler.
+
+[Jobany Heredia Rico] 21:01:30
+Yes or no?
+
+[Cristopher Tagliarini] 21:01:34
+Yeah, I agree. Yeah.
+
+[Mariela Del Rio] 21:01:42
+Yes
+
+[Cristopher Tagliarini] 21:01:44
+A quick question. What would you use REP for that I don't understand the use of it?
+
+[Jobany Heredia Rico] 21:01:45
+Excellent.
+
+[Cristopher Tagliarini] 21:01:51
+would, um…
+
+[Jobany Heredia Rico] 21:01:52
+For many things, so… it's hard to, um…
+
+[Jobany Heredia Rico] 21:01:58
+we will use this, for example, when we're doing… but I need… you might need to understand what ANOVA is to understand this, but when we're in module number 3, we need to create certain sequences of things repeated a number of times. So, like, I want to create number 1.
+
+[Cristopher Tagliarini] 21:02:04
+Oh…
+
+[Jobany Heredia Rico] 21:02:13
+repeated 5 times, and then the number 2 repeated 5 times, and the number 3 repeated 5 times to represent groups. Like, in ANOVA, we work with groups a lot, and the groups are usually group 1, group 2, group 3. But, like, each group has many elements, so group 1 has 5 elements, group 2 has 5 elements, group 3 has 5 elements.
+
+[Jobany Heredia Rico] 21:02:32
+How do we create that sequence? Very easily with a repeat, okay? So, yeah, most of these functions that I'm explaining you right now.
+
+[Jobany Heredia Rico] 21:02:40
+You will see an application of that later, okay?
+
+[Cristopher Tagliarini] 21:02:43
+Oh, okay, so that… they will be learning what… nobody says what the panel does, so…
+
+[Jobany Heredia Rico] 21:02:47
+Yeah, we're going to apply this mostly in ANOVA, yeah.
+
+[Cristopher Tagliarini] 21:02:50
+Okay.
+
+[Jobany Heredia Rico] 21:02:56
+How about this? Can you try this? So, what if I give you a minute to try this?
+
+[Jobany Heredia Rico] 21:03:02
+Create a vector, okay, okay.
+
+[Jobany Heredia Rico] 21:03:05
+Now, Victor, Kate.
+
+[Jobany Heredia Rico] 21:03:07
+Should contain the vector f repeated three times.
+
+[Jobany Heredia Rico] 21:03:11
+Followed by the numbers 10 and 11.
+
+[Jobany Heredia Rico] 21:03:16
+Okay?
+
+[Jobany Heredia Rico] 21:03:17
+So create a vector, okay.
+
+[Jobany Heredia Rico] 21:03:19
+that contains.
+
+[Jobany Heredia Rico] 21:03:21
+The vector f repeated three times, followed by the numbers 10 and 11. Okay?
+
+[Jobany Heredia Rico] 21:03:27
+Try it. Try it right here. So I'm gonna give you one minute to try that. Okay? One minute. Don't don't share your answer in the chat. Okay? So if you do it, don't share your answer in the chat.
+
+[Jobany Heredia Rico] 21:03:37
+Try it for one minute on C, okay?
+
+[Jobany Heredia Rico] 21:03:39
+Alright, go.
+
+[Jobany Heredia Rico] 21:04:43
+Alright, did you try it?
+
+[Jobany Heredia Rico] 21:04:49
+Maybe you didn't get it, that's okay, but at least you tried, right?
+
+[Jobany Heredia Rico] 21:05:02
+Right? Very good. I can see some of you got it right. yeah, how will you do this? So 1st I will try to take care of this. So the vector K needs to contain. 1st of all, I'm gonna create K, right? I'm gonna say, okay.
+
+[Jobany Heredia Rico] 21:05:17
+And I'm gonna assign something to Kay. Okay.
+
+[Jobany Heredia Rico] 21:05:20
+I'm gonna assign something to K, that's what I know. What am I gonna assign to K? So, the vector F, repeat it 3 times, you know how to do that, so we're gonna do repeat, F.
+
+[Jobany Heredia Rico] 21:05:31
+Three times. Good. But then F repeated three times, followed by the numbers 10 and 11.
+
+[Jobany Heredia Rico] 21:05:39
+So it has to be that followed by 10 and 11. So it looks like a comma will do it, right? So that comma 10, comma 11.
+
+[Jobany Heredia Rico] 21:05:47
+But that doesn't work. Like if I try that, notice it's telling me this is not right. Something is missing here. Oh, no, no, no, I need to combine all of this. So I can use the combine function. So I can use the combine function to say, hey, combine this with this.
+
+[Jobany Heredia Rico] 21:06:04
+And this, I can say, oh, let me wrap all of this inside combine.
+
+[Jobany Heredia Rico] 21:06:07
+You can say combine.
+
+[Jobany Heredia Rico] 21:06:11
+All of that.
+
+[Jobany Heredia Rico] 21:06:13
+Okay? So combine. What am I combining? F repeated three times with ten and eleven. And I'm gonna assign it. That's okay.
+
+[Jobany Heredia Rico] 21:06:20
+Sure enough, if I print K.
+
+[Jobany Heredia Rico] 21:06:25
+That's what I'm going to get.
+
+[Jobany Heredia Rico] 21:06:27
+When I get the number, um…
+
+[Jobany Heredia Rico] 21:06:30
+The vector F repeated three times, followed by 10 or 11. Yes?
+
+[Jobany Heredia Rico] 21:06:35
+Make sense?
+
+[Jobany Heredia Rico] 21:06:42
+Let me share the answer, guys, just in case you need it.
+
+[Jobany Heredia Rico] 21:06:49
+Okay, share the answer in the chat. Okay?
+
+[Raydel Castro] 21:06:53
+Why? What?
+
+[Raydel Castro] 21:06:55
+The what?
+
+[Jobany Heredia Rico] 21:06:58
+Say that again?
+
+[Raydel Castro] 21:07:01
+Let's see. Something's wrong here.
+
+[Raydel Castro] 21:07:04
+Hold on a second.
+
+[Jobany Heredia Rico] 21:07:10
+Are you sure they answered in the chat?
+
+[Jobany Heredia Rico] 21:07:13
+My code.
+
+[Raydel Castro] 21:07:14
+I don't know what happened with my code because it's too different.
+
+[Raydel Castro] 21:07:19
+I don't know, let me look, let me have a second.
+
+[Yarelyn Suarez] 21:07:28
+Professor, let me ask you something. It doesn't matter the space when you… that you put before, it doesn't matter where you…
+
+[Jobany Heredia Rico] 21:07:33
+Don't know.
+
+[Jobany Heredia Rico] 21:07:35
+No, no, this space doesn't matter, yeah. If I don't give any space, it doesn't matter, like, yeah.
+
+[Jobany Heredia Rico] 21:07:39
+Doesn't matter. Nope.
+
+[Cristopher Tagliarini] 21:07:41
+Um, just… just a question. And I just… I was close to getting the answer.
+
+[Raydel Castro] 21:07:44
+I found the problem, Professor. The problem was I reassigned.
+
+[Raydel Castro] 21:07:49
+The the baroque.
+
+[Jobany Heredia Rico] 21:07:50
+Ah, okay, okay, okay, okay.
+
+[Cristopher Tagliarini] 21:07:54
+Um, so now that I realize, let's combine… it could also be used to combine different functions at once, right?
+
+[Cristopher Tagliarini] 21:08:01
+Or that's not the case.
+
+[Jobany Heredia Rico] 21:08:04
+Yeah, you can combine… you can combine the output from a function with another function, with specific numbers, that's what we're doing here. We are combining the output from this function with these two numbers, but we can also combine.
+
+[Cristopher Tagliarini] 21:08:16
+Yeah.
+
+[Jobany Heredia Rico] 21:08:17
+many applications of repeat, okay? So, yeah, you can combine the outputs from functions, yes.
+
+[Cristopher Tagliarini] 21:08:23
+Because I realized, yeah, I tried to… I was like, why can't I do these two functions? I'm like, oh, I need to…
+
+[Cristopher Tagliarini] 21:08:29
+Yeah, okay. Because I thought, without, uh, combined, you can do that, but no, you actually…
+
+[Jobany Heredia Rico] 21:08:39
+Yep.
+
+[Jobany Heredia Rico] 21:08:40
+That is right.
+
+[Jobany Heredia Rico] 21:08:44
+Good guys. So what else? What else? What else I want to show you here? See what the index is. So we're almost done, almost done. Yeah, I only want wanted to show you a few things about vectors. But oh, another thing is this is an interesting thing. And again, like to to see the applications of this, you need to wait probably to model number 3. Okay.
+
+[Jobany Heredia Rico] 21:09:05
+But that's all right.
+
+[Jobany Heredia Rico] 21:09:07
+There is another parameter in repeat. So repeat, like if you do it like this, repeat this.
+
+[Jobany Heredia Rico] 21:09:14
+this number of times, that will repeat this element this number of times. But there is a parameter called ish.
+
+[Jobany Heredia Rico] 21:09:21
+Okay? Ish. Let's, let's see how to use it. So, let's, uh, print the vector A again. That's A, right? That's vector A. If we do something like repeat A.
+
+[Jobany Heredia Rico] 21:09:34
+each four times, this is what happens. It happens what you're expecting to happen. What do you think is going to happen if you do repeat A each four? Each element of A is going to be repeated four times.
+
+[Jobany Heredia Rico] 21:09:46
+There you go. 3 is repeated 4 times. 6 is repeated 4 times, you know, and if you do each repeated 5. Well, each is going to be repeated 5 times. Okay, so.
+
+[Jobany Heredia Rico] 21:09:57
+That's another, like, it depends on what you want to do. Like, sometimes you want to repeat.
+
+[Jobany Heredia Rico] 21:10:05
+the whole sequence many times. So if you want to repeat the whole sequence five times.
+
+[Jobany Heredia Rico] 21:10:11
+Then you're going to do repeat.
+
+[Jobany Heredia Rico] 21:10:15
+Hey.
+
+[Jobany Heredia Rico] 21:10:16
+5.
+
+[Jobany Heredia Rico] 21:10:18
+So, because you want to repeat…
+
+[Jobany Heredia Rico] 21:10:19
+The whole sequence five times. Okay? But maybe you want to repeat each element of the sequence a number of times. In that case, you need to use each. Okay?
+
+[Jobany Heredia Rico] 21:10:27
+Again, guys, to know specific applications of this, you need to wait, uh, you need to wait until, uh.
+
+[Jobany Heredia Rico] 21:10:34
+Module 3.
+
+[Jobany Heredia Rico] 21:10:36
+Maybe in module two, I will show you something like that, like an application of this, but at least in module three for sure, okay?
+
+[Jobany Heredia Rico] 21:10:50
+Okay, let me see something. So I'll have index in a vector.
+
+[Jobany Heredia Rico] 21:10:56
+Okay, cool.
+
+[Jobany Heredia Rico] 21:10:57
+Alright, so far so good.
+
+[Jobany Heredia Rico] 21:11:12
+Great. Oh.
+
+[Jobany Heredia Rico] 21:11:13
+No.
+
+[Jobany Heredia Rico] 21:11:15
+Another thing you need to know is how to index a vector. What do I mean by indexing? Indexing refers to the process of retrieving the elements at the different positions of a vector, okay? So very common, like you guys learned that in Python as well. In the Python class, you learn how to index lists.
+
+[Jobany Heredia Rico] 21:11:32
+How to index a list, how to index maybe an array, but for sure a list, okay? So we can also index a vector, okay?
+
+[Jobany Heredia Rico] 21:11:41
+So to learn how to index vectors, I created this new vector. Okay.
+
+[Jobany Heredia Rico] 21:11:46
+I don't know. I could have used a previous one, but I created a new one. I don't know. It doesn't matter. So I created a vector called vector y with these numbers. Okay.
+
+[Jobany Heredia Rico] 21:11:56
+Okay. I think because these are kind of boring, like these vectors are like, you know, with specific numbers, consecutive numbers.
+
+[Jobany Heredia Rico] 21:12:04
+I think that's why I decided to create this one, but it doesn't matter. This is the vector we're going to use to learn indexing, okay?
+
+[Jobany Heredia Rico] 21:12:11
+Okay.
+
+[Jobany Heredia Rico] 21:12:12
+For example.
+
+[Jobany Heredia Rico] 21:12:13
+How do we get the first element of vector y? So we do the following. To get the first element of vector y, we type in the name of the vector, we open and close brackets, and inside the brackets, we type in the index of the element that we want to retrieve.
+
+[Jobany Heredia Rico] 21:12:30
+What element do we want to retrieve? The first element. So the index of the first element is 1. And this is different than Python, guys. Some students are confused, don't be confused.
+
+[Jobany Heredia Rico] 21:12:41
+It's just something of a matter of getting used to this. In Python, the first index is 0, right? Remember? In Python, the index of the first element is 0. In R, it is not. In index.
+
+[Jobany Heredia Rico] 21:12:53
+sorry, in R, the index of the first element is 1. That's it. Python is 0, and index in R is 1, okay?
+
+[Jobany Heredia Rico] 21:13:01
+So name of the vector, open and close brackets, and type in the index of the element that you want. I want the first element, so I'm going to use index one. And sure enough, what do I get? The first element, 23.
+
+[Jobany Heredia Rico] 21:13:16
+What if I want the last element?
+
+[Jobany Heredia Rico] 21:13:19
+Well, to get the last element, let me do it in a kind of…
+
+[Jobany Heredia Rico] 21:13:24
+Hard coding.
+
+[Jobany Heredia Rico] 21:13:25
+Let me hard code it. So what is the last element? Number eight, right?
+
+[Jobany Heredia Rico] 21:13:29
+But what is the index of the last element? I can count. Oh, element one, two, three, four, five, six. So the last element is the one on index six. So I can't hard code it like this. Look.
+
+[Jobany Heredia Rico] 21:13:45
+Vector Y, open and close parentheses 6, and sure enough, what am I gonna get?
+
+[Jobany Heredia Rico] 21:13:49
+The last element, number 8, right? That's the last element.
+
+[Jobany Heredia Rico] 21:13:54
+But that doesn't look very well, right? It's kind of hard coding. What if you want to do it in a programmatic way? Well, guess what, guys? The length, and this is a function, very useful function. If you use length.
+
+[Jobany Heredia Rico] 21:14:05
+Length is a function. The length of the vector will give you the length of the vector. What is the length of a vector? How many elements the vector contains? Right. What is the length of vector? Why?
+
+[Jobany Heredia Rico] 21:14:16
+6, because…
+
+[Jobany Heredia Rico] 21:14:19
+Vector Y contains six elements, right? And obviously.
+
+[Jobany Heredia Rico] 21:14:23
+the length of a vector coincides with the index of the last element. Yes or no? Let me repeat that. The length of a vector coincides with the index of the last element, so if this.
+
+[Jobany Heredia Rico] 21:14:34
+Vector has six elements.
+
+[Jobany Heredia Rico] 21:14:37
+The last index is six. The last index is six. Right? So.
+
+[Jobany Heredia Rico] 21:14:41
+that's my way of telling you, like, if you want to retrieve the last element programmatically, you can do it like this. Vector Y, length of vector Y, and sure enough.
+
+[Jobany Heredia Rico] 21:14:50
+You get number 8, right?
+
+[Jobany Heredia Rico] 21:14:52
+But if you want to hard code it, you can do it like that, okay? But I'm sure you guys prefer it like this, right?
+
+[Jobany Heredia Rico] 21:15:00
+In a programmatic way.
+
+[Jobany Heredia Rico] 21:15:01
+Yes?
+
+[Bobby Munir] 21:15:06
+Yes, sir.
+
+[Cristopher Tagliarini] 21:15:07
+Yeah
+
+[Jobany Heredia Rico] 21:15:09
+In R, we don't have this. In R, we don't have what we have in Python. Remember in Python, you were used to do something like this. Oh, vector.
+
+[Jobany Heredia Rico] 21:15:19
+Vector y. Oh, the last element is index negative one. Remember you did that in Python?
+
+[Lucas Lisboa Alves] 21:15:25
+Yes, a lot.
+
+[Jobany Heredia Rico] 21:15:28
+You lot, you do lot here, and uh…
+
+[Jobany Heredia Rico] 21:15:34
+Look what happens.
+
+[Jobany Heredia Rico] 21:15:36
+So, you leave… what happens is something totally unexpected. You leave the first element out. So, this doesn't work, okay? So…
+
+[Jobany Heredia Rico] 21:15:46
+In R, you don't refer to a last index as negative 1, no, okay? If you want to refer to a last index in a programmatic way, you need to use length of the vector, okay?
+
+[Jobany Heredia Rico] 21:15:56
+So that doesn't work in in in in R.
+
+[Jobany Heredia Rico] 21:15:58
+Like the negative one, the negative two, no.
+
+[Cristopher Tagliarini] 21:16:03
+Oh, I'm sorry, quick question, my… for Python… oh, I'm sorry, for Python, when you put that, it doesn't do, because I might have forgot about that part.
+
+[Jobany Heredia Rico] 21:16:04
+What if I…
+
+[Cristopher Tagliarini] 21:16:14
+Uh, when you put negative 1, uh, you know, index in Python.
+
+[Jobany Heredia Rico] 21:16:18
+You will get the last element, you will get the last element.
+
+[Cristopher Tagliarini] 21:16:18
+those negative, uh…
+
+[Cristopher Tagliarini] 21:16:20
+Okay.
+
+[Jobany Heredia Rico] 21:16:21
+The last element, yeah, but here it doesn't work.
+
+[Jobany Heredia Rico] 21:16:25
+Okay.
+
+[Jobany Heredia Rico] 21:16:28
+What if you don't want only one element, but many elements? What if you want the first three elements of vector Y? Well, two ways. You can say something like this. Hey, I want… let me add a few spaces so you understand what is happening.
+
+[Jobany Heredia Rico] 21:16:40
+You can say vector y, open and close parentheses, and inside, sorry, no parentheses, brackets. Vector y, open and close brackets, and inside the brackets, you type in…
+
+[Jobany Heredia Rico] 21:16:53
+The indexes that you want, the first three elements, what are the indexes of the first three elements? One, two, three. So you combine them, one, two, three, and that's it. But if you want to do it in a kind of simpler way, you say, oh, I want the numbers from one to three so I can.
+
+[Jobany Heredia Rico] 21:17:07
+Kind of use a sequence with column. Okay?
+
+[Jobany Heredia Rico] 21:17:09
+And sure enough, both will give you the same result, the first three elements.
+
+[Jobany Heredia Rico] 21:17:15
+23, 5, and 67, right?
+
+[Jobany Heredia Rico] 21:17:19
+23, 5 and 67. Okay.
+
+[Jobany Heredia Rico] 21:17:25
+What if I don't want consecutive, uh, numbers? I want… or consecutive elements. I want the first and the fifth element, no problem.
+
+[Jobany Heredia Rico] 21:17:33
+You specify the indexes right here. Same thing.
+
+[Jobany Heredia Rico] 21:17:37
+Give me element 1 and element 5, and then you combine them, and…
+
+[Jobany Heredia Rico] 21:17:43
+You get Element 1 and Element 5.
+
+[Jobany Heredia Rico] 21:17:49
+So far, so good?
+
+[Cristopher Tagliarini] 21:17:51
+Okay, yeah, yeah, color and, and combine two different things. Uh, consecutive, not consecutive, that's what you're showing us, right?
+
+[Jobany Heredia Rico] 21:17:59
+Yeah, for both, for consecutive and non-consecutive. Yes, yes, yes.
+
+[Cristopher Tagliarini] 21:17:59
+Okay.
+
+[Jobany Heredia Rico] 21:18:08
+Now, what if you want to leave only one element out so like one? What if you want to get all? But the second element. Okay, so let me let me return Victor white again. So you can see it.
+
+[Jobany Heredia Rico] 21:18:20
+So that's vector Y. What if you want to retrieve everything but the second element, which in this case is 5? So you want to get 23, 67, 3, ta-ta-ta. So you want to leave out the second element. If you want to leave out a specific element, you need to use the negative. So in R, the negative have a different connotation. In R, the negative means you want to leave that element out.
+
+[Jobany Heredia Rico] 21:18:38
+So if you do vector y, open and close brackets, negative 2, that means you want to leave out the second element.
+
+[Jobany Heredia Rico] 21:18:44
+Sure enough, you leave out the second element. Okay.
+
+[Jobany Heredia Rico] 21:18:51
+What if we want to leave out multiple elements, okay? So, let's say you want to leave out.
+
+[Jobany Heredia Rico] 21:18:56
+What?
+
+[Bobby Munir] 21:18:58
+Fabulous. Yeah.
+
+[Jobany Heredia Rico] 21:18:59
+Someone has a question?
+
+[Bobby Munir] 21:19:00
+It happened near the van.
+
+[Jobany Heredia Rico] 21:19:02
+Repeat that again?
+
+[Cristopher Tagliarini] 21:19:04
+No, the tamwa… the tamwa accepted…
+
+[Jobany Heredia Rico] 21:19:07
+Yeah, let me… go ahead.
+
+[Jobany Heredia Rico] 21:19:09
+I think it was a hot mic, right?
+
+[Jobany Heredia Rico] 21:19:16
+Hot mic. Alright.
+
+[Jobany Heredia Rico] 21:19:20
+What if you want to get, what if you want to exclude two elements, the second or the fifth element? Okay, so you exclude the second or the fifth element. So you do negative and then combine two and five. That is going to exclude elements two and five.
+
+[Jobany Heredia Rico] 21:19:34
+Sure enough, you exclude elements 1 and 5.
+
+[Jobany Heredia Rico] 21:19:38
+Easy, guys. That's the way you index vectors, okay? And that's something that we need to do every now and then, okay? You'll see.
+
+[Jobany Heredia Rico] 21:19:45
+But it's very straightforward. We're not gonna do anything crazy in this class, okay? We're gonna do basic stuff only. But at least you need to be comfortable indexing vectors, okay?
+
+[Jobany Heredia Rico] 21:19:59
+Lastly, guys, let's talk about vectorized operations. And that's the last thing I want to talk about. What do I mean by vectorized operations?
+
+[Jobany Heredia Rico] 21:20:09
+a function applied to a vector is actually applied individually to each element. So.
+
+[Jobany Heredia Rico] 21:20:14
+I can't reframe this like.
+
+[Jobany Heredia Rico] 21:20:17
+If a function, okay, if you apply a function to a vector, okay, if you apply a function to a vector, and that function is applied individually to each element.
+
+[Jobany Heredia Rico] 21:20:27
+that's a vectorized operation, okay? And as I said here, many, not all, but many functions in R are vectorized. For example, the square root, the plus, the…
+
+[Jobany Heredia Rico] 21:20:39
+the difference, the product, the quotient, okay? All of those basic operations are vectorized, okay?
+
+[Jobany Heredia Rico] 21:20:48
+some other functions are not, but it's kind of obvious what functions are not vectorized. For example, the sum, the minimum, those functions are summarizing functions, so they're not gonna return a vector, they're gonna return a summary of a vector, okay?
+
+[Jobany Heredia Rico] 21:21:02
+But yeah, many of the basic functions are vectorized. And to illustrate how.
+
+[Jobany Heredia Rico] 21:21:09
+Um, let me… actually, let me…
+
+[Jobany Heredia Rico] 21:21:11
+Let me print a vector a again.
+
+[Jobany Heredia Rico] 21:21:16
+First, so you can see it. Okay, so that's vector a, right?
+
+[Jobany Heredia Rico] 21:21:20
+Remember Vector A?
+
+[Jobany Heredia Rico] 21:21:22
+What happens if I do A plus 1?
+
+[Jobany Heredia Rico] 21:21:25
+if I do A plus 1, the number 1 is going to be added to each element, okay? So, because… because the plus is a vectorized operation, so the…
+
+[Jobany Heredia Rico] 21:21:35
+the operation is applied individually to each element, okay? So if I do A plus 1, 1 will be added to each element of A. If I do a square root of A.
+
+[Jobany Heredia Rico] 21:21:46
+Each element of A will be square rooted, okay? If I do A squared, that's the power.
+
+[Jobany Heredia Rico] 21:21:53
+That symbol, it's power, the power, the exponent.
+
+[Jobany Heredia Rico] 21:21:58
+operator in R, okay? So this is A to the second power. If I do A to the second power, each element of A will be raised to the second power, okay? But if I do sum of A.
+
+[Jobany Heredia Rico] 21:22:08
+well, that is going to give me a summary, that is going to give me the sum of all those elements. So, in other words, the plus, the square root, the exponentiation, all of those are vectorized, but the sum is not, okay? Let's take a look.
+
+[Jobany Heredia Rico] 21:22:23
+Okay? So if we do a plus one, we add one to each element. Square root will give us a square root of.
+
+[Jobany Heredia Rico] 21:22:29
+of each element. And if we do eight to a second.
+
+[Jobany Heredia Rico] 21:22:33
+Uh, each element is square, okay? But if we do sum, get the sum of all elements. Why is this important? Like, right now, it's not that important, but sometimes this, um…
+
+[Jobany Heredia Rico] 21:22:45
+saves you from using loops. Sometimes, uh… like, right now, it's not going to be very clear for you, but…
+
+[Jobany Heredia Rico] 21:22:53
+Sometimes vectorized operations save you from writing loops. Like if you want to apply a specific operation to many elements of a vector, sometimes you don't need to write a loop like, oh, from the first element to the last element, do this.
+
+[Jobany Heredia Rico] 21:23:08
+No, you can use vectorized operations in many cases. That's good to know. Something that is good to know.
+
+[Lucas Lisboa Alves] 21:23:16
+So vectorized operations is pretty much like a loop on Python, right? Like the for each.
+
+[Jobany Heredia Rico] 21:23:21
+Right, right, right, it works like a loop, okay? So when an operation is applied in a vectorized fashion, it works like in a loop, okay?
+
+[Lucas Lisboa Alves] 21:23:23
+Yeah.
+
+[Lucas Lisboa Alves] 21:23:31
+All right.
+
+[Jobany Heredia Rico] 21:23:32
+Yeah, it's just something that's good to know, like, with vectors, many operations are vectorized, and, you know…
+
+[Jobany Heredia Rico] 21:23:38
+That's good. Something good to know.
+
+[Cristopher Tagliarini] 21:23:41
+Um, sorry to interrupt. So, in simple terms of vectorized operation, is that, like, when you're only doing last operation, or decent logic?
+
+[Jobany Heredia Rico] 21:23:51
+Repeat that again?
+
+[Cristopher Tagliarini] 21:23:54
+Vectorized operation, what's that like in simple terms?
+
+[Cristopher Tagliarini] 21:23:57
+Well, how you put it, uh…
+
+[Jobany Heredia Rico] 21:23:58
+Operations, operations that are applied individually to each element of the vector.
+
+[Cristopher Tagliarini] 21:24:02
+Yeah.
+
+[Jobany Heredia Rico] 21:24:03
+Yeah, that's it. So a vectorized operation is an operation that is applied individually to each element of a vector, which is like kind of doing a loop through each element of a vector. Okay.
+
+[Cristopher Tagliarini] 21:24:05
+That's it, okay.
+
+[Cristopher Tagliarini] 21:24:14
+Um, okay, so, like…
+
+[Cristopher Tagliarini] 21:24:17
+Some other stuff, those are vectorized, like you said. All of them.
+
+[Jobany Heredia Rico] 21:24:19
+Those are not. Those are not. Those are not. Some is not, because some will give you a summary. So some is not apply.
+
+[Cristopher Tagliarini] 21:24:24
+Okay.
+
+[Jobany Heredia Rico] 21:24:27
+It's not applied. So some will give you the sum of all the items. Some minimum, maximum, those are summarizing operations, okay?
+
+[Cristopher Tagliarini] 21:24:35
+Oh, it summarizes it. So vector is, like, when it doesn't do that, just returns you the element.
+
+[Jobany Heredia Rico] 21:24:39
+It returns a vector, it returns back a vector. So a vectorized operation will return back a vector, like this is a vector, this is a vector, this is another vector, yeah.
+
+[Cristopher Tagliarini] 21:24:47
+Yeah, like that. That's the elements, but when you're saying sum, no, no, it's like, it returns that vector, like, uh, sum, for example, 32.
+
+[Cristopher Tagliarini] 21:24:56
+Are you seeing, uh, 8 plus 1…
+
+[Cristopher Tagliarini] 21:24:59
+It adds, like you said, one to all the elements in that vector, because it's not… it's vectorized, sorry, compared to the…
+
+[Cristopher Tagliarini] 21:25:06
+Oh, okay, that kind of makes sense.
+
+[Jobany Heredia Rico] 21:25:09
+That's correct.
+
+[Jobany Heredia Rico] 21:25:13
+Guys, that's all. Save the notebook, by the way, so if you haven't saved, go ahead and save the notebook.
+
+[Jobany Heredia Rico] 21:25:19
+And then, at this point, you can close it, okay? Um…
+
+[Jobany Heredia Rico] 21:25:24
+that's what I wanted to cover today. So again, as I told you on Monday, we have the luxury of having a lot of time, so we don't need to rush.
+
+[Jobany Heredia Rico] 21:25:34
+at this point, okay? So, that's what I wanted to cover today, an introduction to vectors, and I'm gonna have you, uh…
+
+[Jobany Heredia Rico] 21:25:42
+Um, take attendance before I let you go, but I'm gonna have you, before Monday, start reviewing a notebook individually, independently.
+
+[Jobany Heredia Rico] 21:25:50
+And on Monday, we're gonna review it together, okay? But I don't want, like, you know, it's the beginning of the semester, I'm assuming you guys have a lot of free time, so I'm gonna publish a notebook, and if you have a chance, I will invite you to start reviewing the notebook.
+
+[Jobany Heredia Rico] 21:26:05
+If you don't understand… by the way, you're gonna understand some things. But let's say, worst case scenario, if you don't understand anything, that's okay. We can explain everything on Monday, okay? But, like…
+
+[Jobany Heredia Rico] 21:26:15
+I'm sure you have time available, so why not publish a notebook? You can start reviewing, okay, a notebook.
+
+[Bobby Munir] 21:26:21
+It's a racket, racket, r.
+
+[Jobany Heredia Rico] 21:26:23
+And, uh…
+
+[Jobany Heredia Rico] 21:26:25
+So…
+
+[Bobby Munir] 21:26:27
+Professor, I…
+
+[Jobany Heredia Rico] 21:26:27
+There are no…
+
+[Jobany Heredia Rico] 21:26:28
+Go ahead.
+
+[Cristopher Tagliarini] 21:26:30
+That was the hot mic.
+
+[Jobany Heredia Rico] 21:26:32
+Go ahead.
+
+[Jobany Heredia Rico] 21:26:39
+Something happened.
+
+[Jobany Heredia Rico] 21:26:42
+Um, that notebook, and this is a notebook you're gonna review, and remember, they're individually, and, uh, we can review it together on Monday.
+
+[Jobany Heredia Rico] 21:26:49
+The notebook I want you to review.
+
+[Bobby Munir] 21:26:51
+Professor, I have a question.
+
+[Jobany Heredia Rico] 21:26:53
+Yes.
+
+[Bobby Munir] 21:26:55
+Uh, could you go to the notebook?
+
+[Jobany Heredia Rico] 21:26:59
+Yes.
+
+[Bobby Munir] 21:27:00
+So, when you start to write R, there is an option.
+
+[Bobby Munir] 21:27:07
+Like, uh…
+
+[Bobby Munir] 21:27:09
+Uh, what do you call it? MS SQL?
+
+[Jobany Heredia Rico] 21:27:14
+Okay, MS SQL?
+
+[Bobby Munir] 21:27:16
+Yes?
+
+[Jobany Heredia Rico] 21:27:17
+Okay, I have no idea what that option is.
+
+[Bobby Munir] 21:27:18
+like…
+
+[Bobby Munir] 21:27:20
+No, on the right-hand side, or maybe, uh, run…
+
+[Bobby Munir] 21:27:26
+Menu, or see… drop-down menu.
+
+[Jobany Heredia Rico] 21:27:35
+What drop down menu?
+
+[Bobby Munir] 21:27:37
+C?
+
+[Cristopher Tagliarini] 21:27:38
+The, the one that says C, uh, the plus C on the, right there.
+
+[Jobany Heredia Rico] 21:27:40
+Oh, this, okay, yeah.
+
+[Bobby Munir] 21:27:40
+C plus? Yeah.
+
+[Cristopher Tagliarini] 21:27:41
+Yeah.
+
+[Bobby Munir] 21:27:43
+So here is a sequel.
+
+[Jobany Heredia Rico] 21:27:44
+Right, right. You can write code in other languages, yes. Obviously, yeah.
+
+[Cristopher Tagliarini] 21:27:45
+Oh…
+
+[Cristopher Tagliarini] 21:27:48
+Yeah, that's the thing.
+
+[Bobby Munir] 21:27:48
+So, can I import a SQL…
+
+[Jobany Heredia Rico] 21:27:51
+Database. Yes, and and and and analyzing here. Yes, yep, you can. You can import a SQL database and have fun writing SQL in in our studio. Yes, and also Python, and also all of these.
+
+[Bobby Munir] 21:27:56
+Okay, okay, thank you.
+
+[Jobany Heredia Rico] 21:28:05
+Languages, okay? Yep. You can do that, absolutely.
+
+[Bobby Munir] 21:28:07
+Okay.
+
+[Samuel Rojas Ballesteros] 21:28:08
+Professor, I have a question. So, I normally use Stata.
+
+[Jobany Heredia Rico] 21:28:10
+Yes.
+
+[Samuel Rojas Ballesteros] 21:28:17
+So, obviously they have a special type of halt that is the DPA.
+
+[Samuel Rojas Ballesteros] 21:28:22
+Does that work with?
+
+[Samuel Rojas Ballesteros] 21:28:24
+RStudio or no?
+
+[Jobany Heredia Rico] 21:28:28
+I don't think so. I don't see it here. It might. You might need to do a research to see if you can write Stata code with RStudio. I've never tried.
+
+[Jobany Heredia Rico] 21:28:39
+I've used… I mean, I've seen Stata, like, many years ago, but I've never used it, and I have never used it in RStudio, so it might be possible, you need to do some research, okay?
+
+[Samuel Rojas Ballesteros] 21:28:39
+Okay.
+
+[Samuel Rojas Ballesteros] 21:28:48
+Okay, Professor. Thank you.
+
+[Jobany Heredia Rico] 21:28:52
+You're welcome.
+
+[Jobany Heredia Rico] 21:28:53
+So let me publish this. Remember, this is optional for you to review. If you don't want to review, that's okay. It's a good idea if you do, because then Monday you'll be more… you'll be sharper, okay? Um, this notebook that I'm gonna publish is about.
+
+[Jobany Heredia Rico] 21:29:07
+dplyr functions. dplyr functions are…
+
+[Jobany Heredia Rico] 21:29:10
+dplyr is a package, and this package has many functions for data cleaning and data transformation, okay? So we're gonna discuss it on Monday, but if you have a chance, please start reviewing it, okay?
+
+[Jobany Heredia Rico] 21:29:22
+If you have a chance, okay, let me publish it.
+
+[Raydel Castro] 21:29:27
+Publishing everything, professor. I want to write everything.
+
+[Jobany Heredia Rico] 21:29:30
+No, no, no, no, I'm gonna publish this only, only this, only that.
+
+[Cristopher Tagliarini] 21:29:31
+You… you don't wanna do it.
+
+[Cristopher Tagliarini] 21:29:32
+You know, you don't… Oh, so… review and everything? Okay. You gotta review this with us together after that.
+
+[Jobany Heredia Rico] 21:29:38
+Guys, I need to take attendance and then let you go. Okay
+
+[Cristopher Tagliarini] 21:29:39
+Okay.
+
