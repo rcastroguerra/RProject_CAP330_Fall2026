@@ -17,7 +17,7 @@ library(palmerpenguins)
 ```{r}
 
 penguins |> str() 
-# toma penguins y pásalo a str()."
+# toma penguins y lo pása a str()."
 #Sirve para obtener un resumen de la estructura de un objeto de R.
 
 ```
@@ -78,9 +78,15 @@ penguins |> select(ends_with("_mm"))
 
 
 TRY IT BY YOURSELF
+<<<<<<< HEAD
 ```{r}
 penguins |> select(-ends_with("_mm"))
 ```
+=======
+
+
+
+>>>>>>> 5a7ca77f27e982c26a524311b80964f3a5a1adfa
 
 
 
@@ -98,7 +104,11 @@ penguins |> select(-ends_with("_mm"))
 
 ```{r}
 
+<<<<<<< HEAD
 penguins |> rename (penguin_species = species, island_new = island)
+=======
+penguins |> rename (penguin_species = species)
+>>>>>>> 5a7ca77f27e982c26a524311b80964f3a5a1adfa
 
 ```
 
@@ -263,12 +273,15 @@ penguins |> count (species, name = "penguin_count") |> mutate (percentage_of_pen
 
 TRY IT BY YOURSELF
 
+<<<<<<< HEAD
 ```{r}
 penguins |>
   filter(species == "Adelie", !is.na(sex)) |>
   count(sex, name = "QTY") |>
   mutate(percentage = QTY / sum(QTY) * 100)
 ```
+=======
+>>>>>>> 5a7ca77f27e982c26a524311b80964f3a5a1adfa
 
 
 
@@ -279,11 +292,14 @@ penguins |>
 TRY IT BY YOURSELF
 
 
+<<<<<<< HEAD
 ```{r}
 penguins |> mutate(body_mass_kg = body_mass_g/1000, .after = body_mass_g)
 
 
 ```
+=======
+>>>>>>> 5a7ca77f27e982c26a524311b80964f3a5a1adfa
 
 
 
@@ -325,16 +341,24 @@ penguins |> group_by(species) |> summarise( min_flipper = min(flipper_length_mm,
 
 
 
+<<<<<<< HEAD
 **Example**: Find out which species has the highest mean ratio of body mass to flipper length. Sort by ratio in descending order.
+=======
+**Example**: Find out which species has the highest ratio of body mass to flipper length, and to sort the results.
+>>>>>>> 5a7ca77f27e982c26a524311b80964f3a5a1adfa
 
 ```{r}
 
 
+<<<<<<< HEAD
 penguins |> 
   mutate(ratio_bm_fliplen = body_mass_g / flipper_length_mm) |> 
   group_by(species) |> 
   summarise(mean_ratio_bm_fliplen = mean(ratio_bm_fliplen, na.rm = TRUE)) |> 
   arrange(desc(mean_ratio_bm_fliplen))
+=======
+penguins |> mutate(ratio_bm_fliplen = body_mass_g / flipper_length_mm) |> group_by(species) |> summarise(mean_ratio_bm_fliplen = mean(ratio_bm_fliplen, na.rm = TRUE)) |> arrange(desc(mean_ratio_bm_fliplen))
+>>>>>>> 5a7ca77f27e982c26a524311b80964f3a5a1adfa
 
 ```
 
@@ -349,11 +373,15 @@ penguins |>
 
 ```{r}
 
+<<<<<<< HEAD
 penguins |>  
   group_by(species) |> 
   slice_max(body_mass_g, n = 5) |> 
   arrange(species, desc(body_mass_g)) |> 
   select (species, body_mass_g)
+=======
+penguins |>  group_by(species) |> slice_max(body_mass_g, n = 5) |> arrange(species, desc(body_mass_g)) |> select (species, body_mass_g)
+>>>>>>> 5a7ca77f27e982c26a524311b80964f3a5a1adfa
 
 ```
 
@@ -385,12 +413,15 @@ penguins |>  group_by(species) |> slice_max(body_mass_g, n = 5, with_ties = FALS
 
 TRY IT BY YOURSELF
 
+<<<<<<< HEAD
 ```{r}
 penguins |>
   group_by(island) |>
   summarise(max_flipper_length = max(flipper_length_mm, na.rm = TRUE)) |>
   filter(max_flipper_length > 220)
 ```
+=======
+>>>>>>> 5a7ca77f27e982c26a524311b80964f3a5a1adfa
 
 
 
@@ -403,12 +434,15 @@ penguins |>
 
 TRY IT BY YOURSELF
 
+<<<<<<< HEAD
 ```{r}
 penguins |> 
   filter (!is.na(sex)) |> 
   count (species, sex, name="count") |> 
   filter (count >= 60)
 ```
+=======
+>>>>>>> 5a7ca77f27e982c26a524311b80964f3a5a1adfa
 
 
 
@@ -426,6 +460,7 @@ TRY IT BY YOURSELF
 
 
 
+<<<<<<< HEAD
 ```{r}
 penguins |>
   mutate(
@@ -438,6 +473,8 @@ penguins |>
   count(species, body_mass_category) |>
   arrange(species)
 ```
+=======
+>>>>>>> 5a7ca77f27e982c26a524311b80964f3a5a1adfa
 
 
 
