@@ -571,7 +571,47 @@ penguins |>
   select(species, sex, body_mass_g, es_grande, es_macho)
 ```
 
+3. Transformaciones matemáticas
 
+```{r}
+penguins |>
+  mutate(
+    peso_log = log(body_mass_g),
+    peso_estandar = scale(body_mass_g),
+    peso_redondeado = round(body_mass_g / 1000, 2)
+  ) |>
+  select(species, body_mass_g, peso_log, peso_estandar, peso_redondeado)
+
+
+```
+
+5. Usar across() para aplicar funciones a múltiples columnas
+
+- .x representa el valor que está recibiendo la función.
+- Dentro de across(), .x representa cada columna seleccionada.
+
+```{r}
+# Convertir todas las columnas numéricas a kg o metros
+penguins |>
+  mutate(
+    across(where(is.numeric), ~ round(.x, 2))
+  )
+
+```
+
+where(is.numeric)
+       ↓
+Busca columnas numéricas
+       ↓
+across()
+       ↓
+Toma cada columna
+       ↓
+.x representa esa columna
+       ↓
+round(.x, 2)
+       ↓
+Redondea a 2 decimales
 
 
 
