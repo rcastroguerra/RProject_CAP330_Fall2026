@@ -197,6 +197,13 @@ Exercise 1: Create a dot plot showing the distribution of highway MPG (hwy) for 
 
 WORK INDEPENDENTLY
 
+```{r}
+
+mpg |> ggplot(aes(x = reorder (drv, hwy, FUN = mean), y = hwy)) + geom_point() + labs(x = "Vehicle Drive Type", y = "Highway MPG")
+
+
+
+```
 
 
 
@@ -216,10 +223,20 @@ WORK INDEPENDENTLY
 
 
 
+```{r}
+mpg |> count(year)
 
 
 
 
+```
+
+
+
+
+```{r}
+mpg |> ggplot (aes (x = factor(year), y = cty)) + geom_boxplot() + labs(x = "Year", y = "City MPG")
+```
 
 
 
