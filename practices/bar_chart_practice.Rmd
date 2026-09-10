@@ -1,0 +1,447 @@
+---
+title: "R Notebook"
+---
+
+
+```{r}
+
+# Then restart R and run:
+library(dplyr)
+library(tidyverse)
+library(palmerpenguins)
+library(conflicted)
+
+conflict_prefer("filter", "dplyr")
+conflict_prefer("lag", "dplyr")
+
+```
+
+
+
+# Gráficos de barras: `geom_bar()` y `geom_col()`
+
+Existen dos tipos de gráficos de barras: `geom_bar()` y `geom_col()`.
+
+- **`geom_bar()`** hace que la altura de la barra sea proporcional al **número de casos** en cada grupo (o, si se proporciona la estética `weight`, a la **suma de los pesos**).
+- Si quieres que las alturas de las barras representen **valores en los datos**, usa **`geom_col()`** en su lugar.
+
+`geom_bar()` usa `stat_count()` por defecto: **cuenta** el número de casos en cada posición de `x`.
+`geom_col()` usa `stat_identity()`: **deja los datos tal como están**.
+
+---
+
+## Uso
+
+### `geom_bar()`
+
+```{r}
+geom_bar(
+  mapping = NULL,
+  data = NULL,
+  stat = "count",
+  position = "stack",
+  ...,
+  just = 0.5,
+  lineend = "butt",
+  linejoin = "mitre",
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
+```
+
+### `geom_col()`
+
+```{r}
+geom_col(
+  mapping = NULL,
+  data = NULL,
+  stat = "identity",
+  position = "stack",
+  ...,
+  just = 0.5,
+  lineend = "butt",
+  linejoin = "mitre",
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
+```
+
+### `stat_count()`
+
+```{r}
+stat_count(
+  mapping = NULL,
+  data = NULL,
+  geom = "bar",
+  position = "stack",
+  ...,
+  orientation = NA,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
+```
+
+---
+
+## Notas sobre los argumentos
+
+Los nombres de los argumentos **no se traducen** porque son parámetros literales de las funciones en R. Sin embargo, aquí tienes una referencia rápida:
+
+| Argumento | Significado |
+|---|---|
+| `mapping` | Mapeo estético (asignación de variables a atributos visuales) |
+| `data` | Datos |
+| `stat` | Transformación estadística |
+| `position` | Posición (ajuste de posición de los elementos) |
+| `...` | Otros argumentos pasados a la capa |
+| `just` | Ajuste (justificación) |
+| `lineend` | Terminación de línea |
+| `linejoin` | Unión de líneas |
+| `na.rm` | Si es `TRUE`, elimina valores faltantes (`NA`) silenciosamente |
+| `show.legend` | Si es `TRUE`, muestra la leyenda; si es `FALSE`, la oculta; `NA` la muestra solo si se mapea una estética |
+| `inherit.aes` | Si es `FALSE`, anula las estéticas predeterminadas en lugar de combinarlas |
+| `geom` | Objeto geométrico que se usará para mostrar los datos |
+| `orientation` | Orientación de la capa (por ejemplo, `"x"` o `"y"`) |
+
+---
+
+## Diferencia clave entre `geom_bar()` y `geom_col()`
+
+- **`geom_bar()`** usa `stat = "count"` por defecto → **cuenta** los casos.
+- **`geom_col()`** usa `stat = "identity"` por defecto → **usa los valores tal cual** están en los datos.
+
+Es decir, `geom_bar()` es equivalente a `geom_col()` cuando se usa `stat = "count"`, y `geom_col()` equivale a `geom_bar(stat = "identity")`.
+
+---
+
+## La idea central
+
+- geom_bar() → TÚ no calculas nada, ggplot lo cuenta por ti
+- geom_col() → TÚ ya calculaste los valores, ggplot solo los dibuja
+
+
+### Ejemplo 
+
+Imagina que quieres un gráfico de barras con cuántos pingüinos hay por especie.
+
+#### Con `geom_bar()` (ggplot cuenta)
+
+```{r}
+penguins |> 
+  ggplot(aes(x= species)) + geom_bar()
+```
+Aquí NO le dices a ggplot cuál es la altura. Solo le dices "pon en el eje x la especie".
+
+ggplot internamente hace esto:
+
+```{r}
+penguins |> count(species)
+
+```
+
+Y luego dibuja las barras con esas alturas. Eso es stat = "count": cuenta los casos.
+
+`En ggplot2, stat significa statistical transformation o transformación estadística.`
+
+Internamente, geom_bar() utiliza:
+
+```{r}
+stat = "count"
+```
+
+
+Fíjate que en aes() no hay y. Solo x = species.
+
+#### Con `geom_col()` (TÚ calculas antes)
+
+Si usas geom_col() directamente así:
+
+```{r}
+penguins |>
+  ggplot(aes(x = species)) +
+  geom_col()
+
+rlang::last_trace()
+```
+
+Te va a dar un error o advertencia, porque geom_col() necesita que le digas la altura (el y).
+
+
+Entonces tú tienes que calcular primero:
+
+```{r}
+penguins |> 
+  count(species) |> # firts we need to calculate
+  ggplot(aes(x = species, y = n )) +
+  geom_col()
+  
+
+penguins |>
+  count(species, name = "total") |> # calculate species with different columns name
+  ggplot(aes(x = species, y = total)) +
+  geom_col()
+```
+
+Aquí ggplot no cuenta nada. Tú ya lo contaste con count().
+geom_col() solo toma el valor n y lo dibuja como altura. Eso es stat = "identity": usa el valor tal cual.
+
+#### Comparación lado a lado
+
+```{r}
+# OPCIÓN A: geom_bar() — ggplot cuenta por ti
+penguins |>
+  ggplot(aes(x = species)) +
+  geom_bar()
+
+
+# OPCIÓN B: geom_col() — TÚ cuentas antes
+penguins |>
+  count(species) |>
+  ggplot(aes(x = species, y = n)) +
+  geom_col()
+```
+Los dos gráficos se ven IDÉNTICOS. La diferencia es quién hace el conteo.
+
+#### ¿Por qué existen los dos?
+Porque a veces ya tienes los valores calculados y no quieres que ggplot los vuelva a contar.
+
+##### Ejemplo: masa corporal promedio por especie
+Aquí no quieres contar pingüinos, quieres mostrar un promedio.
+```{r}
+datos <- penguins |>
+  group_by(species) |>
+  summarise(masa_promedio = mean(body_mass_g, na.rm = TRUE))
+
+datos
+# # A tibble: 3 × 2
+#   species   masa_promedio
+#   <fct>             <dbl>
+#   1 Adelie            3701.
+#   2 Chinstrap         3733.
+#   3 Gentoo            5076.
+```
+
+Ahora quieres dibujar esas barras:
+
+```{r}
+datos |>
+  ggplot(aes(x = species, y = masa_promedio)) +
+  geom_col()
+```
+
+Aquí geom_bar() NO serviría, porque geom_bar() intentaría contar cuántas veces aparece cada especie (que sería 1, porque ya resumiste). No te daría el promedio.
+
+```{r}
+datos |>
+  ggplot(aes(x = species)) +
+  geom_bar()
+```
+❌ geom_bar() sin y → cuenta filas (todas valen 1)
+
+```{r}
+datos |>
+  ggplot(aes(x = species, y = masa_promedio)) +
+  geom_bar()
+```
+Te va a dar un error o advertencia:
+
+¿Por qué? Porque geom_bar() usa stat = "count" por defecto, y stat_count() NO acepta un y — él mismo lo calcula contando. Si le das un y, se confunde.
+
+## Uso
+
+### `geom_bar()`
+
+```{r}
+geom_bar(
+  mapping = NULL,
+  data = NULL,
+  stat = "count",
+  position = "stack",
+  ...,
+  just = 0.5,
+  lineend = "butt",
+  linejoin = "mitre",
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
+```
+
+### `geom_col()`
+
+```{r}
+geom_col(
+  mapping = NULL,
+  data = NULL,
+  stat = "identity",
+  position = "stack",
+  ...,
+  just = 0.5,
+  lineend = "butt",
+  linejoin = "mitre",
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
+```
+
+### `stat_count()`
+
+```{r}
+stat_count(
+  mapping = NULL,
+  data = NULL,
+  geom = "bar",
+  position = "stack",
+  ...,
+  orientation = NA,
+  na.rm = FALSE,
+  show.legend = NA,
+  inherit.aes = TRUE
+)
+```
+
+## Argumentos
+
+### mapping
+
+Conjunto de mapeos estéticos creados por aes(). Si se especifica y inherit.aes = TRUE (el valor por defecto), se combina con el mapeo predeterminado en el nivel superior del gráfico. Debes proporcionar mapping si no hay un mapeo a nivel de gráfico.
+
+
+#### ¿Qué significa en la práctica?
+- "El mapeo predeterminado en el nivel superior del gráfico" = el aes() que pusiste dentro de ggplot().
+- "Se combina" = si pusiste aes(x = species) en ggplot() y aes(y = masa) en geom_col(), ggplot junta ambos y usa x = species, y
+- = masa.
+- "Debes proporcionar mapping si no hay un mapeo a nivel de gráfico" = si no pusiste aes() en ggplot(), entonces es obligatorio ponerlo en el geom_*()
+
+##### Ejemplos
+
+✅ Hay mapeo a nivel de gráfico → geom_col() puede omitir mapping
+
+```{r}
+datos |>
+  ggplot(aes(x = species, y = masa_promedio)) +   # ← mapeo a nivel de gráfico
+  geom_col()                                       # ← no necesita mapping
+
+```
+✅ No hay mapeo a nivel de gráfico → geom_col() debe llevar mapping
+
+
+```{r}
+datos |>
+  ggplot() +                                       # ← sin aes()
+  geom_col(aes(x = species, y = masa_promedio))    # ← obligatorio aquí
+```
+✅ Combinación: parte en ggplot() y parte en geom_col()
+
+```{r}
+datos |>
+  ggplot(aes(x = species)) +                       # ← solo x
+  geom_col(aes(y = masa_promedio))                 # ← solo y (se combinan)
+```
+Resultado: ggplot usa x = species, y = masa_promedio combinando ambos mapeos.
+
+Regla mental
+- Si pones aes() en ggplot() → todas las capas lo heredan.
+- Si no lo pones en ggplot() → cada geom_*() debe llevar el suyo.
+- Si pones partes en ambos → se combinan (siempre que inherit.aes = TRUE).
+
+
+## Argumentos
+
+### data
+
+Los datos que se mostrarán en esta capa. Hay tres opciones:
+
+- Si es NULL (el valor por defecto), los datos se heredan de los datos del gráfico especificados en la llamada a ggplot().
+- Un data.frame u otro objeto sobreescribirá los datos del gráfico. Todos los objetos serán "fortificados" para producir un data frame. Consulta fortify() para saber qué variables se crearán.
+- Una función será llamada con un único argumento: los datos del gráfico. El valor de retorno debe ser un data.frame, y se usará como los datos de la capa. Se puede crear una función a partir de una fórmula (por ejemplo, ~ head(.x, 10)).
+
+### ¿Cuándo usar cada opción?
+
+| **Opción**       | **Cuándo usarla**                                                                                                  |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `NULL` (heredar) | Cuando todas las capas usan los mismos datos (lo más común).                                                       |
+| Un `data.frame`  | Cuando una capa necesita **datos distintos**, por ejemplo, un resumen.                                             |
+| Una función      | Cuando quieres **transformar** los datos del gráfico solo para esa capa, por ejemplo, mostrar solo un subconjunto. |
+
+#### Opción 1: data = NULL (heredar del ggplot())
+
+```{r}
+penguins |>
+  ggplot(aes(x = species, y = body_mass_g)) +
+  geom_col(data = NULL)   # ← hereda los datos de ggplot()
+```
+Es lo mismo que no poner data, porque NULL es el valor por defecto.
+
+#### Opción 2: Dar un data.frame propio (sobreescribe)
+
+```{r}
+datos_resumen <- penguins |>
+  group_by(species) |>
+  summarise(masa_promedio = mean(body_mass_g, na.rm = TRUE))
+
+penguins |>
+  ggplot(aes(x = species, y = body_mass_g)) +
+  geom_col(data = datos_resumen, aes(y = masa_promedio))  # ← usa OTROS datos
+```
+Aquí geom_col() ignora penguins y usa datos_resumen.
+
+#### Opción 3: Dar una función (transforma los datos del gráfico)
+
+```{r}
+penguins |>
+  ggplot(aes(x = species, y = body_mass_g)) +
+  geom_col(data = ~ head(.x, 10))   # ← usa solo las primeras 10 filas
+```
+Aquí .x representa los datos del gráfico (penguins), y head(.x, 10) devuelve solo las primeras 10 filas.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
