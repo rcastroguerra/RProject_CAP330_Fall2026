@@ -1,0 +1,328 @@
+---
+title: "Introduction to R vectors"
+output: 
+---
+
+
+A vector is a type of object in R that allows us to store data in it. All the data stored in a vector must have the same type. Basic data types are integer, numeric, logical, and character.
+
+
+
+**How to create a vector?**
+
+
+a) Using the combine function: c()
+
+```{r}
+
+# Create a vector "a" storing five numbers
+
+a <- c(3,6,7,10,1)
+
+
+```
+
+
+
+
+```{r}
+
+# To print the content inside "a", just type in its name
+
+a
+
+```
+
+
+
+
+```{r}
+
+# Add the number 5 to "a"
+
+a <- c(a,5)
+
+```
+
+
+```{r}
+
+a
+
+```
+
+
+
+
+
+b) Using the : function
+
+```{r}
+
+b <- 1:5
+  
+d <- 5:1
+
+
+b
+
+d
+
+```
+
+
+
+
+c) Using the seq () function
+
+```{r}
+
+e <- seq(from=1, to=5)
+
+e
+
+```
+
+
+
+
+Using the “by” parameter with seq()
+
+```{r}
+
+f<- seq (from= 0, to =10, by=2)
+
+f
+
+```
+Help function 
+
+```{r}
+?seq
+```
+
+
+
+What if you want the sequence 10, 8, 6,..., 0? the seg function have more parameters 
+
+```{r}
+
+g<- seq (from=10, to=0, by= -2 )
+
+g
+
+```
+
+
+
+
+
+d) Using the rep () function
+
+Let’s say you want to create a vector "h" that contains the vector “a” (which we created earlier) repeated three times. 
+
+```{r}
+
+h<- c(a,a,a)
+
+h
+
+```
+
+
+We can get the same result using the rep () function. 
+
+```{r}
+
+h<- rep(a, 3)
+
+h
+
+```
+
+
+
+Let’s say I want to create a vector “k” to contain the vector “f” repeated three times followed by the numbers 10 and 11. How to get it? Think about it for a minute !
+
+```{r}
+
+# ENTER YOUR ANSWER HERE!
+
+k <- c(rep(f,3),10,11)
+
+k
+```
+
+
+
+
+
+Let’s use the parameter “each” with the function rep ()
+
+```{r}
+a
+
+```
+
+
+```{r}
+
+rep (a, each=4)
+
+```
+
+
+
+
+
+
+**Indexing a vector**
+
+Indexing refers to the process of retrieving the elements at the different positions of a vector.
+
+Example: Let us create a new vector with positive and negative numbers. Call it vector_y
+
+```{r}
+
+vector_y <- c(23, 5, 67, 3, -2, -8)
+vector_y
+```
+
+
+
+Get first element
+
+```{r}
+
+vector_y[1]
+
+```
+
+
+
+
+Get last element.
+
+To get the last element, it is useful to find out the index of the last element in the vector
+
+```{r}
+
+length(vector_y)
+
+```
+
+
+
+
+```{r}
+
+vector_y[length(vector_y)]
+
+```
+
+
+
+```{r}
+
+vector_y [6]
+
+```
+
+
+
+
+
+
+
+
+Get first 3 elements 
+
+```{r}
+
+vector_y[c(1,2,3)]
+
+
+# Alternative
+
+vector_y[1:3]
+
+```
+
+
+
+Get the first and fifth elements
+
+```{r}
+
+vector_y[c(1,5)]
+
+```
+
+
+
+Get all but the second element
+
+```{r}
+
+vector_y
+
+```
+
+
+```{r}
+
+vector_y[-2]
+
+```
+
+
+
+
+Get all but the second and fifth elements
+
+```{r}
+
+vector_y[-c(2,5)]
+
+```
+
+
+
+
+
+**Vectorized operations**
+
+Vectorized operations: A function applied to a vector is actually applied individually to each element of that vector.
+
+Many (not all) R built-in functions are vectorized. For example, sqrt (), +, -, *, / … and many others. Some functions are not vectorized since they return a single summary value, for example, sum () and min ().
+
+```{r}
+a
+```
+
+
+```{r}
+a
+
+a+1
+
+sqrt(a)
+
+a^2
+
+sum(a)
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+

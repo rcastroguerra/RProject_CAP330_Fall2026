@@ -1,0 +1,818 @@
+---
+title: "bar char practicas"
+
+---
+
+https://ggplot2.tidyverse.org/reference/geom_bar.html
+
+
+```{r}
+
+# Then restart R and run:
+library(dplyr)
+library(tidyverse)
+library(palmerpenguins)
+library(conflicted)
+
+conflict_prefer("filter", "dplyr")
+conflict_prefer("lag", "dplyr")
+
+```
+
+# Guía completa: geom_bar(), geom_col() y stat_count()
+
+## 1. Concepto fundamental
+
+En ggplot2 una capa tiene dos partes:
+
+```{verbatim}
+Datos
+  ↓
+Stat (calcula)
+  ↓
+Geom (dibuja)
+
+```
+
+Por ejemplo:
+
+```{r}
+ggplot(mpg, aes(class)) +
+  geom_bar()
+```
+Internamente:
+
+- stat_count() → cuenta observaciones
+- geom_bar()   → dibuja barras
+
+## 2. Sintaxis de geom_bar()
+
+```{r}
+penguins |>
+    ggplot(aes(x = species)) +
+    geom_bar(
+      mapping = NULL,      # Define qué variables del dataset se asignan a X, Y, fill, color, etc.
+                            # Normalmente se escribe: mapping = aes(x = species)
+    
+      data = NULL,         # Define qué dataset utilizará esta capa.
+                            # NULL = utiliza el dataset definido en ggplot()
+    
+      stat = "count",      # Define qué cálculo hace ggplot antes de dibujar.
+                            # "count" = cuenta automáticamente las observaciones.
+    
+      position = "stack",  # Define cómo se colocan las barras.
+                            # "stack" = apila las categorías una encima de otra.
+                            # También: "dodge" = lado a lado
+                            #           "fill"  = proporciones/100%
+                            #           "identity" = posición original
+    
+      ...,                 # Permite agregar otros argumentos adicionales.
+                            # Ejemplo: fill = "blue", color = "black", width = 0.8
+    
+      just = 0.5,          # Controla la posición/justificación de la barra.
+                            # 0.5 = centrada (valor predeterminado).
+    
+      lineend = "butt",    # Define cómo termina una línea.
+                            # "butt" = termina exactamente en el punto final.
+    
+      linejoin = "mitre",  # Define cómo se unen las líneas en las esquinas.
+                            # "mitre" = esquinas pronunciadas.
+    
+      na.rm = FALSE,       # Define cómo manejar los valores NA (faltantes).
+                            # FALSE = no eliminar explícitamente los NA.
+                            # TRUE  = eliminar/ignorar los NA.
+    
+      show.legend = NA,    # Controla si esta capa aparece en la leyenda.
+                            # NA    = ggplot decide automáticamente.
+                            # TRUE  = mostrar leyenda.
+                            # FALSE = ocultar leyenda.
+    
+      inherit.aes = TRUE   # Define si geom_bar() hereda los aes() de ggplot().
+                            # TRUE = sí los hereda.
+                            # FALSE = no los hereda.
+    )
+```
+
+
+```{r}
+geom_bar(
+  mapping = aes(x = species), # QUÉ variables utilizo
+  data = penguins,            # DE DÓNDE vienen los datos
+  stat = "count",             # QUÉ cálculo hago
+  position = "stack"          # CÓMO coloco las barras
+)
+```
+
+
+## Hay dos data diferentes y pertenecen a funciones diferentes.
+
+Tu código:
+
+```{r}
+penguins |>
+  ggplot(aes(x = species)) +
+  geom_bar(
+    mapping = NULL,
+    data = NULL,
+    stat = "count",
+    position = "stack"
+  )
+```
+
+se puede leer así:
+
+```{verbatin}
+penguins
+   ↓
+ggplot()
+   ↓
+geom_bar()
+```
+
+## 1. penguins pertenece a ggplot()
+
+Cuando haces:
+
+```{r}
+penguins |>
+  ggplot(aes(x = species))
+```
+el |> está haciendo prácticamente esto:
+
+```{r}
+ggplot(
+  data = penguins,
+  mapping = aes(x = species)
+)
+```
+
+Por eso el dataset principal está en ggplot().
+
+
+## 2. Entonces, ¿por qué geom_bar() también tiene data?
+
+Porque cada capa de ggplot puede tener su propio dataset.
+
+Mira:
+
+```{r}
+
+ggplot(
+  data = penguins, #base de datos a utlizar penguins
+  mapping = aes(x = species)) +
+geom_bar(
+  data = NULL, #esto quiere decir que no se va a proporcionar mas data , vamos a utilizar la misma data de penguins
+  mapping = NULL # No voy a proporcionar mapping aquí. Usa el que ya existe.
+)
+
+```
+
+Esto funciona gracias a:
+
+```{verbatim}
+inherit.aes = TRUE
+```
+inherit.aes es un parámetro en ggplot2 (R) que controla si una capa (geom, stat, etc.) hereda las estéticas (aes) definidas en el ggplot() principal o en una capa anterior.
+
+
+```{verbatim}
+ggplot()
+   │
+   │ data = penguins
+   │ mapping = aes(x = species)
+   ↓
+geom_bar()
+   │
+   │ inherit.aes = TRUE
+   ↓
+HEREDA esos datos y mapping
+```
+
+
+## 🔥 ¿Cuándo pondrías data dentro de geom_bar()?
+
+Cuando quieres que esa capa específica utilice otro dataset.
+
+Por ejemplo:
+
+```{verbatim}
+
+penguins|>                      # Mi gráfico trabaja con penguins
+  ggplot( aes(x = species))     # species está en X.
+  +
+                                # geom_bar() = decide qué dibujar
+  geom_bar(                     # Ahora dibuja barras con esos datos.
+    data = otro_data_set,
+    
+  )
+
+```
+Ahora geom_bar() ya no tiene por qué utilizar penguins.
+
+
+Y por eso normalmente escribes simplemente:
+
+```{r}
+a <- penguins |>
+      ggplot(aes(x = species)) +
+      geom_bar() +
+      labs(title = "Optimizando codigo")
+
+b = penguins |>
+      ggplot(aes(x = species)) +
+      geom_bar(
+      data = NULL,
+      mapping = NULL
+    ) +
+  labs(title = "Sin Optimizar codigo")
+
+a + b
+```
+
+```{r}
+penguins |>
+    ggplot(aes(x = species)) +
+    geom_bar(
+      mapping = NULL,      # Define qué variables del dataset se asignan a X, Y, fill, color, etc.
+                            # Normalmente se escribe: mapping = aes(x = species)
+    
+      data = NULL,         # Define qué dataset utilizará esta capa.
+                            # NULL = utiliza el dataset definido en ggplot()
+    
+      stat = "count",      # Define qué cálculo hace ggplot antes de dibujar.
+                            # "count" = cuenta automáticamente las observaciones.
+    
+      position = "stack",  # Define cómo se colocan las barras.
+                            # "stack" = apila las categorías una encima de otra.
+                            # También: "dodge" = lado a lado
+                            #           "fill"  = proporciones/100%
+                            #           "identity" = posición original
+    
+      ...,                 # Permite agregar otros argumentos adicionales.
+                            # Ejemplo: fill = "blue", color = "black", width = 0.8
+    
+      just = 0.5,          # Controla la posición/justificación de la barra.
+                            # 0.5 = centrada (valor predeterminado).
+    
+      lineend = "butt",    # Define cómo termina una línea.
+                            # "butt" = termina exactamente en el punto final.
+    
+      linejoin = "mitre",  # Define cómo se unen las líneas en las esquinas.
+                            # "mitre" = esquinas pronunciadas.
+    
+      na.rm = FALSE,       # Define cómo manejar los valores NA (faltantes).
+                            # FALSE = no eliminar explícitamente los NA.
+                            # TRUE  = eliminar/ignorar los NA.
+    
+      show.legend = NA,    # Controla si esta capa aparece en la leyenda.
+                            # NA    = ggplot decide automáticamente.
+                            # TRUE  = mostrar leyenda.
+                            # FALSE = ocultar leyenda.
+    
+      inherit.aes = TRUE   # Define si geom_bar() hereda los aes() de ggplot().
+                            # TRUE = sí los hereda.
+                            # FALSE = no los hereda.
+    )
+```
+
+
+## 📊 ¿Qué es stat en ggplot2?
+
+stat es la abreviatura de statistical transformation (transformación estadística). Es uno de los 3 componentes fundamentales de toda capa en ggplot2.
+
+🧩 Los 3 componentes de una capa
+
+
+
+```{verbatim}
+┌─────────────────────────────────────────────┐
+│              CAPA (layer)                   │
+│                                             │
+│   1. data    → ¿qué datos?                  │
+│   2. mapping → ¿cómo se mapean? (aes)       │
+│   3. geom    → ¿cómo se dibuja?             │
+│   4. stat    → ¿qué cálculo se hace?        │
+│   5. position→ ¿dónde se coloca?            │
+└─────────────────────────────────────────────┘
+```
+
+🎯 ¿Qué hace un stat?
+
+Un stat transforma los datos antes de dibujarlos. Toma el data frame original y produce un nuevo data frame con columnas calculadas.
+
+
+```{verbatim}
+data original  ──►  STAT  ──►  data transformada  ──►  GEOM  ──►  dibujo
+
+```
+
+Ejemplo con geom_bar()
+
+
+```{r}
+penguins |>
+  ggplot(aes(x = species)) +
+  geom_bar() # Por debajo, geom_bar() usa stat_count:
+```
+
+| **`geom_*`**       | **`stat_*` por defecto** | **¿Qué calcula?**                                  |
+| ------------------ | ------------------------ | -------------------------------------------------- |
+| `geom_bar()`       | `stat_count`             | Cuenta observaciones                               |
+| `geom_histogram()` | `stat_bin`               | Agrupa los datos en *bins*                         |
+| `geom_point()`     | `stat_identity`          | No transforma los datos; usa los valores tal cual  |
+| `geom_smooth()`    | `stat_smooth`            | Ajusta una curva/modelo, normalmente una regresión |
+| `geom_boxplot()`   | `stat_boxplot`           | Calcula cuartiles, mediana y valores extremos      |
+| `geom_density()`   | `stat_density`           | Estima la densidad de los datos                    |
+| `geom_sf()`        | `stat_sf`                | Maneja y transforma geometrías espaciales          |
+
+
+
+```{r}
+# 1️⃣ Forma típica (geom_bar usa stat_count por dentro)
+penguins |>
+  ggplot(aes(x = species)) +
+  geom_bar() +
+  labs(title = "Forma tipica")
+
+# 2️⃣ Forma explícita (stat_count usa geom_bar por dentro)
+penguins |>
+  ggplot(aes(x =species)) +
+  stat_count() +
+  labs(title = "Forma explícita (stat_count usa geom_bar por dentro)")
+
+# 3️⃣ Forma explícita total
+penguins |>
+  ggplot(aes(x = species)) +
+  geom_bar(stat = "count") +
+  labs(title = " Forma explícita total con geom_bar")
+
+# Agrupa los datos en bins
+penguins |>
+  ggplot(aes(x = bill_length_mm)) +
+  geom_histogram(stat = "bin") +# geom_histogram() (y stat_bin) solo funcionan con variables numéricas continuas. Está diseñado para agrupar valores numéricos en "bins" (intervalos).
+  labs(title = "geom_histogram")
+
+# No transforma los datos; usa los valores tal cual
+penguins |>
+  ggplot(aes(x = species, y = bill_depth_mm)) + # necesita "x" e "y"
+  geom_point(stat = "identity") +
+  labs(title = "geom_point")
+
+# Ajusta una curva/modelo, normalmente una regresión
+penguins |>
+  ggplot(mapping = aes(x = bill_length_mm, y = bill_length_mm)) + # geom_smooth() necesita una variable numérica continua en x para ajustar una curva de regresión. species es un factor:
+  geom_smooth( stat = "smooth")
+
+# Calcula cuartiles, mediana y valores extremos
+penguins |>
+  ggplot(mapping = aes(x = species, y = bill_length_mm)) + # necesita "x" e "y"
+  geom_boxplot(stat = "boxplot") +
+  labs(title = "geom_boxplot")
+
+# Estima la densidad de los datos
+penguins |>
+  ggplot(aes(x = bill_length_mm, fill = species)) + # necesita una variable numérica continua en x para estimar la densidad (kernel density estimation). species es un factor:
+  geom_density(stat = "density",alpha = 0.5) +
+  labs(title = "Densidad por especie")
+
+# Maneja y transforma geometrías espaciales
+
+library(sf)
+
+# 1. Crear tabla con coordenadas de las islas
+coords_islas <- tibble(
+  island = c("Biscoe", "Dream", "Torgersen"),
+  lat    = c(-65.43, -64.73, -64.77),
+  long   = c(-65.50, -64.23, -64.08)
+)
+
+# 2. Unir con penguins y convertir a sf
+penguins_sf <- penguins |>
+  left_join(coords_islas, by = "island") |>
+  st_as_sf(coords = c("long", "lat"), crs = 4326)
+
+# 3. Mapa
+ggplot(penguins_sf) +
+  geom_sf(stat = "sf", aes(color = species)) +
+  labs(
+    title = "Pingüinos por isla con coordenadas",
+    x = "Longitud",
+    y = "Latitud"
+  )
+```
+
+
+```{r}
+penguins |>
+    ggplot(aes(x = species)) +
+    geom_bar(
+      mapping = NULL,      # Define qué variables del dataset se asignan a X, Y, fill, color, etc.
+                            # Normalmente se escribe: mapping = aes(x = species)
+    
+      data = NULL,         # Define qué dataset utilizará esta capa.
+                            # NULL = utiliza el dataset definido en ggplot()
+    
+      stat = "count",      # Define qué cálculo hace ggplot antes de dibujar.
+                            # "count" = cuenta automáticamente las observaciones.
+    
+      position = "stack",  # Define cómo se colocan las barras.
+                            # "stack" = apila las categorías una encima de otra.
+                            # También: "dodge" = lado a lado
+                            #           "fill"  = proporciones/100%
+                            #           "identity" = posición original
+    
+      ...,                 # Permite agregar otros argumentos adicionales.
+                            # Ejemplo: fill = "blue", color = "black", width = 0.8
+    
+      just = 0.5,          # Controla la posición/justificación de la barra.
+                            # 0.5 = centrada (valor predeterminado).
+    
+      lineend = "butt",    # Define cómo termina una línea.
+                            # "butt" = termina exactamente en el punto final.
+    
+      linejoin = "mitre",  # Define cómo se unen las líneas en las esquinas.
+                            # "mitre" = esquinas pronunciadas.
+    
+      na.rm = FALSE,       # Define cómo manejar los valores NA (faltantes).
+                            # FALSE = no eliminar explícitamente los NA.
+                            # TRUE  = eliminar/ignorar los NA.
+    
+      show.legend = NA,    # Controla si esta capa aparece en la leyenda.
+                            # NA    = ggplot decide automáticamente.
+                            # TRUE  = mostrar leyenda.
+                            # FALSE = ocultar leyenda.
+    
+      inherit.aes = TRUE   # Define si geom_bar() hereda los aes() de ggplot().
+                            # TRUE = sí los hereda.
+                            # FALSE = no los hereda.
+    )
+```
+
+# DATA
+
+Sintaxis
+
+```{verbatim}
+geom_point(
+  data = ...,
+  mapping = aes(...)
+)
+
+o
+
+stat_density(
+  data = ...,
+  mapping = aes(...)
+)
+```
+## Opción 1: data = NULL (valor por defecto)
+
+La capa hereda los datos definidos en ggplot().
+
+```{verbatim}
+ggplot(
+    datos,
+    aes(x,y)
+  ) +
+  geom_point()
+
+# equivale a 
+
+ggplot(
+    datos,
+    aes(x,y)
+  ) +
+  geom_point(
+    data = NULL
+  )
+```
+
+
+### Ejemplo
+
+```{r}
+ggplot(penguins, aes(body_mass_g, bill_length_mm)) +
+  geom_point()
+```
+Aquí geom_point() usa automáticamente penguins.
+
+
+## Opción 2: un data.frame
+
+La capa usa otro conjunto de datos y reemplaza los datos globales.
+
+Sintaxis
+```{verbatim}
+geom_*(data = otro_dataframe)
+```
+
+Ejemplo
+
+```{r}
+ggplot(
+  penguins,
+  mapping = aes(x =body_mass_g, y = bill_length_mm)
+)+
+  geom_point(
+    color = "blue"
+  )+
+  geom_point(
+    data = head(penguins, 20),
+    color = "red",
+    size = 3
+  )
+```
+
+
+¿Qué pasa?
+
+- Primera capa → usa todos los datos de penguins.
+- Segunda capa → usa únicamente las primeras 20 filas.
+
+
+## Opción 3: una función
+
+La función recibe los datos del gráfico y devuelve un nuevo data frame que usará la capa.
+
+Sintaxis
+
+```{verbatim}
+geom_point(
+  data = function(x) ...
+)
+
+o
+
+geom_point(
+  data = ~ ...
+)
+```
+
+Ejemplo con función
+
+```{r}
+ggplot(penguins, aes(body_mass_g, bill_length_mm)) +
+  geom_point(
+    data = function(x) head(x, 10),
+    color = "red",
+    size = 3
+  )
+```
+
+¿Qué hace?
+
+- Toma penguins.
+- La función recibe esos datos como x.
+- Devuelve las primeras 10 filas.
+- Solo esas filas se dibujan.
+
+Ejemplo con fórmula
+
+```{r}
+ggplot(penguins, aes(body_mass_g, bill_length_mm)) +
+  geom_point(
+    data = ~ head(.x, 10),
+    color = "blue",
+    size = 3
+  )
+```
+Equivalencia
+
+```{verbatim}
+data = function(x) head(x, 10)
+
+# que es lo mismo que
+
+data = ~ head(.x, 10)
+```
+
+Donde:
+
+- .x = datos originales del gráfico.
+- head(.x, 10) = primeras 10 observaciones.
+
+## Resumen para tu guía
+
+## data
+
+Descripción: datos que utilizará la capa.
+
+Sintaxis general
+
+```{verbatim}
+geom_*(
+  data = NULL
+)
+
+geom_*(
+  data = dataframe
+)
+
+geom_*(
+  data = function(x) ...
+)
+
+geom_*(
+  data = ~ ...
+)
+```
+
+Opciones
+
+| Valor         | Efecto                                     |
+| ------------- | ------------------------------------------ |
+| `NULL`        | Hereda los datos de `ggplot()`             |
+| `data.frame`  | Reemplaza los datos globales para esa capa |
+| `function(x)` | Modifica los datos antes de graficarlos    |
+| `~ expresión` | Versión abreviada usando fórmula           |
+
+# position
+
+Descripción: controla cómo se ajustan o desplazan los datos antes de dibujarlos. Se usa principalmente para:
+
+- Evitar superposición de puntos (overplotting).
+- Separar grupos.
+- Apilar barras.
+- Colocar elementos uno al lado del otro.
+
+Sintaxis general
+
+```{verbatim}
+geom_*(
+  position = "nombre"
+)
+
+o
+
+geom_*(
+  position = position_*(...)
+)
+
+```
+## Forma 1: Usar una función position_*()
+
+Permite configurar argumentos adicionales.
+
+Sintaxis
+
+```{verbatim}
+geom_point(
+  position = position_jitter()
+)
+```
+
+
+
+Ejemplo
+
+```{r}
+ggplot(mtcars, aes(factor(cyl), mpg)) +
+  geom_point(
+    position = position_jitter(
+      width = 0.2,
+      height = 0
+    )
+  )
+```
+
+¿Qué hace?
+
+Los puntos se mueven ligeramente en el eje X para evitar que se encimen.
+
+# Forma 2: Usar una cadena de texto
+
+Se elimina el prefijo position_.
+
+Sintaxis
+
+```{verbatim}
+geom_point(
+  position = "jitter" # ⚠️ Con esta forma no puedes pasar parámetros extras.
+)
+
+o
+
+geom_point(
+  position = position_jitter() # ⚠️ Con esta forma puedes pasar parámetros extras.
+)
+
+```
+
+## Posiciones más comunes
+
+1. "identity"
+
+No realiza ningún ajuste.
+
+Sintaxis
+
+```{verbatim}
+geom_bar(
+  stat = "identity",
+  position = "identity"
+)
+```
+Resultado
+
+Los datos se dibujan exactamente donde están.
+
+Ejemplo
+
+```{r}
+penguins |>
+  count(species) |>
+  ggplot(aes(x = species, y = n)) +
+  geom_bar(
+    stat = "identity",
+    position = "identity"
+  )
+```
+```{verbatim}
+             geom_bar()
+                │
+       ┌────────┴────────┐
+       ↓                 ↓
+     stat             position
+  ¿cómo obtengo      ¿cómo coloco
+   los valores?       las barras?
+       │                 │
+    count             identity
+    identity           dodge
+                       stack
+                       fill
+
+```
+
+2. "stack"
+
+Apila elementos verticalmente.
+
+Sintaxis
+
+```{verbatim}
+geom_bar(
+  position = "stack"
+)
+```
+```{r}
+penguins
+```
+```{r}
+diamonds
+```
+
+
+Ejemplo
+
+```{r}
+ggplot(penguins, aes(island, fill = sex)) +
+  geom_bar(position = "stack")
+```
+
+Resultado
+
+Las barras se colocan una sobre otra.
+
+3. "fill"
+
+Apila pero normaliza a proporciones.
+
+Sintaxis
+
+```{verbatim}
+geom_bar(
+  position = "fill"
+)
+```
+
+Resultado
+
+Cada barra tiene altura 1 (100%).
+
+4. "dodge"
+
+Coloca grupos lado a lado.
+
+Sintaxis
+
+```{verbatim}
+geom_bar(
+  position = "dodge"
+)
+```
+
+Ejemplo
+
+
+
+
+
+
+
+
+
+
+
+
+
+

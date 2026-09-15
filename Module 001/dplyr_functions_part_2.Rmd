@@ -1,0 +1,499 @@
+---
+title: "DPLYR functions. Part 2"
+output:
+---
+
+
+```{r}
+
+library(tidyverse)
+
+library(palmerpenguins)
+
+```
+
+
+
+```{r}
+
+penguins |> str() 
+# toma penguins y lo pása a str()."
+#Sirve para obtener un resumen de la estructura de un objeto de R.
+
+```
+
+
+
+
+**DPLYR FUNCTIONS APPLIED TO COLUMNS**
+
+
+**The select() function**
+
+**Example**: Get a data frame that includes only the species and island columns.
+
+```{r}
+
+penguins |> select (species, island)
+
+```
+
+
+
+
+**Example**: Get a data frame that includes only the penguins' physical characteristics.
+
+```{r}
+
+penguins |> select (bill_length_mm:sex)
+
+```
+
+
+
+
+**Example**: Get a data frame that includes all the columns BUT island and year.
+
+```{r}
+
+penguins |> select(-island, -year)
+
+```
+
+
+
+
+**Example**: Get a data frame that includes any columns that ends in "mm"
+
+```{r}
+
+penguins |> select(ends_with("_mm"))
+
+```
+
+
+
+
+**Example**: Get a data frame that EXCLUDES any columns that ends in "mm"
+
+
+TRY IT BY YOURSELF
+<<<<<<< HEAD
+```{r}
+penguins |> select(-ends_with("_mm"))
+```
+=======
+
+
+
+>>>>>>> 5a7ca77f27e982c26a524311b80964f3a5a1adfa
+
+
+
+
+
+
+
+**The rename() function**
+
+
+**IMPORTANT**: If you want the output from applying any dplyr function to be permanent, you need to reassign it back to the original data frame. SEE NEXT EXAMPLE:
+
+
+**Example**: Rename "species" to be "penguin_species"
+
+```{r}
+
+<<<<<<< HEAD
+penguins |> rename (penguin_species = species, island_new = island)
+=======
+penguins |> rename (penguin_species = species)
+>>>>>>> 5a7ca77f27e982c26a524311b80964f3a5a1adfa
+
+```
+
+
+
+
+The previous renaming operation is not permanent yet. See next:
+
+```{r}
+
+penguins |> head()
+
+```
+
+
+
+
+
+To make it permanent, you would have to either reassign it back to the data frame OR assign it to a new data frame to capture the change. Let's use option 2 here:
+
+
+
+```{r}
+
+penguins_ver_2 =  penguins |> rename (penguin_species = species)
+
+```
+
+
+
+
+```{r}
+
+penguins_ver_2 |> head()
+
+```
+
+
+
+
+
+
+**The relocate() function**
+
+**Example**: Move "year" to the first position
+
+```{r}
+
+penguins |> head()
+
+```
+
+
+
+```{r}
+
+penguins |> relocate(year, .before = 1)
+
+```
+
+
+
+
+
+**Example**: Move "year" to be between island and bill_length_mm.
+
+```{r}
+
+penguins |> relocate (year, .after = island)
+
+# Equivalent: penguins |> relocate (year, .before = bill_length_mm)
+
+```
+
+
+
+
+
+
+
+
+
+**The mutate() function**
+
+This function allows to create new columns !
+
+
+**Example**: Create a new column to store the ratio of flipper length to body mass. Name it "fippler_to_mass".
+
+```{r}
+
+penguins |> mutate (fippler_to_mass = flipper_length_mm/body_mass_g)
+
+```
+
+
+
+
+
+Let's say you want to place the new column after the body mass column. Then:
+
+```{r}
+
+penguins |> mutate (fippler_to_mass = flipper_length_mm/body_mass_g, .after = body_mass_g )
+
+```
+
+
+
+
+
+
+
+
+**Example with mutate()**: Add a new column to the penguins data set that indicates whether each penguin’s body mass is above the average body mass of all penguins in the data. Place if after the "body_mass_g" function.
+
+```{r}
+
+penguins |> mutate (heavier_than_average = body_mass_g > mean(body_mass_g, na.rm = TRUE), .after = body_mass_g )
+
+```
+
+
+
+
+
+
+
+
+
+
+
+**Example with mutate()**: Get the count of penguins for each species. Name the count "penguin_count". Then, use the count to create a new column to store the percentage of penguins for each species.
+
+```{r}
+
+penguins |> count (species, name = "penguin_count")
+
+```
+
+
+
+
+```{r}
+
+penguins |> count (species, name = "penguin_count") |> mutate (percentage_of_penguins = (penguin_count / sum(penguin_count))*100)
+
+```
+
+
+
+
+
+
+
+
+
+**Exercises practicing the previously learned functions**
+
+
+**Question 1**: Get the percentage of males and females among the Adelie penguins.
+
+TRY IT BY YOURSELF
+
+<<<<<<< HEAD
+```{r}
+penguins |>
+  filter(species == "Adelie", !is.na(sex)) |>
+  count(sex, name = "QTY") |>
+  mutate(percentage = QTY / sum(QTY) * 100)
+```
+=======
+>>>>>>> 5a7ca77f27e982c26a524311b80964f3a5a1adfa
+
+
+
+
+
+**Question 2**: Create a new column with body mass in kilograms instead of grams (the current column is in grams)
+
+TRY IT BY YOURSELF
+
+
+<<<<<<< HEAD
+```{r}
+penguins |> mutate(body_mass_kg = body_mass_g/1000, .after = body_mass_g)
+
+
+```
+=======
+>>>>>>> 5a7ca77f27e982c26a524311b80964f3a5a1adfa
+
+
+
+
+
+
+
+
+
+**DPLYR GROUP_BY() FUNCTION**
+
+
+**Example**: Get a summary with the average body mass for each penguin species. Display the heavier species first.
+
+```{r}
+
+penguins |> group_by (species) |> summarise(average_body_mass = mean (body_mass_g, na.rm = TRUE)) |> arrange(desc (average_body_mass) )
+
+```
+
+
+
+
+
+
+**Example**: Get a summary with the min and max flipper length for each species.
+
+```{r}
+
+penguins |> group_by(species) |> summarise( min_flipper = min(flipper_length_mm, na.rm = TRUE),max_flipper = max(flipper_length_mm, na.rm = TRUE) )
+
+```
+
+
+
+
+
+
+
+
+
+<<<<<<< HEAD
+**Example**: Find out which species has the highest mean ratio of body mass to flipper length. Sort by ratio in descending order.
+=======
+**Example**: Find out which species has the highest ratio of body mass to flipper length, and to sort the results.
+>>>>>>> 5a7ca77f27e982c26a524311b80964f3a5a1adfa
+
+```{r}
+
+
+<<<<<<< HEAD
+penguins |> 
+  mutate(ratio_bm_fliplen = body_mass_g / flipper_length_mm) |> 
+  group_by(species) |> 
+  summarise(mean_ratio_bm_fliplen = mean(ratio_bm_fliplen, na.rm = TRUE)) |> 
+  arrange(desc(mean_ratio_bm_fliplen))
+=======
+penguins |> mutate(ratio_bm_fliplen = body_mass_g / flipper_length_mm) |> group_by(species) |> summarise(mean_ratio_bm_fliplen = mean(ratio_bm_fliplen, na.rm = TRUE)) |> arrange(desc(mean_ratio_bm_fliplen))
+>>>>>>> 5a7ca77f27e982c26a524311b80964f3a5a1adfa
+
+```
+
+
+
+
+
+
+
+
+**Example**: Get the five heaviest penguins (relative to body mass) for each species. Only show the species and the body mass in the output
+
+```{r}
+
+<<<<<<< HEAD
+penguins |>  
+  group_by(species) |> 
+  slice_max(body_mass_g, n = 5) |> 
+  arrange(species, desc(body_mass_g)) |> 
+  select (species, body_mass_g)
+=======
+penguins |>  group_by(species) |> slice_max(body_mass_g, n = 5) |> arrange(species, desc(body_mass_g)) |> select (species, body_mass_g)
+>>>>>>> 5a7ca77f27e982c26a524311b80964f3a5a1adfa
+
+```
+
+
+
+
+
+It is showing 6 penguins instead of 5 for the Gentoo species because there is more than one fifth-largest penguin for that species. I asked ChatGPT how to fix this, and it suggested using with_ties = FALSE.
+
+```{r}
+
+penguins |>  group_by(species) |> slice_max(body_mass_g, n = 5, with_ties = FALSE) |> arrange(species, desc(body_mass_g)) |> select (species, body_mass_g)
+
+```
+
+
+
+
+
+
+
+
+
+**Exercises practicing the previously learned functions**
+
+
+**Question 1**: "For each island, compute the maximum flipper length, then keep only the islands where this maximum exceeds 220 mm.
+
+
+TRY IT BY YOURSELF
+
+<<<<<<< HEAD
+```{r}
+penguins |>
+  group_by(island) |>
+  summarise(max_flipper_length = max(flipper_length_mm, na.rm = TRUE)) |>
+  filter(max_flipper_length > 220)
+```
+=======
+>>>>>>> 5a7ca77f27e982c26a524311b80964f3a5a1adfa
+
+
+
+
+
+
+
+**Question 2**: "Count the number of penguins by species and sex, and keep only those groups that have 60 or more penguins.
+
+
+TRY IT BY YOURSELF
+
+<<<<<<< HEAD
+```{r}
+penguins |> 
+  filter (!is.na(sex)) |> 
+  count (species, sex, name="count") |> 
+  filter (count >= 60)
+```
+=======
+>>>>>>> 5a7ca77f27e982c26a524311b80964f3a5a1adfa
+
+
+
+
+
+
+
+
+**Question 3**: Create a new column titled "body_mass_category" that labels penguins as “Small” (body mass less than 3500 g), “Medium” (at least 3500 but less than 5000 g), or “Large” (at least 5000 g) based on body mass.
+
+Then use this new column to count how many penguins fall in each category by species. Sort results in alphabetic order by species.
+
+
+TRY IT BY YOURSELF
+
+
+
+<<<<<<< HEAD
+```{r}
+penguins |>
+  mutate(
+    body_mass_category = case_when(
+      body_mass_g < 3500 ~ "Small",
+      body_mass_g >= 3500 & body_mass_g < 5000 ~ "Medium",
+      body_mass_g >= 5000 ~ "Large"
+    )
+  ) |>
+  count(species, body_mass_category) |>
+  arrange(species)
+```
+=======
+>>>>>>> 5a7ca77f27e982c26a524311b80964f3a5a1adfa
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
