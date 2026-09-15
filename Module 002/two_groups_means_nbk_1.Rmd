@@ -37,6 +37,16 @@ Management suspects that, on average, the service rating given by domestic guest
 
 When conducting the corresponding statistical test, you should consider that the variances of the scores provided by both types of guests are the same.
 
+```{text}
+Ho means score domestic <= mean score foreign
+Ha means score domestic > mean score foreign
+
+varianzes are the same
+```
+
+
+
+
 
 
 
@@ -183,6 +193,9 @@ The order in which you enter the vectors for the two samples MATTERS! The first 
 ```{r}
 
 t.test(domestic_scores, foreign_scores, alternative = c("greater"), var.equal = TRUE)
+
+# alternative = c("less")
+# alternative = c("two. sided")
 
 ```
 

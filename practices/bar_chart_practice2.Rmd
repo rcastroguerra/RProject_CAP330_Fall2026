@@ -5,6 +5,20 @@ title: "bar char practicas"
 
 https://ggplot2.tidyverse.org/reference/geom_bar.html
 
+
+```{r}
+
+# Then restart R and run:
+library(dplyr)
+library(tidyverse)
+library(palmerpenguins)
+library(conflicted)
+
+conflict_prefer("filter", "dplyr")
+conflict_prefer("lag", "dplyr")
+
+```
+
 # Guía completa: geom_bar(), geom_col() y stat_count()
 
 ## 1. Concepto fundamental
@@ -683,6 +697,117 @@ geom_point(
 )
 
 ```
+
+## Posiciones más comunes
+
+1. "identity"
+
+No realiza ningún ajuste.
+
+Sintaxis
+
+```{verbatim}
+geom_bar(
+  stat = "identity",
+  position = "identity"
+)
+```
+Resultado
+
+Los datos se dibujan exactamente donde están.
+
+Ejemplo
+
+```{r}
+penguins |>
+  count(species) |>
+  ggplot(aes(x = species, y = n)) +
+  geom_bar(
+    stat = "identity",
+    position = "identity"
+  )
+```
+```{verbatim}
+             geom_bar()
+                │
+       ┌────────┴────────┐
+       ↓                 ↓
+     stat             position
+  ¿cómo obtengo      ¿cómo coloco
+   los valores?       las barras?
+       │                 │
+    count             identity
+    identity           dodge
+                       stack
+                       fill
+
+```
+
+2. "stack"
+
+Apila elementos verticalmente.
+
+Sintaxis
+
+```{verbatim}
+geom_bar(
+  position = "stack"
+)
+```
+```{r}
+penguins
+```
+```{r}
+diamonds
+```
+
+
+Ejemplo
+
+```{r}
+ggplot(penguins, aes(island, fill = sex)) +
+  geom_bar(position = "stack")
+```
+
+Resultado
+
+Las barras se colocan una sobre otra.
+
+3. "fill"
+
+Apila pero normaliza a proporciones.
+
+Sintaxis
+
+```{verbatim}
+geom_bar(
+  position = "fill"
+)
+```
+
+Resultado
+
+Cada barra tiene altura 1 (100%).
+
+4. "dodge"
+
+Coloca grupos lado a lado.
+
+Sintaxis
+
+```{verbatim}
+geom_bar(
+  position = "dodge"
+)
+```
+
+Ejemplo
+
+
+
+
+
+
 
 
 
