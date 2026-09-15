@@ -122,6 +122,9 @@ hotel_scores_df |>
 ```
 
 
+```{r}
+coffee_stores_df |> ggplot(aes(x = store, y = caffeine_content)) + geom_point() + labs(x = "Store", y = "Caffeine Content (mg)")
+```
 
 
 
@@ -245,11 +248,31 @@ a) Reviewing slides from 18 to 22.
 b) Watching a YouTube I prepared about this topic (share link to video).
 
 
+```{r}
+length(domestic_scores)
+length(foreign_scores)
+```
+```{r}
+# Compute the pooled standard deviation and store the result in a variable.
 
+sp_guest_scores <- sqrt( ( 42*var(domestic_scores) + 42*var(foreign_scores) ) / (43+43-2) )
 
+sp_guest_scores
+```
 
+Now compute the effect size:
 
+```{r}
+abs( mean(domestic_scores) - mean(foreign_scores) ) / sp_guest_scores
+```
 
+I would say this a medium to large effect size. How does that translate to practical significance?
+
+This is an effect size that is likely considered practically significant by domain knowledge experts.
+
+Small effect size: Unlikely to be considered practically significant by domain knowledge experts.
+
+Large effect size: Very likely to be considered practically significant by domain knowledge experts.
 
 
 
@@ -318,15 +341,39 @@ WORK ON THIS INDEPENDENTLY !!!
 
 
 
+```{r}
+coffee_stores_df |>
+  group_by(store) |>
+  summarise(
+    mean = round(mean(caffeine_content), 1),
+    median = round(median(caffeine_content), 1),
+    sd = round(sd(caffeine_content), 1)
+  )
+```
+
 
 Do a box plot AND a dot plot of caffeine content by store.
+
+
+```{r}
+coffee_stores_df|>
+  ggplot(aes(x = store, y = caffeine_content))+
+  geom_boxplot() +
+  labs(title = "Coffee Store", x = "store", y = "coffee content")
+```
 
 
 WORK ON THIS INDEPENDENTLY !!!
 
 
+```{r}
+coffee_stores_df |> ggplot(aes(x = store, y = caffeine_content)) + geom_jitter(width = 0.2, height = 0) + labs(x = "Store", y = "Caffeine
+Content (mg)")
+```
+From Claude AI:
 
-
+width - horizontal spread (0.2 is a good starting point; increase if points still overlap, decrease if they spread too far from their category)
+height = 0 - keeps vertical jitter off, so the caffeine values on the y-axis stay accurate
 
 
 
@@ -353,17 +400,51 @@ WORK ON THIS INDEPENDENTLY !!!
 
 **Setting up the hypotheses**
 
+Version 1:
+
+Ho: μa = μb 
+
+Ha: μa != μb
+
+
+Alternative way:
+
+Ho: Mean caffeine content at Store A = Mean caffeine content at Store B
+
+Ha: Mean caffeine content at Store A != Mean caffeine content at Store B
+
+
 
 COMPLETE IT
 
 
 
 **Run a two samples t test**
+In contrast to exercise 1, here in exercise 2, I am not providing you with info about whether you can safely assume that the variances of both variables are the same or not. **From now on, I do not have to give you that information** because I will teach you how to check for it by running a hypothesis test to compare the variances of two populations.
+
+
+**Test to check for the equality of the variances :**
+
+Ho: Variance (or SD) of "Caffeine content at store A" = Variance (or SD) of "Caffeine content at store B"
+
+Ha: Variance (or SD) of "Caffeine content at store A" != Variance (or SD) of "Caffeine content at store 8"
 
 
 COMPLETE IT
 
+```{r}
+var.test(coffeeA,coffeeB, alternative = "two.sided")
+```
+p-value = 0.8328 is very large (way bigger than alpha = 0.05), thus, we do not have evidence to reject Ho and cannot support Ha. Thus, we conclude that the variances of both variables are the same. **Therefore, when we apply the t. test(), we should set var.equaly= TRUE**
 
+```{r}
+t.test(coffeeA, coffeeB, alternative = "two.sided", var.equal = TRUE)
+```
+- State your decision and conclusion 
+
+Decision: p-value = 0.2221 > alpha =0.05, therefore, we do not have evidence to reject Ho and cannot support Ha. 
+
+Conclusion: The samples **do NOT give us enough evidence** to conclude that the average caffeine content is different in the two stores. The manager's suspicion is not backed up by the data.
 
 
 **What kind of error COULD you be making based on the decision you made after running the t test?**

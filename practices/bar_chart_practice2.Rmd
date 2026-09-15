@@ -315,15 +315,31 @@ penguins |>
   geom_bar() # Por debajo, geom_bar() usa stat_count:
 ```
 
-| **`geom_*`**       | **`stat_*` por defecto** | **¿Qué calcula?**                                  |
-| ------------------ | ------------------------ | -------------------------------------------------- |
-| `geom_bar()`       | `stat_count`             | Cuenta observaciones                               |
-| `geom_histogram()` | `stat_bin`               | Agrupa los datos en *bins*                         |
-| `geom_point()`     | `stat_identity`          | No transforma los datos; usa los valores tal cual  |
-| `geom_smooth()`    | `stat_smooth`            | Ajusta una curva/modelo, normalmente una regresión |
-| `geom_boxplot()`   | `stat_boxplot`           | Calcula cuartiles, mediana y valores extremos      |
-| `geom_density()`   | `stat_density`           | Estima la densidad de los datos                    |
-| `geom_sf()`        | `stat_sf`                | Maneja y transforma geometrías espaciales          |
+## Tipo de variable espera cada geom_* en x y y.
+
+> Importante: en ggplot2, "categórica" puede ser factor o character; "numérica" normalmente es integer o double
+
+| `geom_*`           | `stat_*` por defecto | `x` normalmente           | `y` normalmente     | ¿Qué calcula / necesita?                                            |
+| ------------------ | -------------------- | ------------------------- | ------------------- | ------------------------------------------------------------------- |
+| `geom_bar()`       | `stat_count`         | **Categórica**            | ❌ No se proporciona | **Calcula el número de observaciones** por categoría                |
+| `geom_histogram()` | `stat_bin`           | **Numérica**              | ❌ No se proporciona | **Calcula intervalos (bins)** y cuenta observaciones en cada uno    |
+| `geom_point()`     | `stat_identity`      | **Numérica o categórica** | **Numérica**        | **No calcula/transforma los valores**; usa `x` e `y` directamente   |
+| `geom_smooth()`    | `stat_smooth`        | **Numérica**              | **Numérica**        | **Calcula un modelo/curva** y sus valores suavizados                |
+| `geom_boxplot()`   | `stat_boxplot`       | **Categórica**            | **Numérica**        | **Calcula** mediana, cuartiles, límites y posibles valores atípicos |
+| `geom_density()`   | `stat_density`       | **Numérica**              | ❌ No se proporciona | **Calcula una estimación de densidad**                              |
+| `geom_sf()`        | `stat_sf`            | ❌ Normalmente no          | ❌ Normalmente no    | **Calcula/maneja la representación de geometrías espaciales**       |
+
+
+
+| `geom`             | `x`           | `y`         | Idea principal             |
+| ------------------ | ------------- | ----------- | -------------------------- |
+| `geom_bar()`       | 🟦 Categórica | —           | **Cuenta**                 |
+| `geom_histogram()` | 🔢 Numérica   | —           | **Agrupa números**         |
+| `geom_point()`     | 🔢/🟦         | 🔢          | **Punto por observación**  |
+| `geom_smooth()`    | 🔢            | 🔢          | **Modelo/curva**           |
+| `geom_boxplot()`   | 🟦 Categórica | 🔢 Numérica | **Distribución por grupo** |
+| `geom_density()`   | 🔢 Numérica   | —           | **Densidad**               |
+| `geom_sf()`        | —             | —           | **Geometría espacial**     |
 
 
 
@@ -755,10 +771,10 @@ geom_bar(
 )
 ```
 ```{r}
-penguins
+head(penguins,5)
 ```
 ```{r}
-diamonds
+head(diamonds,5)
 ```
 
 
@@ -802,6 +818,705 @@ geom_bar(
 ```
 
 Ejemplo
+
+```{r}
+ggplot(
+  penguins,
+  aes(species, fill = sex)
+)+
+  geom_bar(
+    position = "dodge"
+  )
+  
+```
+Resultado
+
+Las barras aparecen separadas horizontalmente.
+
+5. "jitter"
+
+Agrega ruido aleatorio.
+
+Sintaxis
+
+```{verbatim}
+geom_point(
+  position = "jitter"
+)
+
+o
+
+geom_point(
+  position = position_jitter(
+    width = 0.2,
+    height = 0.1
+  )
+)
+```
+Resultado
+
+Reduce la superposición de puntos.
+
+Ejemplo
+
+```{r}
+penguins |>
+  ggplot(aes(species, bill_length_mm)) +
+  geom_point(
+    position = position_jitter(
+      width = 0.2,
+      height = 0.1
+    )
+  )
+
+```
+
+6. "nudge"
+
+Desplaza elementos una distancia fija.
+
+Sintaxis
+
+```{verbatim}
+geom_text(
+  position = position_nudge(
+    x = 0.5,
+    y = 1
+  )
+)
+```
+Resultado
+
+Las etiquetas se mueven respecto a su posición original.
+
+
+## Resumen para tu guía
+### position
+
+Controla cómo se acomodan los datos antes de dibujarse.
+
+Sintaxis
+
+```{r, eval=FALSE}
+position = "nombre"
+
+position = position_nombre(...)
+
+#Posiciones principales
+
+position = "identity"
+position = "stack"
+position = "fill"
+position = "dodge"
+position = "jitter"
+
+#Con parámetros
+
+position = position_jitter(
+  width = 0.2,
+  height = 0
+)
+
+position = position_nudge(
+  x = 0.5,
+  y = 1
+)
+
+```
+
+## ... (argumentos adicionales)
+
+Descripción: ... permite pasar argumentos extra a la capa (layer()). Es uno de los conceptos más importantes de ggplot2 porque conecta geom, stat y otros componentes.
+
+Sintaxis general
+
+```{r, eval=FALSE}
+geom_*(
+  ...
+)
+
+# o
+
+stat_*(
+  ...
+)
+```
+
+Los argumentos dentro de ... pueden pertenecer a distintas categorías.
+
+### Categoría 1: Estéticas fijas (Static aesthetics)
+
+Son propiedades que se aplican a toda la capa y no están mapeadas dentro de aes().
+
+Sintaxis
+
+```{r, eval=FALSE}
+geom_point(
+  colour = "red",
+  size = 3
+)
+```
+
+Ejemplo
+
+```{r}
+penguins|>
+  ggplot(
+    aes(body_mass_g, bill_length_mm)
+  ) +
+  geom_point(
+    colour = "red",
+    size = 3,
+    alpha = 0.5
+  )
+```
+
+####¿Qué ocurre?
+
+Todos los puntos:
+
+- son rojos
+- tienen tamaño 3
+- tienen transparencia 0.5
+
+### Estéticas comunes
+
+| Aesthetic   | ¿Qué controla?                     | Valores típicos                   | Ejemplo               |
+| ----------- | ---------------------------------- | --------------------------------- | --------------------- |
+| `colour`    | **Color** del borde, línea o punto | `"red"`, `"blue"`, `"black"`      | `colour = "blue"`     |
+| `fill`      | **Color de relleno** de una figura | `"red"`, `"blue"`, `"gray"`       | `fill = "lightblue"`  |
+| `linewidth` | **Grosor de líneas**               | `0.5`, `1`, `2`, etc.             | `linewidth = 2`       |
+| `linetype`  | **Tipo de línea**                  | `"solid"`, `"dashed"`, `"dotted"` | `linetype = "dashed"` |
+| `shape`     | **Forma de los puntos**            | `16`, `17`, `19`, etc.            | `shape = 17`          |
+| `size`      | **Tamaño** del elemento            | `1`, `2`, `3`, etc.               | `size = 3`            |
+| `alpha`     | **Transparencia**                  | `0` a `1`                         | `alpha = 0.5`         |
+
+
+📏 linewidth
+
+- Controla el grosor de una línea.
+
+
+➖ linetype
+
+- Controla cómo está dibujada una línea.
+
+| `linetype`   | Apariencia |
+| ------------ | ---------- |
+| `"solid"`    | ─────────  |
+| `"dashed"`   | - - - - -  |
+| `"dotted"`   | · · · · ·  |
+| `"dotdash"`  | — · — · —  |
+| `"longdash"` | ── ── ──   |
+| `"twodash"`  | ─ ─ ─ ─    |
+
+
+🔵 shape
+
+- Controla la forma de los puntos de geom_point().
+
+| Código | Forma | Descripción                    |
+| -----: | :---: | ------------------------------ |
+|    `0` |   □   | Cuadrado vacío                 |
+|    `1` |   ○   | Círculo vacío                  |
+|    `2` |   △   | Triángulo vacío                |
+|    `3` |   +   | Cruz                           |
+|    `4` |   ×   | X                              |
+|    `5` |   ◇   | Rombo vacío                    |
+|    `6` |   ▽   | Triángulo invertido vacío      |
+|    `7` |   ⊕   | Cuadrado con cruz              |
+|    `8` |   *   | Asterisco                      |
+|    `9` |   ◇   | Rombo con cruz                 |
+|   `10` |   ⊗   | Círculo con X                  |
+|   `11` |   ⊞   | Cuadrado con X                 |
+|   `12` |   ⊕   | Triángulo con cruz             |
+|   `13` |   ⊖   | Círculo con línea horizontal   |
+|   `14` |   ⊗   | Círculo con X                  |
+|   `15` |   ■   | Cuadrado relleno               |
+|   `16` |   ●   | Círculo relleno                |
+|   `17` |   ▲   | Triángulo relleno              |
+|   `18` |   ◆   | Rombo relleno                  |
+|   `19` |   ●   | Círculo relleno grande         |
+|   `20` |   •   | Punto pequeño                  |
+|   `21` |   ●   | Círculo rellenable             |
+|   `22` |   ■   | Cuadrado rellenable            |
+|   `23` |   ▲   | Rombo/cuadrado rellenable      |
+|   `24` |   ▲   | Triángulo rellenable           |
+|   `25` |   ▼   | Triángulo invertido rellenable |
+
+⚠️ Una distinción importante: 15–20 vs 21–25
+
+Los 21–25 son shapes especiales porque permiten controlar por separado colour y fill.
+
+Por ejemplo:
+
+```{r}
+penguins |>
+  ggplot(aes(species, body_mass_g))+
+  geom_point(
+    shape = 21,
+    colour = "black",
+    fill = "red",
+    size = 4
+  )
+```
+
+
+
+📐 size
+
+- Controla el tamaño.
+
+👻 alpha
+
+- Controla la transparencia.
+
+El valor está entre:
+
+- 0 → completamente transparente
+- 1 → completamente opaco
+
+
+## Resumen
+
+| Aesthetic | Significado | Pregunta clave |
+|---|---|---|
+| `colour` | Exterior | ¿De qué **COLOR**? |
+| `fill` | Interior | ¿De qué color el **RELLENO**? |
+| `linewidth` | Grosor | ¿Qué tan **GRUESA** es la línea? |
+| `linetype` | Estilo de línea | ¿Qué **TIPO** de línea? |
+| `shape` | Forma | ¿Qué **FORMA** tiene el punto? |
+| `size` | Tamaño | ¿Qué **TAMAÑO**? |
+| `alpha` | Transparencia | ¿Qué tan **TRANSPARENTE**? |
+
+
+### Categoría 2: Pasar argumentos del geom desde un stat_*()
+
+Cuando usas una función stat_*(), puedes enviar parámetros al geom mediante ....
+
+Sintaxis
+
+```{verbatim}
+stat_*(
+  geom = "...",
+  parametro_del_geom = ...
+)
+```
+📊 Geoms principales
+
+| `geom`             | ¿Qué dibuja?                  | `x`                       | `y`                         | Otras variables típicas                    |
+| ------------------ | ----------------------------- | ------------------------- | --------------------------- | ------------------------------------------ |
+| `geom_point()`     | Puntos                        | Numérica o categórica     | **Numérica**                | `colour`, `fill`, `shape`, `size`, `alpha` |
+| `geom_line()`      | Líneas conectadas             | **Numérica u ordenada**   | **Numérica**                | `colour`, `linewidth`, `linetype`          |
+| `geom_path()`      | Trayectoria/ruta              | **Numérica**              | **Numérica**                | `group`, `colour`, `linewidth`             |
+| `geom_bar()`       | Barras contando observaciones | **Categórica**            | ❌ No se proporciona         | `fill`, `colour`                           |
+| `geom_col()`       | Barras con altura dada        | **Categórica o numérica** | **Numérica**                | `fill`, `colour`                           |
+| `geom_histogram()` | Histograma                    | **Numérica**              | ❌ No se proporciona         | `binwidth`, `fill`, `colour`               |
+| `geom_boxplot()`   | Caja y bigotes                | **Categórica**            | **Numérica**                | `fill`, `colour`, `group`                  |
+| `geom_violin()`    | Distribución tipo violín      | **Categórica**            | **Numérica**                | `fill`, `colour`, `group`                  |
+| `geom_density()`   | Curva de densidad             | **Numérica**              | ❌ No se proporciona         | `fill`, `colour`, `alpha`                  |
+| `geom_area()`      | Área rellena                  | **Numérica**              | **Numérica**                | `fill`, `colour`, `alpha`                  |
+| `geom_ribbon()`    | Banda/intervalo               | **Numérica**              | ❌ `y` no se usa normalmente | `ymin` **numérica**, `ymax` **numérica**   |
+| `geom_smooth()`    | Curva suavizada/modelo        | **Numérica**              | **Numérica**                | `method`, `colour`, `fill`                 |
+
+
+📐 Geometrías para líneas y formas
+
+| `geom`                | ¿Qué dibuja?                   |
+| --------------------- | ------------------------------ |
+| `geom_abline`         | Línea con pendiente/intercepto |
+| `geom_hline`          | Línea horizontal               |
+| `geom_vline`          | Línea vertical                 |
+| `geom_segment`        | Segmento de línea              |
+| `geom_curve`          | Línea curva                    |
+| `geom_spoke`          | Líneas desde un punto          |
+| `geom_contour`        | Líneas de contorno             |
+| `geom_contour_filled` | Contornos rellenos             |
+
+
+🔷 Rectángulos y polígonos
+
+| `geom`         | ¿Qué dibuja?                              |
+| -------------- | ----------------------------------------- |
+| `geom_rect`    | Rectángulos                               |
+| `geom_tile`    | Rectángulos organizados en una cuadrícula |
+| `geom_raster`  | Raster/cuadrícula de celdas               |
+| `geom_polygon` | Polígonos                                 |
+| `geom_hex`     | Hexágonos                                 |
+
+
+📝 Texto y etiquetas
+
+| `geom`              | ¿Qué dibuja?                     |
+| ------------------- | -------------------------------- |
+| `geom_text`         | Texto                            |
+| `geom_label`        | Texto dentro de una etiqueta     |
+| `geom_text_repel`*  | Texto evitando superposición     |
+| `geom_label_repel`* | Etiquetas evitando superposición |
+
+🗺️ Datos espaciales
+
+| `geom`          | ¿Qué dibuja?     |
+| --------------- | ---------------- |
+| `geom_sf`       | Geometrías `sf`  |
+| `geom_spatial`* | Datos espaciales |
+
+
+### Para stat_type(), los más útiles son estos:
+
+| `stat_*()`              | Nº de `geom` útiles/prácticos | `geom =`                                                                                |
+| ----------------------- | ----------------------------: | --------------------------------------------------------------------------------------- |
+| `stat_identity()`       |       **7** | `"point"`, `"line"`, `"path"`, `"text"`, `"label"`, `"area"`, `"ribbon"`                |
+| `stat_count()`          |       **4** | `"bar"`, `"point"`, `"text"`, `"label"`                                                 |
+| `stat_bin()`            |       **1** | `"bar"`                                                                                 |
+| `stat_density()`        |       **2** | `"area"`, `"line"`                                                                      |
+| `stat_boxplot()`        |       **1** | `"boxplot"`                                                                             |
+| `stat_ydensity()`       |       **1** | `"violin"`                                                                              |
+| `stat_smooth()`         |       **1** | `"smooth"`                                                                              |
+| `stat_summary()`        |       **7** | `"pointrange"`, `"point"`, `"line"`, `"errorbar"`, `"linerange"`, `"crossbar"`, `"bar"` |
+| `stat_summary_bin()`    |       **7** | `"pointrange"`, `"point"`, `"line"`, `"errorbar"`, `"linerange"`, `"crossbar"`, `"bar"` |
+| `stat_ecdf()`           |       **3** | `"step"`, `"point"`, `"line"`                                                           |
+| `stat_ellipse()`        |       **3** | `"path"`, `"polygon"`, `"point"`                                                        |
+| `stat_contour()`        |       **2** | `"contour"`, `"path"`                                                                   |
+| `stat_contour_filled()` |       **2** | `"contour_filled"`, `"polygon"`                                                         |
+| `stat_bin_2d()`         |       **3** | `"bin_2d"`, `"tile"`, `"raster"`                                                        |
+| `stat_bin_hex()`        |       **2** | `"binhex"`, `"polygon"`                                                                 |
+| `stat_summary_2d()`     |       **2** | `"tile"`, `"raster"`                                                                    |
+| `stat_summary_hex()`    |       **1** | `"hex"`                                                                                 |
+| `stat_function()`       |       **1** | `"function"`                                                                            |
+| `stat_sf()`             |       **1** | `"sf"`                                                                                  |
+| `stat_sf_coordinates()` |       **3** | `"point"`, `"text"`, `"label"`                                                          |
+| `stat_unique()`         |       **3** | `"point"`, `"text"`, `"label"`                                                          |
+| `stat_sum()`            |       **2** | `"count"`, `"point"`                                                                    |
+| `stat_connect()`        |       **2** | `"line"`, `"path"`                                                                      |
+| `stat_manual()`         | **depende** | Depende de las variables que produzca                                                   |
+
+#### OJO RECUERDA QUE CADA GEOM TIENE SUS PROPIOS ARGUMENTOS
+
+
+
+
+#### ⚠️ Pero hay algo importante sobre stat_*()
+
+Tu sintaxis:
+
+```{verbatim}
+stat_*(
+  geom = "...",
+  parametro_del_geom = ...
+)
+```
+significa que estás utilizando un stat específico y diciéndole qué geom utilizar para dibujar el resultado.
+
+Por ejemplo:
+
+```{r, eval=FALSE}
+stat_count(
+  geom = "bar"
+)
+```
+es conceptualmente lo que ocurre cuando haces:
+
+```{r, eval=FALSE}
+geom_bar()
+```
+porque:
+
+```{verbatim}
+geom_bar()
+    ↓
+stat_count
+    ↓
+geom_bar
+```
+
+Puedes pensar:
+
+```{verbatim}
+STAT
+ ↓
+¿Qué cálculo hago?
+
+GEOM
+ ↓
+¿Cómo dibujo el resultado?
+```
+
+
+Ejemplo
+
+```{r}
+ggplot(penguins, aes(body_mass_g)) +
+  stat_density(
+    geom = "area",
+    fill = "steelblue",
+    alpha = 0.5,
+    outline.type = "both"
+  )
+```
+¿Qué pasa?
+
+- stat_density() calcula la densidad.
+- geom = "area" dibuja un área.
+- fill, alpha y outline.type pertenecen a geom_area().
+
+
+### Categoría 3: Pasar argumentos del stat desde un geom_*()
+
+A la inversa: cuando usas una función geom_*(), puedes pasarle parámetros del stat por ....
+
+Sintaxis
+
+```{r, eval = FALSE}
+geom_*(
+  stat = "...",
+  parametro_del_stat = ...
+)
+```
+
+Ejemplo
+
+```{r}
+ggplot(penguins, aes(body_mass_g)) +
+  geom_area(
+    stat = "density",
+    adjust = 0.5
+  )
+```
+¿Qué ocurre?
+- geom_area() dibuja áreas.
+- stat = "density" calcula una densidad.
+- adjust = 0.5 pertenece a stat_density().
+
+Otro ejemplo
+
+```{r}
+penguins |>
+  ggplot(aes(bill_depth_mm))+
+geom_histogram(
+  bins = 30 # es un parámetro del estadístico (stat_bin), no del geom.
+)
+```
+bins es un parámetro del estadístico (stat_bin), no del geom.
+
+
+### Categoría 4: key_glyph
+
+Controla cómo aparece la capa en la leyenda.
+
+Sintaxis
+
+```{r, eval=FALSE}
+geom_*(
+  key_glyph = ...
+)
+```
+Ejemplo
+
+```{r}
+ggplot(mtcars, aes(wt, mpg, colour = factor(cyl))) +
+  geom_point(
+    key_glyph = draw_key_dotplot
+  )
+```
+ejemplo
+
+```{r}
+ggplot(penguins, aes(x = species, y = body_mass_g, colour = species)) +
+  geom_point(
+    key_glyph = "point"
+  )
+```
+¿Qué valores puede recibir?
+
+key_glyph puede recibir normalmente el nombre de una función de draw_key_*().
+
+Algunos ejemplos:
+
+| `key_glyph` | Apariencia aproximada en la leyenda | Uso                 |
+| ----------- | ----------------------------------- | ------------------- |
+| `"point"`   | ●                                   | puntos              |
+| `"path"`    | ───                                 | líneas/trayectorias |
+| `"polygon"` | ▰                                   | polígonos           |
+| `"rect"`    | ▭                                   | rectángulos         |
+| `"text"`    | Abc                                 | texto               |
+| `"label"`   | etiqueta                            | etiquetas           |
+| `"blank"`   | nada                                | ocultar el símbolo  |
+
+```{verbatim}
+STAT
+ ↓
+calcula / transforma datos
+ ↓
+produce variables
+ ↓
+GEOM
+ ↓
+usa esas variables para dibujar
+```
+## just
+
+Descripción: controla la alineación horizontal de las columnas (barras) respecto a las marcas del eje X (axis breaks).
+
+Se usa principalmente en:
+
+```{r, eval=FALSE}
+geom_col()
+geom_bar()
+```
+Sintaxis
+
+```{r, eval=FALSE}
+geom_col(
+  just = valor
+)
+
+geom_bar(
+  just = valor
+)
+```
+
+Donde:
+
+```{verbatim}
+0 <= just <= 1
+```
+Valor por defecto: just = 0.5
+
+Las columnas quedan centradas sobre cada marca del eje.
+
+Ejemplo
+
+```{r}
+ggplot(mtcars, aes(factor(cyl))) +
+  geom_bar(
+    just = 0 #El borde izquierdo de la barra coincide con la marca del eje.
+  )
+ggplot(mtcars, aes(factor(cyl))) +
+  geom_bar(
+    just = 0.5 # Centrado
+  )
+ggplot(mtcars, aes(factor(cyl))) +
+  geom_bar(
+    just = 1 # El borde derecho de la barra coincide con la marca del eje.
+  )
+
+```
+just determina dónde se posiciona una barra con respecto a la marca del eje X. 0 = izquierda, 0.5 = centro (predeterminado), 1 = derecha. Se usa principalmente en geom_bar() y geom_col().
+
+
+## lineend
+
+Descripción: controla la forma en que terminan los extremos de una línea. Se usa en geoms que dibujan líneas como geom_line(), geom_segment(), geom_path(), geom_curve(), etc.
+
+Sintaxis
+
+```{r, eval=FALSE}
+geom_line(
+  lineend = "round"
+)
+
+# o
+
+geom_segment(
+  lineend = "square"
+)
+```
+Opciones
+
+1. lineend = "butt" (por defecto)
+
+La línea termina exactamente en el punto final.
+
+```{r}
+library(ggplot2)
+
+datos <- data.frame(
+  start = c(1, 1, 2),
+  end   = c(2, 3, 3),
+  y     = c(40, 45, 50)
+)
+
+ggplot(datos) +
+  geom_segment(
+    aes(
+      x = start,
+      xend = end,
+      y = y,
+      yend = y
+    ),
+    linewidth = 8,
+    lineend = "butt"
+  )
+```
+
+
+
+```{r}
+
+
+ggplot(penguins) +
+  geom_segment(
+    aes(
+      x = 1,
+      xend = bill_depth_mm,
+      y = 60,
+      yend = bill_length_mm
+    ),
+    linewidth = 4,
+    lineend = "butt"
+  )
+```
+
+2. lineend = "round"
+
+Los extremos son redondeados.
+
+```{r}
+ggplot(penguins) +
+  geom_segment(
+    aes(
+      x = 1,
+      xend = bill_depth_mm,
+      y = 60,
+      yend = bill_length_mm
+    ),
+    linewidth = 4,
+    lineend = "round"
+  )
+```
+
+3. lineend = "square"
+
+Los extremos son cuadrados y sobresalen ligeramente.
+
+```{r}
+ggplot(penguins) +
+  geom_segment(
+    aes(
+      x = 1,
+      xend = bill_depth_mm,
+      y = 60,
+      yend = bill_length_mm
+    ),
+    linewidth = 4,
+    lineend = "square"
+  )
+```
+## linejoin
+
+Descripción: controla la forma en que se unen dos segmentos de línea cuando hay una esquina o cambio de dirección.
+
+Se utiliza en geoms que dibujan líneas, como:
+
+
+
+
+
+
+
+
+
 
 
 
