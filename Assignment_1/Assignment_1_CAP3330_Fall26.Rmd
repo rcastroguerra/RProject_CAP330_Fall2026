@@ -753,4 +753,68 @@ Heavy smokers are associated with prominent wrinkles around the eyes, while non-
 
 
 
+**Additional Visualization (Not Required):** 
 
+**The following graph was created only to visually illustrate the decision of the hypothesis test and is not part of the required statistical analysis.**
+
+```{r, echo=FALSE}
+library(tidyverse)
+
+# Chi-Square Test
+test <- chisq.test(matrix_smoking_wrinkles)
+
+# Contribution of each cell to χ²
+contrib <- (test$observed - test$expected)^2 / test$expected
+
+# Convert to data frame
+contrib_df <- as.data.frame(as.table(contrib))
+
+# Improve labels
+contrib_df$Cell <- c(
+  "Heavy Smoker\nProminent Wrinkles",
+  "Light Smoker\nProminent Wrinkles",
+  "Non-Smoker\nProminent Wrinkles",
+  "Heavy Smoker\nWrinkles Not Prominent",
+  "Light Smoker\nWrinkles Not Prominent",
+  "Non-Smoker\nWrinkles Not Prominent"
+)
+
+# Plot
+ggplot(contrib_df,
+       aes(x = reorder(Cell, Freq),
+           y = Freq,
+           fill = Var1)) +
+
+  geom_col(width = 0.7) +
+
+  geom_text(
+    aes(label = round(Freq, 2)),
+    hjust = -0.1,
+    size = 4
+  ) +
+
+  coord_flip() +
+
+  labs(
+    title = "Chi-Square Contribution Plot",
+    subtitle = "Contribution of Each Cell to the Overall Chi-Square Statistic",
+    x = "",
+    y = expression("Contribution to " * chi^2),
+    fill = "Smoking Category"
+  ) +
+
+  theme_minimal() +
+
+  theme(
+    plot.title = element_text(face = "bold"),
+    legend.position = "bottom"
+  )
+```
+
+The graph shows the contribution of each cell to the overall Chi-Square statistic. Cells with larger contributions are those that differ the most from the values expected under independence.
+
+The largest contributions come from the combinations Heavy Smoker + Prominent Wrinkles, Heavy Smoker + Wrinkles Not Prominent, Non-Smoker + Prominent Wrinkles, and Non-Smoker + Wrinkles Not Prominent. These combinations are primarily responsible for the rejection of the null hypothesis.
+
+In contrast, the contributions associated with light smokers are very small, indicating that their observed counts are close to what would be expected if smoking habits and wrinkle status were independent.
+
+Therefore, the graph supports the conclusion that heavy smokers are associated with prominent wrinkles, whereas non-smokers are associated with non-prominent wrinkles.
