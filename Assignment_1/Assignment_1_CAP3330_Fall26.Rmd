@@ -1,0 +1,756 @@
+---
+title: "Assignment_1_CAP3330_Fall26"
+output: html_document
+---
+
+```{r, echo=FALSE, results='hide', message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+
+Create an R notebook to answer the questions presented below.
+
+### **Question 1** (40 points) 
+
+A researcher wants to compare the average anxiety levels of people living in Alaska and Hawaii. The researcher does not have any specific hypothesis in mind in terms of which state could have higher mean anxiety levels. She collected anxiety scores for two random samples of residents, one from each state. Each resident was given a score between 0 to 100 (higher scores mean more anxiety). 
+
+The anxiety scores she collected for each state are shown next. Create two vectors in R with these data (one vector for Alaska scores and another one for Hawaii scores).
+
+Alaska scores:  
+69 76 64 65 67 77 56 67 62 82 56 77 71 68 76 69 64 66 83 77 75 79 71 75 86 67 70 73 77 71 78 64 62 58 67
+
+Hawaii scores:  
+64 76 74 74 73 71 75 63 67 77 74 67 69 70 64 72 72 72 74 76 67 69 80 73 68 77 71 73 69 68 71 71 73 75 71
+
+create these two vectors
+```{r}
+alaska <- c(69,76,64,65,67,77,56,67,62,82,56,77,71,68,76,69,64,66,83,77,
+            75,79,71,75,86,67,70,73,77,71,78,64,62,58,67)
+hawaii <- c(64,76,74,74,73,71,75,63,67,77,74,67,69,70,64,72,72,72,74,76,
+            67,69,80,73,68,77,71,73,69,68,71,71,73,75,71)
+```
+
+
+
+
+**a) (15 points) Run an exploratory analysis relevant to the question addressed by this researcher. The analysis must include computing summary stats and doing one plot. Also, and most importantly, interpret the results of the exploratory analysis.**
+
+**Requirement: You MUST do the exact same exploratory analysis we did in class. If you do something different (e.g., use different R functions, compute different summary stats, do different plots, etc than the ones we used in class), you will receive ZERO points for this part with the following comment: Intentionally failed to follow the instructions.**
+
+```{r}
+length(alaska)
+length(hawaii)
+```
+Create a data frame containing the anxiety scores and the corresponding state.
+
+```{r}
+anxiety_scores_df <- data.frame(
+  anxiety_score = c(alaska, hawaii),
+  state = c(rep("Alaska", length(alaska)),
+            rep("Hawaii", length(hawaii)))
+)
+```
+
+```{r}
+anxiety_scores_df |> str() 
+```
+Obtain mean, median, and standard deviation of the anxiety scores for each state.
+Round these numbers to 1 decimal place.
+
+```{r}
+anxiety_scores_df |>
+  group_by(state) |>
+  summarise(
+    mean = round(mean(anxiety_score), 1),
+    median = round(median(anxiety_score), 1),
+    sd = round(sd(anxiety_score), 1)
+  )
+```
+
+Do a box plot of anxiety scores by state.
+
+
+```{r}
+anxiety_scores_df |>
+  ggplot(aes(x = state, y = anxiety_score)) +
+  geom_boxplot() +
+  labs(
+    title = "Anxiety Scores by State",
+    x = "State",
+    y = "Anxiety Score"
+  )
+```
+
+Conclusion from the exploratory analysis:
+
+The exploratory analysis suggests that anxiety levels are relatively similar in Alaska and Hawaii. However, Hawaii has a slightly higher mean anxiety score (71.4) and median anxiety score (72) compared to Alaska (mean = 70.4, median = 70). The standard deviation is larger for Alaska (7.5) than for Hawaii (3.9), indicating that anxiety scores are more variable among Alaska residents.
+
+The boxplot shows that the distributions of anxiety scores for the two states overlap considerably, although the center of the Hawaii distribution appears to be slightly higher. The plot also indicates greater spread in the Alaska scores, which is consistent with the larger standard deviation.
+
+Therefore, the exploratory analysis provides some evidence that Hawaii residents may have slightly higher average anxiety levels than Alaska residents, but the observed difference appears to be small. A statistical test is needed to determine whether this difference is statistically significant.
+
+
+**b) (5 points) If the researcher decides to run a hypothesis test to complement her conclusion from a), state the hypotheses (Ho and Ha) that she should set up to conduct the test that will allow her to make the desired comparison.** 
+
+Version 1
+
+- Ho: μAlaska = μHawaii
+
+- Ha: μAlaska ≠ μHawaii
+
+Version 2
+
+- Ho: The mean anxiety score of Alaska residents is equal to the mean anxiety score of Hawaii residents.
+
+- Ha: The mean anxiety score of Alaska residents is different from the mean anxiety score of Hawaii residents.
+
+**c) (15 points) Run the corresponding statistical test and make a decision and conclude using a significance level of 0.05. Justify your decision.**
+
+Test for Equality of Variances
+
+```{r}
+var.test(alaska, hawaii, alternative = "two.sided")
+```
+Decision: The p-value (0.0003212) is less than the significance level α = 0.05; therefore, we reject Ho and support Ha.
+
+Conclusion: The data provide sufficient evidence to conclude that the variances of anxiety scores in Alaska and Hawaii are different. Therefore, the assumption of equal variances is not appropriate, and the Welch Two Sample t-test (var.equal = FALSE) should be used for comparing the means.
+
+
+Two-Sample t-Test
+
+Since the variances are not equal, we will use the Welch Two Sample t-test (var.equal = FALSE).
+
+```{r}
+t.test(alaska, hawaii,
+       alternative = "two.sided",
+       var.equal = FALSE)
+```
+Decision and Conclusion
+
+
+Decision: The p-value (0.4861) is greater than the significance level α = 0.05; therefore, we do not have evidence to reject Ho and cannot support Ha.
+
+Conclusion: The data do not provide sufficient evidence to conclude that the average anxiety levels differ between Alaska and Hawaii. Although the sample mean anxiety score is slightly higher in Hawaii (71.43) than in Alaska (70.43), the observed difference is not statistically significant at the 0.05 significance level. Therefore, the researcher cannot conclude that the population mean anxiety levels are different between the two states.
+
+Justification: Since the p-value (0.4861) is greater than α = 0.05, the observed difference between the sample means could reasonably be explained by random sampling variation rather than by a true difference between the population mean anxiety scores.
+
+**d) (5 points) If needed, compute and assess the effect size. If not needed, justify why. **
+
+```{r}
+# Compute the pooled standard deviation and store the result in a variable.
+sp_anxiety <- sqrt(
+  (34*var(alaska) + 34*var(hawaii)) / (35+35-2)
+)
+round(sp_anxiety, 2)
+```
+
+
+```{r}
+effect_size <- abs(mean(alaska) - mean(hawaii)) / sp_anxiety
+round(effect_size,2)
+```
+
+Assessment of the Effect Size 
+
+The effect size is approximately 0.17.
+
+According to common guidelines, an effect size around 0.2 is considered small, around 0.5 is considered medium, and around 0.8 is considered large.
+
+Therefore, the difference in anxiety scores between Alaska and Hawaii represents a small effect size. This suggests that the practical difference between the average anxiety levels of residents in the two states is very small.
+
+This result is consistent with the outcome of the t-test, which found no statistically significant difference between the mean anxiety scores of Alaska and Hawaii.
+
+
+
+
+
+**Additional Visualization (Not Required)**
+
+*The following graph was created only to facilitate a visual understanding of the hypothesis test results. It helps illustrate the rejection and non-rejection regions as well as the location of the observed test statistic. This graph is not part of the required analysis and is included only as an additional visual aid.*
+
+The graph represents the two-tailed hypothesis test conducted to compare the mean anxiety levels of residents in Alaska and Hawaii.
+
+Hypotheses:
+
+- Ho: μAlaska = μHawaii
+- Ha: μAlaska ≠ μHawaii
+
+Since the researcher did not have a specific expectation regarding which state would have a higher mean anxiety level, a two-tailed test is appropriate.
+
+Components of the Graph:
+
+- The black curve represents the t-distribution used in the Welch Two Sample t-test.
+- The red shaded areas represent the rejection regions for *α = 0.05 (2.5% in each tail)*.
+- The green central region represents the range of t-values for which we fail to reject the null hypothesis.
+- The blue vertical line represents the observed test statistic: *t= −0.70165*
+- The critical values (-tcrit and +tcrit) indicate the boundaries between the rejection regions and the non-rejection region. Any test statistic that falls beyond these critical values would lead to rejecting the null hypothesis.
+
+```{r}
+# Nivel de significancia
+alpha <- 0.05
+
+# Grados de libertad obtenidos del Welch t-test
+dfree <- 57.317
+
+# Punto crítico para una prueba unilateral a la izquierda
+t_crit <- qt(alpha, df = dfree)
+
+round(t_crit, 2)
+```
+
+
+```{r, echo=FALSE}
+library(ggplot2)
+
+# Degrees of freedom from the Welch t-test
+dfree <- 51.503
+
+# Test statistic from the t-test
+t_value <- -0.70165
+
+# Critical value for alpha = 0.05 (two-tailed test)
+t_crit <- qt(0.975, df = dfree)
+
+# Height of the curve at the test statistic
+t_height <- dt(t_value, df = dfree)
+
+# Create data for the t distribution
+x <- seq(-4, 4, length = 1000)
+
+t_dist_df <- data.frame(
+  x = x,
+  y = dt(x, df = dfree)
+)
+
+ggplot(t_dist_df, aes(x = x, y = y)) +
+
+  # t distribution curve
+  geom_line(linewidth = 1, color = "black") +
+  
+  # Non-rejection region
+  geom_area(
+  data = subset(t_dist_df, x >= -t_crit & x <= t_crit),
+  fill = "lightgreen",
+  alpha = 0.4
+  ) +
+
+  # Left rejection region
+  geom_area(
+    data = subset(t_dist_df, x <= -t_crit),
+    fill = "red",
+    alpha = 0.4
+  ) +
+
+  # Right rejection region
+  geom_area(
+    data = subset(t_dist_df, x >= t_crit),
+    fill = "red",
+    alpha = 0.4
+  ) +
+
+  # Observed t-value
+  annotate(
+    "segment",
+    x = t_value,
+    xend = t_value,
+    y = 0,
+    yend = t_height,
+    color = "blue",
+    linewidth = 1.2
+  ) +
+
+  # Label for t statistic
+  annotate(
+  "text",
+  x = t_value + -1.2,
+  y = t_height + 0.03,
+  label = "t = -0.70",
+  color = "blue",
+  fontface = "bold",
+  size = 5
+  ) +
+
+  # Labels for rejection regions
+  annotate(
+    "text",
+    x = -3,
+    y = 0.05,
+    label = "Reject H0",
+    color = "red",
+    fontface = "bold",
+    size = 5
+  ) +
+
+  annotate(
+    "text",
+    x = 3,
+    y = 0.05,
+    label = "Reject H0",
+    color = "red",
+    fontface = "bold",
+    size = 5
+  ) +
+
+  # Label for non-rejection region
+  annotate(
+    "text",
+    x = 0,
+    y = 0.42,
+    label = "Don't Reject H0",
+    color = "darkgreen",
+    fontface = "bold",
+    size = 5
+  ) +
+
+  # Critical values
+  annotate(
+    "text",
+    x = -t_crit + 0.3,
+    y = 0.02,
+    label = paste0("-tcrit\n", round(-t_crit, 2)),
+    size = 4
+  ) +
+
+  annotate(
+    "text",
+    x = t_crit - 0.3,
+    y = 0.02,
+    label = paste0("tcrit\n", round(t_crit, 2)),
+    size = 4
+  ) +
+
+  labs(
+    title = "Two-Tailed Hypothesis Test",
+    subtitle = "Alaska vs Hawaii Anxiety Scores",
+    x = "t value",
+    y = "Density"
+  ) +
+
+  theme_minimal()
+
+```
+
+
+Interpretation
+
+The observed test statistic (t = −0.70165) falls between the two critical values, meaning that it lies within the non-rejection region. Therefore, there is insufficient evidence to reject the null hypothesis. This indicates that the observed difference between the sample means is not large enough to conclude that a true difference exists between the population means.
+
+Furthermore, the corresponding p-value is:
+
+>p=0.4861
+
+which is much larger than the significance level:
+
+>α=0.05
+
+Therefore, there is insufficient statistical evidence to reject the null hypothesis.
+
+Decision:
+
+Because the p-value (0.4861) is greater than the significance level (α = 0.05), we do not have evidence to reject Ho and cannot support Ha.
+
+Conclusion:
+
+The data do not provide sufficient evidence to conclude that the average anxiety levels differ between Alaska and Hawaii. Although the sample mean anxiety score is slightly higher in Hawaii (71.43) than in Alaska (70.43), the observed difference is not statistically significant at the 0.05 significance level.
+
+The graph supports this conclusion because the observed t-statistic falls within the non-rejection region rather than in one of the rejection regions. Therefore, the researcher cannot conclude that there is a significant difference in the population mean anxiety levels between the two states.
+
+
+---
+
+<hr style="border:2px solid black;">
+
+### **Question 2** (30 points) 
+
+A health psychologist wants to assess whether people living in rural areas have lower average life satisfaction scores than people living in urban areas. She collected life satisfaction scores for two random samples of residents, one from rural areas and one from urban areas. Each resident was given a score between 0 and 100 (higher scores mean more life satisfaction).
+
+Assume that the variables involved in this problem follow a normal distribution.
+
+The scores she collected are shown next. Create two vectors in R with these data.
+
+Rural scores:
+82 60 65 69 57 65 65 47 75 71 59 63 70 62 63 50 71 66 68 50 82 67 61 85 65 50 61 42 75 61
+
+Urban scores:
+68 86 58 80 54 68 63 90 93 72 83 73 81 67 58 57 79 97 78 70 94 77 76 78 74 72 61 80 74 87
+
+
+create these two vectors
+
+```{r}
+rural <- c(
+  82, 60, 65, 69, 57, 65, 65, 47, 75, 71,
+  59, 63, 70, 62, 63, 50, 71, 66, 68, 50,
+  82, 67, 61, 85, 65, 50, 61, 42, 75, 61
+)
+
+urban <- c(
+  68, 86, 58, 80, 54, 68, 63, 90, 93, 72,
+  83, 73, 81, 67, 58, 57, 79, 97, 78, 70,
+  94, 77, 76, 78, 74, 72, 61, 80, 74, 87
+)
+```
+
+**a) (20 points) Run the relevant statistical test that will allow the psychologist to conduct the desired comparison. Make sure to do the following as you conduct the test:**
+
+**-	Set up the corresponding hypotheses. **
+
+**-	Make a decision and conclude using a significance level of 0.05. Justify your decision.** 
+
+**NOTE: You are NOT required to do an exploratory analysis before running the test.**
+
+Hypotheses:
+
+Version 1:
+
+- Ho: μRural ≥ μUrban
+- Ha: μRural < μUrban
+
+Version 2:
+
+Ho: The mean life satisfaction score of rural residents is greater than or equal to the mean life satisfaction score of urban residents.
+
+Ha: The mean life satisfaction score of rural residents is lower than the mean life satisfaction score of urban residents.
+
+Run the Corresponding Statistical Test
+
+A var.test() is not necessary because the comparison of interest involves the population means, not the population variances. The Welch Two Sample t-test used by t.test() does not require the assumption of equal variances and can therefore be applied directly.
+
+```{r}
+t.test(rural, urban,
+       alternative = "less")
+```
+Decision
+
+The p-value (0.0001538) is less than the significance level α = 0.05; therefore, we reject Ho and support Ha.
+
+Conclusion
+
+The data provide sufficient evidence to conclude that the average life satisfaction scores of people living in rural areas are lower than the average life satisfaction scores of people living in urban areas.
+
+Justification
+
+Since the p-value (0.0001538) is less than α = 0.05, the observed difference between the sample means is statistically significant and is unlikely to have occurred due to random sampling variation alone. Therefore, the data support the psychologist's claim that rural residents have lower average life satisfaction than urban residents.
+
+
+**b) (10 points) THIS IS A CHALLENGE QUESTION**
+
+**Challenge questions are those with somewhat low weight but where you cannot ask me any questions about how to answer them.**
+
+**To evaluate the practical significance of the test results, the psychologist applies the following ad-hoc criterion established in the psychological well-being literature: a statistically significant difference between the means is considered practically significant (i.e., large enough to have real-life consequences) only if the absolute difference between the sample means is at least half the pooled standard deviation. Evaluate the practical significance of the test results using this ad-hoc criterion. **
+
+Practical Significance Assessment
+
+The psychologist's criterion states that a statistically significant difference is considered practically significant only if the absolute difference between the sample means is at least half the pooled standard deviation.
+
+Compute the Pooled Standard Deviation
+
+```{r}
+sp_life <- sqrt(
+  (29 * var(rural) + 29 * var(urban)) /
+  (30 + 30 - 2)
+)
+round(sp_life, 2)
+```
+
+Compute the Absolute Difference Between the Sample Means
+
+```{r}
+mean_diff <- abs(mean(rural) - mean(urban))
+round(mean_diff, 2)
+```
+
+Compute Half the Pooled Standard Deviation
+
+```{r}
+round(sp_life / 2, 2)
+```
+Assessment of Practical Significance
+
+The pooled standard deviation is 10.79. According to the criterion provided, a difference is considered practically significant if the absolute difference between the sample means is at least half the pooled standard deviation.
+
+Half the pooled standard deviation is: *5.39*
+
+
+The absolute difference between the sample means is: *10.70*
+
+Since
+
+> 10.70 > 5.39
+
+the observed difference exceeds the criterion for practical significance.
+
+Conclusion
+
+The difference in life satisfaction scores between rural and urban residents is practically significant according to the criterion provided. The absolute difference between the sample means (10.70) is greater than half the pooled standard deviation (5.39).
+
+Therefore, the difference is large enough to be considered meaningful in practical terms and may have real-life consequences.
+
+Furthermore, because the hypothesis test was statistically significant (p-value = 0.0001538 < 0.05), the results indicate that the difference is both statistically significant and practically significant.
+
+
+**Additional Visualization (Not Required):** 
+
+**The following graph was created only to visually illustrate the decision of the hypothesis test and is not part of the required statistical analysis.**
+
+
+
+```{r, echo=FALSE}
+library(ggplot2)
+
+# Estadístico t y grados de libertad obtenidos del t.test()
+
+t_value <- -3.8422
+dfree <- 57.317
+
+# Valor crítico para alpha = 0.05 (cola izquierda)
+t_crit <- qt(0.05, df = dfree)
+
+# Datos para la distribución t
+x <- seq(-5, 5, length = 1000)
+
+t_dist_df <- data.frame(
+  x = x,
+  y = dt(x, df = dfree)
+)
+
+
+
+ggplot(t_dist_df, aes(x, y)) +
+
+  # Región de rechazo
+  geom_area(
+    data = subset(t_dist_df, x <= t_crit),
+    fill = "red",
+    alpha = 0.4
+  ) +
+
+  # Región de no rechazo
+  geom_area(
+    data = subset(t_dist_df, x > t_crit),
+    fill = "lightgreen",
+    alpha = 0.4
+  ) +
+
+  # Curva t
+  geom_line(linewidth = 1, color = "black") +
+
+  # Línea del estadístico observado
+  annotate(
+    "segment",
+    x = t_value,
+    xend = t_value,
+    y = 0,
+    yend = max(t_dist_df$y)/2 + 0.03,
+    color = "blue",
+    linewidth = 1.2
+  ) +
+
+  # Etiqueta del estadístico
+  annotate(
+    "text",
+    x = t_value ,
+    y = max(t_dist_df$y)/2 + 0.05,
+    label = paste0("t = ", round(t_value, 2)),
+    color = "blue",
+    fontface = "bold",
+    size = 5
+  ) +
+
+  # Etiqueta región de rechazo
+  annotate(
+    "text",
+    x = -2.7,
+    y = 0.08,
+    label = "Reject H0",
+    color = "red",
+    fontface = "bold",
+    size = 5
+  ) +
+
+  # Etiqueta región de no rechazo
+  annotate(
+    "text",
+    x = 0,
+    y = 0.42,
+    label = "Don't Reject H0",
+    color = "darkgreen",
+    fontface = "bold",
+    size = 5
+  ) +
+
+  # Etiqueta del valor crítico
+  annotate(
+    "text",
+    x = t_crit + 0.4,
+    y = 0.03,
+    label = paste0("-tcrit\n", round(t_crit, 2)),
+    size = 4
+  ) +
+
+  labs(
+    title = "Left-Tailed Hypothesis Test",
+    subtitle = "Rural vs Urban Life Satisfaction",
+    x = "t value",
+    y = "Density"
+  ) +
+
+  theme_minimal() +
+
+  coord_cartesian(
+    ylim = c(0, max(t_dist_df$y) + 0.08)
+  )
+```
+
+
+Critical value
+
+```{r, echo=FALSE}
+# Nivel de significancia
+alpha <- 0.05
+
+# Grados de libertad obtenidos del Welch t-test
+dfree <- 57.317
+
+# Punto crítico para una prueba unilateral a la izquierda
+t_crit <- qt(alpha, df = dfree)
+
+round(t_crit, 2)
+```
+The critical value for a left-tailed test with α = 0.05 and 57.317 degrees of freedom is approximately -1.67.
+
+Any t-statistic smaller than -1.67 falls in the rejection region.
+
+Since the observed test statistic is **t = -3.84, and -3.84 < -1.67**,
+
+the test statistic falls within the rejection region. Therefore, the null hypothesis is rejected.
+
+
+The red region represents the rejection region for *α = 0.05*. The green region represents the non-rejection region. The observed test statistic *(t = -3.8422)* falls inside the rejection region because it is smaller than the critical value. Therefore, the null hypothesis is rejected. This provides statistical evidence that the average life satisfaction score of rural residents is lower than that of urban residents.
+
+
+---
+
+<hr style="border:2px solid black;">
+
+### **Question 3** (30 points) 
+
+**A medical researcher conjectures that the likelihood of having wrinkled skin around the eyes increases when a person smokes. The smoking habits as well as the presence of prominent wrinkles around the eyes were recorded for 500 randomly selected people from the population of interest. The following frequency table is obtained:**
+
+|                  | Prominent Wrinkles | Wrinkles not prominent |
+| ---------------- | -----------------: | ---------------------: |
+| **Heavy smoker** |                 95 |                     55 |
+| **Light smoker** |                 75 |                     75 |
+| **Non-smoker**   |                 66 |                    134 |
+
+
+Create the matrix of counts
+
+```{r}
+matrix_smoking_wrinkles <- matrix(
+  c(95, 55,
+    75, 75,
+    66, 134),
+  nrow = 3,
+  byrow = TRUE,
+  dimnames = list(
+    c("Heavy smoker", "Light smoker", "Non-smoker"),
+    c("Prominent Wrinkles", "Wrinkles not prominent")
+  )
+)
+
+matrix_smoking_wrinkles
+```
+**a) (20 points) Conduct the relevant statistical test to find out if someone’s smoking habits are associated with the presence of skin wrinkles. Use alpha= 0.05. You must follow these steps to conduct this test:**
+
+- **a1) State the hypotheses (Ho and Ha). **
+- **a2) Whether you reject or fail to reject Ho and why.**
+- **a3) Your conclusion (i.e., whether smoking is associated with having wrinkles).**
+
+**a1) State the hypotheses (Ho and Ha). **
+
+
+- Ho: Smoking habits and the presence of prominent wrinkles around the eyes are independent (wrinkles are not associated with smoking habits).
+
+- Ha: Smoking habits and the presence of prominent wrinkles around the eyes are dependent (wrinkles are associated with smoking habits).
+
+
+
+Exploratory Analysis
+
+Compute the conditional probabilities of wrinkle status given smoking category:
+
+```{r}
+round(prop.table(matrix_smoking_wrinkles, margin = 1) * 100, 2)
+```
+Conclusion from the Exploratory Analysis
+
+Among heavy smokers, approximately 63.33% have prominent wrinkles around the eyes. Among light smokers, 50.00% have prominent wrinkles around the eyes, whereas among non-smokers only 33.00% have prominent wrinkles around the eyes.
+
+Therefore, it appears that smoking habits may be associated with the presence of prominent wrinkles around the eyes. In particular, the proportion of individuals with prominent wrinkles seems to increase as smoking intensity increases.
+
+However, we cannot rule out that the observed differences are simply due to sampling variability. Therefore, we will conduct a chi-square test of independence to assess the statistical significance of the observed relationship.
+
+STATISTICAL ASSESSMENT ANALYSIS
+
+
+Run the Chi-Square Test of Independence
+
+Because both variables (smoking habits and wrinkle status) are categorical and the goal is to determine whether they are associated, a Chi-Square Test of Independence is the appropriate statistical procedure.
+
+```{r}
+chisq.test(matrix_smoking_wrinkles)
+```
+
+**a2) Whether you reject or fail to reject Ho and why.**
+
+Decision
+
+The p-value (9.59 × 10⁻⁸) is less than the significance level α = 0.05; therefore, we reject Ho and support Ha.
+
+**a3) Your conclusion (i.e., whether smoking is associated with having wrinkles).**
+
+Conclusion
+
+The data provide sufficient evidence to conclude that smoking habits and the presence of prominent wrinkles around the eyes are associated. Therefore, the results support the researcher's conjecture that smoking is associated with having wrinkles around the eyes.
+
+Validity Condition
+
+Validity condition: All expected counts are greater than or equal to 5.
+
+```{r}
+chisq.test(matrix_smoking_wrinkles)$expected
+```
+All expected counts are above 5; therefore, the validity condition for the chi-square test is satisfied.
+
+**b) (10 points) Conduct a deeper analysis to know which smoking category is associated with prominent wrinkles, and which one is linked to non-prominent wrinkles. Show your work and discuss your results.**
+
+Deeper Analysis
+
+Because we rejected Ho, we can ask: which smoking categories are associated with prominent wrinkles and which are associated with non-prominent wrinkles?
+
+Pearson residuals contain that information.
+
+```{r}
+round(chisq.test(matrix_smoking_wrinkles)$residuals,2)
+```
+
+Discussion of Results:
+
+- The combination Heavy Smoker and Prominent Wrinkles has a large positive residual (2.88). Therefore, heavy smokers have prominent wrinkles more often than expected under independence.
+
+- The combination Heavy Smoker and Wrinkles Not Prominent has a negative residual (-2.72). Therefore, heavy smokers are less likely to belong to the non-prominent wrinkles category.
+
+- The combination Non-Smoker and Prominent Wrinkles has a large negative residual (-2.92). Therefore, non-smokers have prominent wrinkles less often than expected under independence.
+
+- The combination Non-Smoker and Wrinkles Not Prominent has a large positive residual (2.76). Therefore, non-smokers are more likely to belong to the non-prominent wrinkles category.
+
+- The residuals for light smokers are close to zero, suggesting little deviation from what would be expected under independence.
+
+Final Conclusion:
+
+Heavy smokers are associated with prominent wrinkles around the eyes, while non-smokers are associated with non-prominent wrinkles around the eyes. Light smokers do not show a strong association with either wrinkle category. These findings reinforce the conclusion of the chi-square test and provide additional evidence supporting the researcher's conjecture that the likelihood of having wrinkles around the eyes increases with smoking.
+
+
+
+

@@ -121,9 +121,30 @@ COMPLETE IT
 
 **Estimate the effect size in this problem and use it to assess the practical significance of the results**
 
+```{r}
+length(sat_scores_software)
 
+length(sat_scores_traditional)
+```
+
+
+
+```{r}
+sp_sat_scores <- sqrt ( ( 14*var(sat_scores_software) + 14*var(sat_scores_traditional) ) / (15 + 15 - 2) )
+
+sp_sat_scores
+```
+
+
+```{r}
+abs( mean(sat_scores_software) - mean(sat_scores_traditional) )/ sp_sat_scores
+```
+
+This is a large effect size according to Cohen's criterion (because it is above 0.8). This is an effect size that is very likely to be considered practically significant by domain knowledge experts.
 COMPLETE IT
 
+
+Categorical data
 
 
 
