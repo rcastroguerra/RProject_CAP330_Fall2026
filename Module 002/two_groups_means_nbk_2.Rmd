@@ -1,0 +1,152 @@
+---
+title: "Means across two groups. Notebook 2"
+output: 
+---
+
+
+**Exercise**
+
+The US Department of Education wants to conduct a study to find out if educational software is effective in improving students’ academic performance. They will measure academic performance using the student SAT scores. They want to compare the average performance of students who used the educational software with the average performance of those who used traditional methods.
+
+Run the following code chunk to create two vectors with the SAT scores for several students who prepare for the exam using each method:
+
+```{r}
+
+sat_scores_software <- c(1050, 1080, 1000, 1050, 1100, 1090, 1060, 1130, 990, 1060,1040,1150, 1100,1150, 970)
+
+sat_scores_traditional <- c(1035, 965, 985, 1005, 1085, 975, 1045, 1115, 875, 1045, 1025, 1100, 1020, 1030, 900)
+
+sat_scores_software
+sat_scores_traditional
+```
+
+
+
+Analyze the data and conduct the appropriate statistical test to help the Department of Education find out if educational software is effective in improving students’ SAT performance. Assume that both random variables follow a Normal distribution.
+
+
+
+**EXPLORATORY ANALYSIS**
+
+COMPLETE IT
+
+```{r}
+length(sat_scores_software)
+
+length(sat_scores_traditional)
+```
+Therefore, in order to be able to use tidyverse functions to do the exploratory analysis, it is better to create a data frame with these two columns. See next:
+
+```{r}
+sat_scores_df <- data.frame( sat_score = c(sat_scores_software, sat_scores_traditional), method = c(rep("Software",
+length(sat_scores_software)), rep("Traditional", length(sat_scores_traditional))))
+```
+
+```{r}
+sat_scores_df |> str()
+```
+
+
+
+
+
+```{r}
+sat_scores_df |> group_by(method) |> summarise(mean_score = round (mean(sat_score), 1), median_score = round (median(sat_score), 1), sd_score =
+round (sd (sat_score), 1) )
+```
+
+```{r}
+sat_scores_df |>
+  ggplot(aes(x = method, y = sat_score)) +
+  geom_boxplot() +
+  labs(x = "Educational Method", y = "SAT Score")
+```
+**Conclusion from the exploratory analysis**:
+
+The results from the exploratory analysis seem to support the effectiveness of the new (software) method because both the average and median sat scores are higher for students who used it than for those who used the traditional method.
+
+The box plot confirms that the whole distribution of sat scores is higher for students who used software than for those who did not.
+
+Let's apply the t test to assess the statistical significance of the exploratory results (to find out if the observed difference between the two groups is statistically significant).
+
+
+**STATISTICAL ASSESSMENT ANALYSIS**
+
+**Set up the hypotheses**
+
+claim/ suspicion "... if educational software is effective in improving students' academic performance"
+
+Effective means that SAT score with software is higher (>) than the SAT score with traditional methods.
+
+How can I translate this into a hypothesis?
+
+Average SAT score with software > average SAT score with traditional methods
+
+Ho: Average SAT score with software <= average SAT score with traditional methods
+Ha: Average SAT score with software > average SAT score with traditional methods (this represents that the software improves performance)
+
+Or ...
+
+Ho: μ soft <= μ trad
+Ha: μ soft > μ trad
+
+**Run a two samples t test in R**
+
+First, conduct the test to compare two variances to decide whether the variances are the same or not:
+
+Ho: Variance SAT score of students who used software = Variance SAT score of students who used traditional
+
+Ha: Variance SAT score of students who used software != Variance SAT score of students who used traditional
+
+```{r}
+var.test(sat_scores_software , sat_scores_traditional, alternative = "two.sided")
+```
+The p-value (0.461) is greater than alpha (0.05); therefore, we do NOT reject Ho. Ho states that the variances of both variables are the same. So, we need to stick with what Ho states. So, we will assume that both variables have the same variance. This means that we should set "var.equal = TRUE" when applying the t.test().
+
+Now conduct the t.test() to compare both means.
+
+```{r}
+t.test(sat_scores_software, sat_scores_traditional, alternative = "greater", var.equal = TRUE)
+```
+
+Decision: The p-value (0.01072) is less than alpha (0.05); therefore, we reject Ho and support Ha. We can conclude that the variances are the same.
+
+Conclusion: we now have statistical evidence to conclude that educational software leads to higher average SAT scores than traditional methods. In other words, we now have stronger evidence to conclude that educational software is effective in improving student's academic performance.
+
+
+
+COMPLETE IT
+
+**EXTRA QUESTION FOR STATISTICAL ASSESSMENT ANALYSIS**
+
+**Estimate the effect size in this problem and use it to assess the practical significance of the results**
+
+```{r}
+length(sat_scores_software)
+
+length(sat_scores_traditional)
+```
+
+
+
+```{r}
+sp_sat_scores <- sqrt ( ( 14*var(sat_scores_software) + 14*var(sat_scores_traditional) ) / (15 + 15 - 2) )
+
+sp_sat_scores
+```
+
+
+```{r}
+abs( mean(sat_scores_software) - mean(sat_scores_traditional) )/ sp_sat_scores
+```
+
+This is a large effect size according to Cohen's criterion (because it is above 0.8). This is an effect size that is very likely to be considered practically significant by domain knowledge experts.
+COMPLETE IT
+
+
+Categorical data
+
+
+
+
+
