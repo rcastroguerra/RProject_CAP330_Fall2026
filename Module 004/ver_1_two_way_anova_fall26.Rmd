@@ -325,4 +325,160 @@ interaction.plot (growth_df$diet, growth_df$supplement, growth_df$gain,  xlab ="
 
 
 
+------
+-----
+
+
+
+**Exercise 2**
+
+Download the CSV file “BatterriesTemperature” from Canvas and read it as a data frame in R.
+
+To read the csv file, I WILL RECOMMEND YOU to run the following code:
+
+
+POSIT CLOUD USERS: YOU MUST UPLOAD THE CSV TO THE **SAME POSIT CLOUD LOCATION** WHERE YOU UPLOAD THIS NOTEBOOK !
+
+OR
+
+R STUDIO DESKTOP USERS: Store it in the same folder where this notebook is in your local computer.
+
+```{r}
+batt_temp_mat_df <- read.csv ("BatteriesTemperature.csv", colClasses = c("numeric","factor","factor"))
+```
+
+
+Take  a look the batteries_temperature data frame
+
+```{r}
+batt_temp_mat_df |> str()
+```
+
+**Problem description**
+
+An engineer is designing a battery for a device that could be deployed at different temperatures. Three choices of material are available to build the battery. Three temperatures levels (15, 70, and 125 F) are considered because they are consistent with the product end-use environment. Four batteries are tested at each combination of material and temperature, and the resulting observed battery lifetime is recorded. Analyze the data using R and conclude about the influence of the two factors on the DV.
+
+
+
+Before running ANOVA, answer a few questions:
+
+
+a) Outcome (dependent) variable:  Battery lifetime
+
+Factors and their levels:
+
+Factor A: Type of material. It has three levels (mat 1, mat 2, and mat 3)
+
+Factor B: Deployment temperature. It has three levels (15, 70, and 125 F)
+
+
+
+b) Do an exploratory analysis fallowing the same steps than used in exercise 1
+
+```{r}
+# Mean by material
+batt_temp_mat_df |>
+  group_by(material) |>
+  summarize(
+    mean_life_t = round(mean(lifetime), 1),
+    sd_life_t   = round(sd(lifetime), 1)
+  ) |>
+  arrange(desc(mean_life_t))
+```
+
+
+
+```{r}
+# Mean by temperature
+batt_temp_mat_df |>
+  group_by(temperature) |>
+  summarize(
+    mean_life_t = round(mean(lifetime), 1),
+    sd_life_t   = round(sd(lifetime), 1)
+  ) |>
+  arrange(desc(mean_life_t))
+```
+
+
+```{r}
+# Mean by material and temperature
+batt_temp_mat_df |>
+  group_by(material, temperature) |>
+  summarize(
+    mean_life_t = round(mean(lifetime), 1),
+    sd_life_t   = round(sd(lifetime), 1)
+  ) |>
+  arrange(material, desc(mean_life_t))
+```
+
+```{r}
+# Mean by material and temperature
+
+batt_temp_mat_df |>
+  group_by(material, temperature) |>
+  summarize(
+    mean_life_t = round(mean(lifetime), 1),
+    sd_life_t   = round(sd(lifetime), 1)
+  ) |>
+  arrange(material, desc(mean_life_t)) |>
+  slice(1)
+```
+
+
+
+```{r}
+batt_temp_mat_df |> ggplot(aes(x = temperature, y = lifetime, fill = temperature)) + geom_boxplot() + facet_wrap(~ material) + labs(y = "Lifetime (Days)", x="Material") + theme( axis.ticks.x = element_blank())
+```
+professor note:  I wanted to see the lifetime across the temperatures within each material, okay?
+
+
+```{r}
+batt_temp_mat_df |> ggplot(aes(x = factor(temperature, levels= c("15", "70", "125")), y = lifetime, fill = temperature)) + geom_boxplot() + facet_wrap(~ material) + labs(y = "Lifetime (Days)", x="Material") + theme( axis.ticks.x = element_blank())
+```
+note professor: that temperature is a factor, and then you redefine the levels the way you want.
+
+
+**Conclusion from exploratory analysis**: EXPLAIN IT VERBALLY
+
+The effect that changing the temperature from 15, to 70, to 125 has on lifetime changes according to the material used. This is a sign of interaction (to be confirmed with the ANOVA test)
+
+
+
+
+c) State the hypotheses for the three effects under investigation in this problem:
+
+**For Material**:
+
+Ho: The mean battery lifetime is the same for all three materials (material 1, material 2, and material 3).
+Ha: There is a difference in mean battery lifetime for at least two materials.
+
+Or, alternatively...
+
+Ho: µ mat1 = µ mat2 = µ mat3
+Ha: Same as above
+
+
+**For Temperature**:
+
+Ho: µ t15 = µ t70 = M t125
+
+Ha: There is a difference in mean battery lifetime for at least two temperatures.
+
+
+
+
+**For the Interaction between Temp and Material**
+
+Ho: No interaction effect (= The effect of material on battery lifetime does NOT depend on the temperature)
+
+Ha: There is interaction effect (= The effect of material on battery lifetime DEPENDS on the temperature)
+
+
+Testing the interaction hypotheses will allow us to know if the difference in lifetime across temperatures varies  significantly for at least one material.
+
+
+d) Run ANOVA and conclude about the statistical significance of the three effects
+
+WORK INDEPENDENTLY!
+
 
