@@ -454,7 +454,17 @@ COMPLETE IT
 
 
 
+We could be making a type II error. 
 
+Why? Because we did NOT reject Ho. When one does not reject Ho after conducting a hypothesis test, IF Ho happens to be false (which in reality we do NOT know), we would be making an error.
+
+In this specific problem, a type II error can be described as follows: 
+
+Concluding that the mean caffeine content in the coffee served at both stores is the same WHEN IN REALITY there is a difference in the mean caffeine content between the stores.
+
+Do we have any indication that the risk of making a type II error is low in this exercise? No (although we could).
+
+The probability of making a Type II error is called Beta. Computing Beta is beyond the scope of this course. You should just simply be aware that Beta can be calculated in cases where we fail to reject.
 
 
 

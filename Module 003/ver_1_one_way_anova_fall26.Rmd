@@ -1,0 +1,82 @@
+---
+title: "One Way ANOVA"
+output:
+---
+
+
+```{r}
+
+library(tidyverse)
+
+```
+
+
+
+
+**Exercise 1**
+
+Download the CSV file “Batteries” from Canvas and upload it to Posit Cloud **DO NOT DO ANYTHING WITH THIS FILE YET !!!** I will tell how to read it into R later.
+
+Four brands of flashlight batteries are to be compared by testing each brand in six flashlights. Twenty four flashlights are randomly selected and divided randomly into four groups of six flashlights each. Then each group of flashlights uses a different brand of battery. The lifetimes of the batteries (to the nearest days) can be found in the column named “battlife” of the data frame “Batteries”. The column “battbrand” includes the brand of each of the 24 batteries tested. A researcher wants to know if the battery brand is related to its lifetime.
+
+
+a) Identify the outcome (dependent) variable as well as the factor and its levels.
+
+
+"Four brands of flashlight batteries are to be compared by testing each brand in six flashlights"
+
+"A researcher wants to know if the battery brand is related to its lifetime"
+
+
+They want to know if the brand of the battery is related to the battery lifetime.
+
+Outcome (dependent) variable: The lifetime of the batteries (in days)
+
+Factor: The brand of the battery
+
+Factor levels: Brand A, brand B, brand C, and brand D.
+
+
+
+
+Now, **FOLLOW MY INSTRUCTIONS** to read the Batteries csv file as an R data frame** and name it: batteries_df.
+
+
+
+
+Check that the file was read successfully:
+
+```{r}
+
+batteries_df |> str()
+
+```
+
+
+
+
+
+b) **EXPLORATORY ANALYSIS**
+
+Let's get some exploratory statistics: The mean, median, and standard deviation of lifetime for each brand. Round these numbers to 1 decimal place. **Show the brands with the longest lifetime first**.
+
+
+Let's do an exploratory plot: A box plot of lifetime by brand.
+
+
+WORK ON THIS INDEPENDENTLY
+
+
+
+
+
+
+
+c) Run ANOVA to address the researcher's question.
+
+
+c1) State the hypotheses relevant to this ANOVA example.
+
+
+
+

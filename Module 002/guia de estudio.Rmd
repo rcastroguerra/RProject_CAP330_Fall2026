@@ -1,0 +1,722 @@
+---
+title: "guia de estudio"
+output: html_document
+---
+
+
+
+# Guía de Estudio: Two Sample t-Test (Comparación de dos medias)
+
+1. ¿Cuándo usar un Two Sample t-Test?
+
+Se usa cuando queremos comparar el promedio (media) de una variable cuantitativa entre dos grupos.
+
+Ejemplos:
+
+- Domestic vs Foreign guests
+- Store A vs Store B
+- Hombres vs Mujeres
+- Método A vs Método B
+
+Ejemplo
+
+Una universidad quiere saber si los estudiantes que toman clases presenciales obtienen, en promedio, calificaciones más altas que los estudiantes que toman clases en línea.
+
+- Grupo 1: Estudiantes presenciales
+- Grupo 2: Estudiantes en línea
+- Variable: Calificación final del curso
+
+2. Hipótesis
+
+Cola derecha (>)
+
+Cuando sospechamos que un grupo tiene una media mayor.
+
+Ejemplo:
+
+- H0:μd ≤ μf 
+- Ha:μd > μf  
+
+Interpretación:
+
+- Ho: Los huéspedes domésticos no tienen una media mayor.
+- Ha: Los huéspedes domésticos sí tienen una media mayor.
+
+```{r, echo=FALSE}
+library(ggplot2)
+
+# Grados de libertad
+dfree <- 30
+
+# Valor crítico para alpha = 0.05
+t_crit <- qt(0.95, df = dfree)
+
+# Distribución t
+x <- seq(-4, 4, length.out = 1000)
+
+t_dist_df <- data.frame(
+  x = x,
+  y = dt(x, df = dfree)
+)
+
+ggplot(t_dist_df, aes(x, y)) +
+
+  # Región de no rechazo
+  geom_area(
+    data = subset(t_dist_df, x <= t_crit),
+    fill = "lightgreen",
+    alpha = 0.5
+  ) +
+
+  # Región de rechazo (cola derecha)
+  geom_area(
+    data = subset(t_dist_df, x > t_crit),
+    fill = "red",
+    alpha = 0.5
+  ) +
+
+  # Curva t
+  geom_line(linewidth = 1.2, color = "black") +
+
+  # Línea del valor crítico
+  geom_vline(
+    xintercept = t_crit,
+    linetype = "dashed",
+    color = "blue",
+    linewidth = 1
+  ) +
+
+  # Etiqueta H0
+  annotate(
+    "text",
+    x = -0.5,
+    y = 0.42,
+    label = "Fail to Reject H0",
+    color = "darkgreen",
+    fontface = "bold",
+    size = 5
+  ) +
+
+  # Etiqueta Ha
+  annotate(
+    "text",
+    x = 2.5,
+    y = 0.12,
+    label = "Reject H0",
+    color = "red",
+    fontface = "bold",
+    size = 5
+  ) +
+
+  # Etiqueta valor crítico
+  annotate(
+    "text",
+    x = t_crit - 0.2,
+    color = "blue",
+    y = 0.03,
+    label = "tcrit",
+    size = 4
+  ) +
+
+  labs(
+    title = "Right-Tailed Hypothesis Test",
+    subtitle = expression(H[a] : mu[1] > mu[2]),
+    x = "t value",
+    y = "Density"
+  ) +
+
+  theme_minimal() +
+
+  coord_cartesian(
+    ylim = c(0, max(t_dist_df$y) + 0.08)
+  )
+```
+
+Este gráfico muestra únicamente el concepto:
+
+- 🟩 Área verde = No rechazar H₀.
+- 🟥 Área roja = Región de rechazo.
+- 🔵 Línea punteada = valor crítico.
+- La región roja está a la derecha, por eso es una prueba de cola derecha (>).
+
+Cola izquierda (<)
+
+- H0: μX1 ≥ μX2 
+- Ha: μX1 < μX2
+
+
+```{r, echo=FALSE}
+library(ggplot2)
+
+# Grados de libertad
+dfree <- 30
+
+# Valor crítico para alpha = 0.05 (cola izquierda)
+t_crit <- qt(0.05, df = dfree)
+
+# Distribución t
+x <- seq(-4, 4, length.out = 1000)
+
+t_dist_df <- data.frame(
+  x = x,
+  y = dt(x, df = dfree)
+)
+
+ggplot(t_dist_df, aes(x, y)) +
+
+  # Región de rechazo (cola izquierda)
+  geom_area(
+    data = subset(t_dist_df, x <= t_crit),
+    fill = "red",
+    alpha = 0.5
+  ) +
+
+  # Región de no rechazo
+  geom_area(
+    data = subset(t_dist_df, x > t_crit),
+    fill = "lightgreen",
+    alpha = 0.5
+  ) +
+
+  # Curva t
+  geom_line(linewidth = 1.2, color = "black") +
+
+  # Valor crítico
+  geom_vline(
+    xintercept = t_crit,
+    linetype = "dashed",
+    color = "blue",
+    linewidth = 1
+  ) +
+
+  # Etiqueta Ha
+  annotate(
+    "text",
+    x = -2.5,
+    y = 0.12,
+    label = "Reject H0",
+    color = "red",
+    fontface = "bold",
+    size = 5
+  ) +
+
+  # Etiqueta H0
+  annotate(
+    "text",
+    x = 0.7,
+    y = 0.42,
+    label = "Fail to Reject H0",
+    color = "darkgreen",
+    fontface = "bold",
+    size = 5
+  ) +
+
+  # Etiqueta valor crítico
+  annotate(
+    "text",
+    x = t_crit + 0.3,
+    y = 0.03,
+    label = "tcrit",
+    color = "blue",
+    size = 4
+  ) +
+
+  labs(
+    title = "Left-Tailed Hypothesis Test",
+    subtitle = "Ha: muX1 < muX2",
+    x = "t value",
+    y = "Density"
+  ) +
+
+  theme_minimal() +
+
+  coord_cartesian(
+    ylim = c(0, max(t_dist_df$y) + 0.08)
+  )
+```
+
+
+Dos colas (≠)
+
+Cuando solo queremos saber si son diferentes.
+
+- H0: μ1 = μ2
+- Ha: μ1 ≠ μ2
+
+Ejemplo:
+
+Store A vs Store B.
+
+```{r, echo=FALSE}
+library(ggplot2)
+
+# Grados de libertad
+dfree <- 30
+
+# Valores críticos para alpha = 0.05
+t_left <- qt(0.025, df = dfree)
+t_right <- qt(0.975, df = dfree)
+
+# Distribución t
+x <- seq(-4, 4, length.out = 1000)
+
+t_dist_df <- data.frame(
+  x = x,
+  y = dt(x, df = dfree)
+)
+
+ggplot(t_dist_df, aes(x, y)) +
+
+  # Cola izquierda (rechazo)
+  geom_area(
+    data = subset(t_dist_df, x <= t_left),
+    fill = "red",
+    alpha = 0.5
+  ) +
+
+  # Región de no rechazo
+  geom_area(
+    data = subset(t_dist_df,
+                  x > t_left & x < t_right),
+    fill = "lightgreen",
+    alpha = 0.5
+  ) +
+
+  # Cola derecha (rechazo)
+  geom_area(
+    data = subset(t_dist_df, x >= t_right),
+    fill = "red",
+    alpha = 0.5
+  ) +
+
+  # Curva t
+  geom_line(linewidth = 1.2, color = "black") +
+
+  # Valores críticos
+  geom_vline(
+    xintercept = c(t_left, t_right),
+    linetype = "dashed",
+    color = "blue",
+    linewidth = 1
+  ) +
+
+  annotate(
+    "text",
+    x = 0,
+    y = 0.42,
+    label = "Fail to Reject H0",
+    color = "darkgreen",
+    fontface = "bold",
+    size = 5
+  ) +
+
+  annotate(
+    "text",
+    x = -2.7,
+    y = 0.10,
+    label = "Reject H0",
+    color = "red",
+    fontface = "bold",
+    size = 4.5
+  ) +
+
+  annotate(
+    "text",
+    x = 2.7,
+    y = 0.10,
+    label = "Reject H0",
+    color = "red",
+    fontface = "bold",
+    size = 4.5
+  ) +
+
+  labs(
+    title = "Two-Tailed Hypothesis Test",
+    subtitle = "Ha: muX1 != muX2",
+    x = "t value",
+    y = "Density"
+  ) +
+
+  theme_minimal() +
+
+  coord_cartesian(
+    ylim = c(0, max(t_dist_df$y) + 0.08)
+  )
+```
+
+Interpretación:
+
+- 🟥 Cola izquierda = Región de rechazo.
+- 🟥 Cola derecha = Región de rechazo.
+- 🟩 Centro = No rechazar H₀.
+- 🔵 Líneas punteadas = valores críticos.
+- Como el rechazo ocurre en ambos extremos, es una prueba de dos colas (!=).
+
+3. Exploratory Analysis
+
+
+Obtener estadísticas descriptivas
+
+
+
+```r
+dataframe |>
+  group_by(grupo) |>
+  summarise(
+    mean = round(mean(variable), 1),
+    median = round(median(variable), 1),
+    sd = round(sd(variable), 1)
+  )
+```
+
+
+Debes mirar:
+
+- Mean
+- Median
+- Standard Deviation
+
+
+Boxplot
+
+```r
+dataframe |>
+  ggplot(aes(x = grupo, y = variable)) +
+  geom_boxplot()
+```
+
+Sirve para comparar distribuciones.
+
+Dot Plot
+
+```r
+dataframe |>
+  ggplot(aes(x = grupo, y = variable)) +
+  geom_jitter(width = 0.2, height = 0)
+```
+
+Sirve para visualizar cada observación.
+
+4. Revisar si las varianzas son iguales
+
+Antes de hacer el t-test:
+
+
+```r
+var.test(sample1, sample2,
+         alternative = "two.sided")
+```
+
+
+Hipótesis:
+
+- $H0:\sigma_1^2 = \sigma_2^2$
+
+- $Ha:\sigma_1^2 \neq \sigma_2^2$
+
+
+Decisión:
+
+<u>Si: p-value > 0.05</u>
+
+No rechazamos Ho.
+
+Conclusión:
+
+✅ Las varianzas son iguales.
+
+Entonces:
+
+var.equal = TRUE
+
+
+<u>Si: p-value < 0.05</u>
+
+
+Rechazamos Ho.
+
+Conclusión:
+
+✅ Las varianzas son diferentes.
+
+Entonces:
+
+var.equal = FALSE
+
+
+5. Ejecutar el Two Sample t-Test
+
+Cola derecha
+```r
+t.test(sample1,
+       sample2,
+       alternative = "greater",
+       var.equal = TRUE)
+```
+
+Cola izquierda
+
+```r
+t.test(sample1,
+       sample2,
+       alternative = "less",
+       var.equal = TRUE)
+```
+
+Dos colas
+
+```r
+t.test(sample1,
+       sample2,
+       alternative = "two.sided",
+       var.equal = TRUE)
+```
+
+6. Regla de decisión
+
+Nivel de significancia:
+
+$\alpha = 0.05$
+
+Si:
+
+p-value < 0.05
+
+
+- ✅ Rechazar Ho
+- ✅ Apoyar Ha
+
+Si:
+
+p-value > 0.05
+
+
+- ✅ No rechazar Ho
+- ✅ No podemos apoyar Ha
+
+7. Cómo escribir la decisión
+
+*<u>Cuando rechazamos Ho</u>*
+
+Ejemplo:
+
+Decision: The p-value (0.0011) is less than alpha (0.05). Therefore, we reject Ho and support Ha.
+
+Conclusion: There is sufficient evidence that domestic guests give higher average scores than foreign guests.
+
+*<u>Cuando NO rechazamos Ho</u>*
+
+Ejemplo:
+
+Decision: The p-value (0.2221) is greater than alpha (0.05). Therefore, we do not reject Ho.
+
+Conclusion: There is not enough evidence to conclude that the average caffeine content differs between the two stores.
+
+8. Errores Tipo I y Tipo II
+
+Error Tipo I
+
+Ocurre cuando:
+
+✅ Rechazamos Ho
+
+pero
+
+❌ Ho era verdadera.
+
+Recordatorio:
+
+Si rechazaste Ho, el posible error es Tipo I.
+
+Ejemplo:
+
+Concluir que los huéspedes domésticos tienen una media mayor cuando en realidad no la tienen.
+
+Error Tipo II
+
+Ocurre cuando:
+
+✅ No rechazamos Ho
+
+pero
+
+❌ Ha era verdadera.
+
+Recordatorio:
+
+Si NO rechazaste Ho, el posible error es Tipo II.
+
+Ejemplo:
+
+Concluir que las tiendas tienen el mismo promedio de cafeína cuando en realidad sí son diferentes.
+
+9. Effect Size (Cohen's d)
+
+Paso 1: Calcular la desviación estándar agrupada
+```r
+sp <- sqrt(
+          ((n1-1)*var(sample1) +
+          (n2-1)*var(sample2))
+          /
+          (n1+n2-2)
+          )
+```
+
+Paso 2: Calcular el tamaño del efecto
+
+```r
+abs(mean(sample1)-mean(sample2))/sp
+```
+
+Interpretación
+
+| Effect Size | Interpretación |
+| ----------- | -------------- |
+| 0.2         | Pequeño        |
+| 0.5         | Mediano        |
+| 0.8 o más   | Grande         |
+
+Un t-test responde:
+
+- ¿Existe evidencia de una diferencia?
+
+El Effect Size responde:
+
+- ¿Qué tan grande es esa diferencia?
+
+
+**Exercise 1)** A study examined whether the perception of the quality of service at a five-star hotel in Jamaica differed by the type of guest (domestic vs foreign). Hotel guests were randomly selected and asked to rate 10 service-related items. Each item was rated on a five-point scale (the higher the score, the higher the perceived quality of service). A score for each guest was obtained by adding the ratings s/he gave for all items. The scores for domestic and foreign guests are recorded in the vectors “domestic_scores” and “foreign_scores” (see next code chunks).
+
+```{r}
+
+domestic_scores <- c(49, 48, 48, 39, 42, 41, 44, 46, 45, 44, 46, 47, 43, 45, 46, 40, 48, 43, 44, 46, 45, 44, 49, 43, 42, 47, 39, 47, 48, 48, 49, 43, 47, 43, 45, 39, 45, 46, 44, 48, 46, 44, 44)
+foreign_scores <- c(42, 42, 49, 42, 44, 46, 43, 44, 44, 44, 41, 44, 42, 42, 48, 40, 45, 43, 44 ,45, 44, 46, 45, 44, 44, 45, 37, 44, 41, 42, 42, 40, 42, 43, 41, 41, 45, 44, 42, 44, 46, 39, 40)
+```
+```{r}
+domestic_scores
+domestic_scores
+```
+Management suspects that, on average, the service rating given by domestic guests is higher than the service rating given by foreign guests. Let's analyze the data to find out if their suspicion is backed up by the evidence (i.e., by the collected data).
+
+```r
+mean score domestic > mean score foreign
+```
+When conducting the corresponding statistical test, you should consider that the variances of the scores provided by both types of guests are the same.
+
+
+```r
+Ho means score domestic <= mean score foreign
+Ha means score domestic > mean score foreign
+
+varianzes are the same
+```
+
+**EXPLORATORY ANALYSIS**
+
+primero calculamos el tamano de cada muestra
+
+```{r}
+length(domestic_scores)
+length(foreign_scores)
+```
+ahora tenemos que crear el dataframe
+
+```{r}
+hotel_scores_df <- data.frame( #crear dataframe
+  score = #nombre de columna
+    c( #combina varios valores/vectores
+    domestic_scores,
+    foreign_scores
+  ),
+  guest_type =
+    c(
+      rep( #Repite "Domestic" tantas veces como huéspedes nacionales haya
+        "Domestic",
+        length(domestic_scores)
+      ),
+      rep( #Repite "Foreign" tantas veces como huéspedes extranjeros haya
+        "Foreign",
+        length(foreign_scores)
+      )
+    )
+  
+  
+)
+```
+
+
+```{r}
+hotel_scores_df
+
+```
+
+Obtain mean, median, and standard deviation of scores for each guest type. Round these numbers to 1 decimal place.
+
+ahora tenemos que obtener la media , mediana , desviacion estandar y redondear a un decimal
+
+sintaxis
+```r
+dataframe |>
+  group_by(grupo) |>
+  summarise(
+    mean = round(mean(variable), 1),
+    median = round(median(variable), 1),
+    sd = round(sd(variable), 1)
+  )
+```
+
+
+```{r}
+hotel_scores_df |> 
+  group_by(guest_type) |>
+  summarise(
+    mean = round(mean(score),1),
+    median = round(median(score),1),
+    sd = round(sd(score),1)
+  )
+```
+
+
+Do a box plot of scores by guest type.
+
+```r
+dataframe |>
+  ggplot(aes(x = grupo, y = variable)) +
+  geom_boxplot()
+```
+
+```{r}
+hotel_scores_df |>
+  ggplot(aes(x = guest_type, y = score)) +
+  geom_boxplot() +
+  labs(title = "Scores", x = "guest type", y = "score")
+```
+
+
+Dot Plot
+
+```r
+dataframe |>
+  ggplot(aes(x = grupo, y = variable)) +
+  geom_jitter(width = 0.2, height = 0)
+```
+
+```{r}
+hotel_scores_df |>
+  ggplot(aes(x = guest_type, y= score)) +
+  geom_jitter(width = 0.2, height = 0)
+```
+
+**STATISTICAL ASSESSMENT ANALYSIS**
+
+Version 1:
+
+Ho: μd <= μf
+
+Ha: μd > μf
+
+**Run a two samples t test in R**
+
+
+
+

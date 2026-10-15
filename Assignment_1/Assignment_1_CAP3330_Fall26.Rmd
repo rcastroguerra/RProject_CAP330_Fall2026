@@ -818,3 +818,8 @@ The largest contributions come from the combinations Heavy Smoker + Prominent Wr
 In contrast, the contributions associated with light smokers are very small, indicating that their observed counts are close to what would be expected if smoking habits and wrinkle status were independent.
 
 Therefore, the graph supports the conclusion that heavy smokers are associated with prominent wrinkles, whereas non-smokers are associated with non-prominent wrinkles.
+
+
+
+
+
