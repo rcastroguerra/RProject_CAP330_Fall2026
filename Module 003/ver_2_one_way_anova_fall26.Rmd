@@ -1,0 +1,306 @@
+---
+title: "One Way ANOVA"
+output:
+---
+
+
+```{r}
+
+library(tidyverse)
+
+```
+
+
+
+
+**Exercise 1**
+
+Download the CSV file “Batteries” from Canvas and upload it to Posit Cloud **DO NOT DO ANYTHING WITH THIS FILE YET !!!** I will tell how to read it into R later.
+
+Four brands of flashlight batteries are to be compared by testing each brand in six flashlights. Twenty four flashlights are randomly selected and divided randomly into four groups of six flashlights each. Then each group of flashlights uses a different brand of battery. The lifetimes of the batteries (to the nearest days) can be found in the column named “battlife” of the data frame “Batteries”. The column “battbrand” includes the brand of each of the 24 batteries tested. A researcher wants to know if the battery brand is related to its lifetime.
+
+
+a) Identify the outcome (dependent) variable as well as the factor and its levels.
+
+
+"Four brands of flashlight batteries are to be compared by testing each brand in six flashlights"
+
+"A researcher wants to know if the battery brand is related to its lifetime"
+
+
+They want to know if the brand of the battery is related to the battery lifetime.
+
+Outcome (dependent) variable: The lifetime of the batteries (in days)
+
+Factor: The brand of the battery
+
+Factor levels: Brand A, brand B, brand C, and brand D.
+
+
+
+
+Now, **FOLLOW MY INSTRUCTIONS** to read the Batteries csv file as an R data frame** and name it: batteries_df.
+
+```{r}
+batteries_df |> group_by(battbrand) |> summarise(mean_life_t = round (mean(battlife), 1), median_life_t = round (median(battlife), 1), sd_life_t = round (sd (battlife), 1) ) |> arrange (desc(mean_life_t))
+```
+
+Check that the file was read successfully:
+
+```{r}
+
+batteries_df |> str()
+
+```
+```{r}
+batteries_df |> ggplot(aes(x = battbrand, y = battlife)) + geom_boxplot() + labs(x = "Brand", y = "Lifetime")
+```
+
+
+
+
+
+b) **EXPLORATORY ANALYSIS**
+
+Let's get some exploratory statistics: The mean, median, and standard deviation of lifetime for each brand. Round these numbers to 1 decimal place. **Show the brands with the longest lifetime first**.
+
+
+Let's do an exploratory plot: A box plot of lifetime by brand.
+
+
+WORK ON THIS INDEPENDENTLY
+
+```{r}
+batteries_df |> ggplot(aes(x = battbrand, y = battlife)) + geom_boxplot() + labs(x = "Brand", y = "Lifetime")
+```
+
+
+
+
+
+
+
+c) Run ANOVA to address the researcher's question.
+
+
+c1) State the hypotheses relevant to this ANOVA example.
+
+Ho: μa= μb= μc= μd (All the brands have the same mean lifetime, so, brand is NOT related to lifetime)
+
+Ha: At least two brands have different mean lifetime (brand is related to lifetime)
+
+
+
+
+
+
+
+
+
+c2) Run the ANOVA test in R and conclude.
+
+
+```{r}
+# To run ANOVA, we can use the aov() function
+
+anova_bat_brands <- aov( batteries_df$battlife ~ batteries_df$battbrand )
+
+summary(anova_bat_brands)
+```
+
+Decision: The PV is 0.0136, which is less than alpha (0.05); therefore, the data is giving us evidence to reject Ho and support Ha.
+
+Conclusion: The difference between at least two of the sample means that we obtained earlier is statistically significant. So, we have evidence to conclude that at least two brands have different mean lifetime. This in turn means that brand is related to (associate with) lifetime.
+
+
+
+d) Find out which brands result in statistically different mean lifetime. 
+
+DO THIS LATER !!!
+
+CONTINUE TO EXERCISE 2 FIRST !!!
+
+Before running the post hoc test, I like to estimate the mean for each group:
+
+```{r}
+batteries_df |> group_by(battbrand) |> summarise(mean_life_t = round (mean(battlife), 1)) |> arrange (desc(mean_life_t))
+```
+
+Bonferroni
+
+
+```{r}
+pairwise.t.test (batteries_df$battlife, batteries_df$battbrand, p.adjust.method = "bonferroni")
+```
+
+The only PV less than alpha is the one between B and C. So, according to the Bonferroni method, the only difference that is statistically significant is the one between the mean lifetimes of Brand B and C. According to Bonferroni, the only two sample means that are statistically different are the ones for B and C.
+
+Tukey
+
+```{r}
+TukeyHSD(anova_bat_brands)
+```
+
+Similarly to Bonferroni, Tukey only finds one significant difference: the difference between B and C (because that's the only diff with a PV less than alpha (pv= 0.023))
+
+However, it is worth noticing that the PV for the difference between B and D is very close to alpha. 
+
+Further analyses should keep exploring the potential difference existing between these two brands.
+
+
+
+
+**Exercise 2**: We are going to work with the 'chickwts' data set (a data set built-in in R)
+
+To know what the 'chickwts' data set is about and what data is stored in it, run the following code chunk:
+
+```{r}
+
+?chickwts
+
+```
+
+
+
+More info about the 'chickwts' data frame:
+
+```{r}
+
+chickwts |> str()
+
+```
+
+
+
+Explore the feed column to find out all its levels (variants):
+
+```{r}
+
+chickwts |> distinct(feed)
+
+```
+
+
+
+
+
+QUESTIONS:
+
+
+a) Identify the outcome variable, the factor, and the factor levels.
+
+
+b) Do an exploratory analysis similar to exercise 1. The only new requirement is to sort the box plot in descending order relative to the median for the outcome variable.
+
+```{r}
+chickwts |> group_by(feed) |> summarise(mean_weight = round(mean(weight), 1), median_weight = round(median(weight), 1), sd_weight = round(sd(weight), 1) ) |> arrange(desc(mean_weight))
+```
+
+
+```{r}
+chickwts |> ggplot(aes(x = reorder(feed, -weight, FUN = median), y = weight)) + geom_boxplot() + labs(x = "Feed", y = "weight")
+```
+
+c) Set up the hypotheses need to run the relevant statistical test.
+
+
+Ho: μ casein = μ horsebean = μ linseed = μ meatmeal = μ soybean = μ sunflower (All the type of feeds lead to the same mean weight) (the type of feed is NOT related to the weight)
+
+Ha: At least two of the six means are different (at least two types of feed lead to different mean weight) (the type of feed is related to the weight)
+
+
+
+d) Run ANOVA and make the appropriate conclusions.
+
+```{r}
+anova_weight_feeds <- aov(chickwts$weight ~ chickwts$feed)
+
+summary(anova_weight_feeds)
+```
+5.94e-10 = 5.94 * 10^-10
+
+Decision: The PV is 5.94e-10, which is WAY less than alpha (0.05); therefore, the data is giving us evidence to reject Ho and support Ha.
+
+Conclusion: We have evidence to conclude that at least two types of feed lead to different mean weight. The type of feed is related to the weight.
+
+
+e) Find out which types of feed result in different mean weight. 
+
+```{r}
+chickwts |> group_by(feed) |> summarise(mean_weight = round (mean(weight), 1)) |> arrange (desc(mean_weight))
+```
+
+```{r}
+TukeyHSD(anova_weight_feeds)
+```
+**OPTIONAL**
+
+Create a data frame with Tukey test results to sort the pairs from smallest to highest p-values.
+
+
+```{r}
+
+# store the Tukey test results 
+
+anova_weight_feeds_tukey <- TukeyHSD(anova_weight_feeds)
+
+```
+
+
+
+
+```{r}
+# Extract the results for 'feed' and convert results to a data frame
+
+anova_weight_feeds_tukey_df <- as.data.frame(anova_weight_feeds_tukey[["chickwts$feed"]])
+```
+
+
+
+```{r}
+anova_weight_feeds_tukey_df
+```
+The pair names are row labels. In order to use arrange, let's crate a column with these pair names:
+
+```{r}
+anova_weight_feeds_tukey_df$pair_name<- rownames(anova_weight_feeds_tukey[["chickwts$feed"]])
+```
+
+
+
+
+```{r}
+anova_weight_feeds_tukey_df
+```
+```{r}
+anova_weight_feeds_tukey_df |>select(pair_name, `p adj`) |> arrange(`p adj`)
+```
+
+
+```{r}
+options(scipen = 999)  # avoid scientific notation
+
+anova_weight_feeds_tukey_df |>select(pair_name, `p adj`) |> arrange(`p adj`)
+```
+
+
+WORK INDEPENDENTLY !!!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

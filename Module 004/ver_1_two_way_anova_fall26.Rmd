@@ -1,0 +1,484 @@
+---
+title: "Two-way ANOVA"
+output: 
+---
+
+
+```{r}
+
+library(tidyverse)
+
+```
+
+
+
+
+
+**Exercise 1**
+
+Download the CSV file “growth” from Canvas and upload it to Posit Cloud.
+
+**FOLLOW MY INSTRUCTIONS** to read it as an R data frame and name it: **growth_df**. 
+
+Use the Import option from the Environment tab. Read Diet and Supplement as factors.
+
+
+
+Take a look at the data frame that was created:
+
+```{r}
+
+growth_df |> str()
+
+```
+
+
+
+**Problem description**
+
+The data comes from a farm-scale trial of animal diets. There are *two factors: diet and supplement*. 
+
+Diet is a factor with three levels: barley, oats and wheat. 
+
+Supplement is a factor with four levels: agrimore, control, supergain, and supersupp. 
+
+There are 12 treatments (12 combinations of diets and supplements).
+
+The *outcome* variable is *weight gain after 6 weeks*.  
+
+
+**Analyze the data and conclude about the effects of diet and supplement on the animals’ weight gain**.
+
+
+
+
+a) **EXPLORATORY ANALYSIS**
+
+
+a 1) Compute the mean and standard deviation of weight gain:
+
+For each diet.
+
+For each supplement.
+
+For each diet-supplement combination (treatment). 
+
+
+Round to 2 decimal places (because the raw gain data is given with one decimal place). 
+
+
+Identify:
+
+Diet with highest sample mean gain.
+
+Supplement with highest sample mean gain.
+
+Within each diet, which supplement produces the highest mean gain.
+
+
+
+a 2) Do a boxplot showing the gain for the different supplements within each diet.
+
+
+
+a 1) ANSWER
+
+```{r}
+
+growth_df |> group_by(diet) |> summarize(mean_gain = round(mean(gain), 2), sd_gain   = round(sd(gain), 2)) |> arrange(desc(mean_gain))
+
+```
+
+
+
+```{r}
+
+growth_df |> group_by(supplement) |> summarize(mean_gain = round(mean(gain), 2), sd_gain   = round(sd(gain), 2)) |> arrange(desc(mean_gain))
+
+```
+
+
+
+
+
+
+```{r}
+
+growth_df |> group_by(diet, supplement) |> summarize(mean_gain = round(mean(gain), 2), sd_gain   = round(sd(gain), 2)) |> arrange(diet, desc(mean_gain))
+
+```
+
+
+
+
+
+```{r}
+
+growth_df |> group_by(diet, supplement) |> summarize(mean_gain = round(mean(gain), 2), sd_gain   = round(sd(gain), 2)) |> arrange(diet, desc(mean_gain)) |> slice(1)
+
+```
+
+
+
+
+
+a 2) ANSWER
+
+Do a box plot showing the gain for the different supplements within each diet.
+
+```{r}
+
+growth_df |> ggplot(aes(x = supplement, y = gain, fill = supplement)) + geom_boxplot() + facet_wrap(~ diet) + labs(x = "Supplement", y = "Weight Gain (lbs)")
+
+```
+
+
+
+
+```{r}
+
+growth_df |> ggplot(aes(x = supplement, y = gain, fill = supplement)) + geom_boxplot() + facet_wrap(~ diet) + labs(y = "Weight Gain (lbs)") + theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.title.x = element_blank())
+
+```
+
+
+
+
+
+The summary statistics and the boxplots show that, overall, **barley** is the diet resulting in the highest weight gain.
+
+With respect to the supplement, although **agrimore** results in the highest mean weight gain overall, the boxplots and the results from the third set of summary statistics show that this really depends on the diet. For the **barley** and **wheat** diets, both the **agrimore** and **supersup** supplements seem to lead to similar weight gain. For the **oats** diet, **agrimore** seems to be the clearly better supplement.
+
+We observed some differences in weight gain across diets and supplements, but we still do not know whether these differences are real (statistically significant) or simply due to sample variability. We will use ANOVA to assess the statistical evidence for these results.
+
+
+
+b) Define the hypotheses for these anova problem.
+
+
+**Hypotheses**
+
+**For the effect of diet**:
+
+Ho: The mean weight gain is the same for all three diets (barley, oats, and wheat).
+Ha: There is a difference in mean weight gain for at least two diets.
+
+Or, alternatively...
+
+Ho: µ barley = µ oats = µ wheat
+Ha: Same as above
+
+
+**For the effect of supplement**:
+
+H₀: The mean weight gain is the same for all four supplements (agrimore, control, supergain, and supersupp)
+
+Ha: There is a difference in mean weight gain for at least two supplements.
+
+
+Or, alternatively...
+
+Ho: µ agrimore = µ control = µ supergain = µ supersupp
+Ha: Same as above
+
+
+
+
+**For the interaction between diet and supplement**:
+
+Ho: No interaction effect (= The effect of diet on weight gain does NOT depend on the type of supplement)
+
+Ha: There is interaction effect (= The effect of diet on weight gain DEPENDS on the type of supplement)
+
+
+Or, alternatively
+
+Ho: No interaction effect (= The effect of supplement on weight gain does NOT depend on the type of diet)
+
+Ha: There is interaction effect (= The effect of supplement on weight gain DEPENDS on the type of diet)
+
+
+Testing the interaction hypotheses will allow us to know if the difference in mean gain across the supplements varies significantly for at least one diet.
+
+
+
+
+c) Run the anova test.
+
+
+```{r}
+
+twoway_growth <- aov(gain ~ diet * supplement, data = growth_df)
+
+summary (twoway_growth)
+
+```
+
+
+
+
+Interpret the results of ANOVA:
+
+- The diet effect interpretation: The PV for diet is really small (3.00e-14 = 3*10^-14); therefore, it is less than alpha 0.05. We reject Ho and support Ha. We can claim that at least two diets yield different average weight gain.
+
+
+- The supplement effect interpretation: The PV for supplement is really small (2.95e-07 = 2.95*10^-7); therefore, it is less than alpha 0.05. We reject Ho and support Ha. We can claim that at least two supplements yield different average weight gain.
+
+
+- The interaction effect interpretation: The PV for the interaction is 0.917, much bigger than alpha 0.05. Therefore, we do not reject Ho and cannot support Ha in case of the interaction effect. The data DO NOT give us evidence to claim that the effect of supplement on weight gain depends (is affected by) on the diet
+
+Or, you can simply say:
+
+The data DO NOT give us evidence to claim that there is an interaction between diet and supplement.
+
+------
+------
+
+**What do we do next based on the results of this exercise?**
+
+Since the interaction is NOT significant, but both main effects are, we should conduct a post-hoc test *individually for each factor*, diet and supplement.
+
+
+#### Side comment: How do we proceed in an exercise where the interaction effect is significant?
+
+When there is interaction, understanding the effect of the two factors on the DV becomes more challenging. It is NOT as simple as doing a post-hoc test individually for each factor. More about this in exercise 2.
+
+#### End of Side comment
+
+
+
+
+**Post-hoc test for each factor**
+
+
+**Tukey for diet**
+
+```{r}
+
+growth_df |> group_by(diet) |> summarize(mean_gain = round(mean(gain), 2), sd_gain   = round(sd(gain), 2)) |> arrange(desc(mean_gain))
+
+```
+
+
+Now we apply Tukey to see which of these sample means are statistically different. 
+
+```{r}
+
+TukeyHSD(twoway_growth, which = "diet")
+
+```
+
+
+All PVs are less than alpha. Therefore, all diets lead to a statistically different average weight gain.
+
+
+
+
+
+**Tukey for supplement**
+
+
+```{r}
+
+growth_df |> group_by(supplement) |> summarize(mean_gain = round(mean(gain), 2), sd_gain   = round(sd(gain), 2)) |> arrange(desc(mean_gain))
+
+```
+
+
+
+```{r}
+
+TukeyHSD(twoway_growth, which = "supplement")
+
+```
+
+
+In this case, not all PVs are less than alpha; therefore, the difference in average weight gain for some pairs is not statistically significant. The pairs with a statistically significant difference are those with PVs less than alpha.
+
+
+
+
+
+**EXTRA OPTIONAL PLOT**
+
+Just in case you are curious about how to do the interaction plot in R, I will show you how to do it for this exercise. 
+
+
+**VERY IMPORTANT:**
+
+We DO NOT have to do an interaction plot in this example because the interaction is not significant. I am just going to do it to illustrate what such a plot looks like in R.
+
+```{r}
+
+interaction.plot (growth_df$diet, growth_df$supplement, growth_df$gain,  xlab ="Diet", trace.label= "Supplement", ylab= "Weight Gain")
+
+```
+
+
+
+**END OF EXTRA OPTIONAL PLOT**
+
+
+
+
+
+
+
+
+------
+-----
+
+
+
+**Exercise 2**
+
+Download the CSV file “BatterriesTemperature” from Canvas and read it as a data frame in R.
+
+To read the csv file, I WILL RECOMMEND YOU to run the following code:
+
+
+POSIT CLOUD USERS: YOU MUST UPLOAD THE CSV TO THE **SAME POSIT CLOUD LOCATION** WHERE YOU UPLOAD THIS NOTEBOOK !
+
+OR
+
+R STUDIO DESKTOP USERS: Store it in the same folder where this notebook is in your local computer.
+
+```{r}
+batt_temp_mat_df <- read.csv ("BatteriesTemperature.csv", colClasses = c("numeric","factor","factor"))
+```
+
+
+Take  a look the batteries_temperature data frame
+
+```{r}
+batt_temp_mat_df |> str()
+```
+
+**Problem description**
+
+An engineer is designing a battery for a device that could be deployed at different temperatures. Three choices of material are available to build the battery. Three temperatures levels (15, 70, and 125 F) are considered because they are consistent with the product end-use environment. Four batteries are tested at each combination of material and temperature, and the resulting observed battery lifetime is recorded. Analyze the data using R and conclude about the influence of the two factors on the DV.
+
+
+
+Before running ANOVA, answer a few questions:
+
+
+a) Outcome (dependent) variable:  Battery lifetime
+
+Factors and their levels:
+
+Factor A: Type of material. It has three levels (mat 1, mat 2, and mat 3)
+
+Factor B: Deployment temperature. It has three levels (15, 70, and 125 F)
+
+
+
+b) Do an exploratory analysis fallowing the same steps than used in exercise 1
+
+```{r}
+# Mean by material
+batt_temp_mat_df |>
+  group_by(material) |>
+  summarize(
+    mean_life_t = round(mean(lifetime), 1),
+    sd_life_t   = round(sd(lifetime), 1)
+  ) |>
+  arrange(desc(mean_life_t))
+```
+
+
+
+```{r}
+# Mean by temperature
+batt_temp_mat_df |>
+  group_by(temperature) |>
+  summarize(
+    mean_life_t = round(mean(lifetime), 1),
+    sd_life_t   = round(sd(lifetime), 1)
+  ) |>
+  arrange(desc(mean_life_t))
+```
+
+
+```{r}
+# Mean by material and temperature
+batt_temp_mat_df |>
+  group_by(material, temperature) |>
+  summarize(
+    mean_life_t = round(mean(lifetime), 1),
+    sd_life_t   = round(sd(lifetime), 1)
+  ) |>
+  arrange(material, desc(mean_life_t))
+```
+
+```{r}
+# Mean by material and temperature
+
+batt_temp_mat_df |>
+  group_by(material, temperature) |>
+  summarize(
+    mean_life_t = round(mean(lifetime), 1),
+    sd_life_t   = round(sd(lifetime), 1)
+  ) |>
+  arrange(material, desc(mean_life_t)) |>
+  slice(1)
+```
+
+
+
+```{r}
+batt_temp_mat_df |> ggplot(aes(x = temperature, y = lifetime, fill = temperature)) + geom_boxplot() + facet_wrap(~ material) + labs(y = "Lifetime (Days)", x="Material") + theme( axis.ticks.x = element_blank())
+```
+professor note:  I wanted to see the lifetime across the temperatures within each material, okay?
+
+
+```{r}
+batt_temp_mat_df |> ggplot(aes(x = factor(temperature, levels= c("15", "70", "125")), y = lifetime, fill = temperature)) + geom_boxplot() + facet_wrap(~ material) + labs(y = "Lifetime (Days)", x="Material") + theme( axis.ticks.x = element_blank())
+```
+note professor: that temperature is a factor, and then you redefine the levels the way you want.
+
+
+**Conclusion from exploratory analysis**: EXPLAIN IT VERBALLY
+
+The effect that changing the temperature from 15, to 70, to 125 has on lifetime changes according to the material used. This is a sign of interaction (to be confirmed with the ANOVA test)
+
+
+
+
+c) State the hypotheses for the three effects under investigation in this problem:
+
+**For Material**:
+
+Ho: The mean battery lifetime is the same for all three materials (material 1, material 2, and material 3).
+Ha: There is a difference in mean battery lifetime for at least two materials.
+
+Or, alternatively...
+
+Ho: µ mat1 = µ mat2 = µ mat3
+Ha: Same as above
+
+
+**For Temperature**:
+
+Ho: µ t15 = µ t70 = M t125
+
+Ha: There is a difference in mean battery lifetime for at least two temperatures.
+
+
+
+
+**For the Interaction between Temp and Material**
+
+Ho: No interaction effect (= The effect of material on battery lifetime does NOT depend on the temperature)
+
+Ha: There is interaction effect (= The effect of material on battery lifetime DEPENDS on the temperature)
+
+
+Testing the interaction hypotheses will allow us to know if the difference in lifetime across temperatures varies  significantly for at least one material.
+
+
+d) Run ANOVA and conclude about the statistical significance of the three effects
+
+WORK INDEPENDENTLY!
+
+

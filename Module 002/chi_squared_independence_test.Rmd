@@ -1,0 +1,410 @@
+---
+title: "Chi-Square Independence Test"
+output: 
+---
+
+
+```{r}
+
+library (tidyverse)
+
+```
+
+
+
+
+
+**Exercise 1: Relationship between Gender and Brand**
+
+Use the collected data (see slide 13 from presentation ) to find out if gender and brand awareness are related.
+
+
+First, let's enter the data. Since we are given the count for each combination of gender and awareness, the best way to enter the data is by creating a matrix of counts. See next:
+
+```{r}
+
+matrix_gender_brand <- matrix(c(95,41,50,114), nrow= 2, byrow= TRUE, dimnames= list( c("Could","Could not"), c("Male","Female")))
+
+```
+
+
+```{r}
+
+matrix_gender_brand
+
+```
+
+
+
+
+**EXPLORATORY ANALYSIS**
+
+A useful thing to do in the exploratory phase of a chi-squared test of independence is to compute the conditional probabilities of the categories of one variable given the values of the other variable. Doing so could give us an idea of how associated the variables are. The trick is to choose the conditioning variable, which is something that is context dependent.
+
+In this problem, it makes more sense to compute the probabilities of each awareness condition GIVEN the gender (i.e., condition on gender).
+
+```{r}
+#margin 2 represent column
+#margin 1 represent row
+round (prop.table(matrix_gender_brand, margin = 2) * 100, 2)
+
+# margin = 2 computes the probabilities column-wise (using the column total as the total). This implies conditioning on gender.
+
+```
+
+
+
+Among males, ~ 66% could identify the products.
+
+Among females, ~ 27% could identify the products.
+
+So, it looks like the gender influences (is related to) brand awareness because the probabilities/percentages of the awareness categories change a lot depending on the gender.
+
+However, we cannot rule out that the observed difference in awareness across the genders is simply due to sampling variability. We will run a chi-squared test of independence to assess the statistical significance of the observed results.
+
+
+
+
+**STATISTICAL ASSESSMENT ANALYSIS**
+
+Let's apply the chi-squared test of independence.
+
+
+**Set up the hypotheses**
+
+Ho: Gender and brand awareness are independent (brand awareness is NOT associated with gender).
+
+Ha: Gender and brand awareness are dependent (brand awareness is associated with gender = the level of brand awareness is NOT the same for both genders).
+
+
+
+**Run the chi-squared test of independence by using the chisq.test() function**:
+
+```{r}
+
+chisq.test(matrix_gender_brand)
+
+```
+
+
+p-value = 2.452e-11
+
+p-value = 2.452 * 10^-11
+
+
+Decision: The p-value is less than alpha (0.05); therefore, we reject Ho and support Ha. 
+
+Conclusion: We can claim that gender and brand awareness are dependent. The level of brand awareness is not the same for both genders.
+
+
+
+Was the use of the chi-square test warranted? Is the validity condition satisfied?
+
+Validity condition: All the expected counts are greater than or equal to 5.
+
+```{r}
+
+chisq.test(matrix_gender_brand)$expected
+
+```
+
+All Eij (i.e., the expected counts) are above 5; thus, the assumption for the validity of the test is satisfied.
+
+
+
+
+**Pearson residuals**: es solo cuando rechasamos Ho
+
+Because we rejected Ho (this next analysis DOES NOT make sense when we do NOT reject Ho), we can ask the following question: Which gender is related to higher and lower brand awareness? Pearson residuals contain that information:
+
+
+```{r}
+
+chisq.test(matrix_gender_brand)$residuals
+
+```
+
+We can see that "Male" and "Could" (could identify) have a positive and large residual (same for Female and Could Not). Therefore, we can conclude that males have more brand awareness of the products being advertised than females.
+
+
+
+
+**Computing Cramer's V: A proxy for practical significance** (MIGHT SKIP ON FIRST DAY. NOT ASKED IN ASSIGNMENT 1)
+
+```{r}
+
+chi_square_value <- unname (chisq.test(matrix_gender_brand)$statistic)
+
+sqrt (chi_square_value/ (sum (matrix_gender_brand)*min (ncol(matrix_gender_brand)-1,nrow(matrix_gender_brand)-1)))
+
+```
+
+
+The value of Cramer's V indicates that Gender and Brand Awareness have a weak to moderate association.
+
+
+
+
+
+**Exercise 2: Relationship between Marital Status and Political Party Affiliation**
+
+The **gss_cat** dataset (available in the tidyverse) contains a sample of responses from the General Social Survey, a long-running survey conducted in the United States. We will use this dataset to assess whether marital status and political party affiliation are associated among Americans.
+
+Before running any analysis, the dataset requires some cleaning. Specifically, the partyid variable has 10 levels, several of which are uninformative (e.g., "No answer", "Don't know"). We will simplify it into three meaningful categories: Republican, Independent, and Democrat. We will also remove "No answer" observations from the marital variable.
+
+
+Take a look at the original dataset:
+
+```{r}
+
+gss_cat |> str()
+
+```
+
+
+Clean the dataset and create a new one with two meaningful new categorical variables:
+
+```{r}
+
+gss_cat_clean <- gss_cat |> filter(marital != "No answer") |> 
+  mutate(party = fct_collapse(partyid,
+    "Republican"  = c("Strong republican", "Not str republican", "Ind,near rep"),
+    "Independent" = c("Independent"),
+    "Democrat"    = c("Not str democrat", "Strong democrat", "Ind,near dem"),
+    other_level   = "Other")) |>
+  filter(party != "Other") |>
+  select(marital, party) |>
+  droplevels()
+
+```
+
+
+
+Comment about previous code from Claude:
+
+"... other_level is a special named argument of fct_collapse(). It tells the function fct_collapse(): "take all levels I haven't explicitly listed above ("No answer", "Don't know", "Other party") and collapse them all into a single category, and call that category whatever string I assign to other_level."
+
+
+
+Take a look at the new dataset:
+
+```{r}
+
+gss_cat_clean |> str()
+
+```
+
+
+
+
+
+
+**EXPLORATORY ANALYSIS**
+
+Check out the options (levels) of marital status:
+
+```{r}
+
+gss_cat_clean |> count (marital)
+
+```
+
+
+
+Compute the conditional probabilities of the categories of one variable given the values of the other variable. In this problem, it makes more sense to compute the probabilities of each marital status GIVEN the party affiliation  (i.e., condition on party affiliation).
+
+
+In contrast to exercise 1 (gender and awareness), here the data is stored in two columns of a data frame. Thus, we have two options to compute the conditional probabilities:
+
+
+**Way 1** for obtaining the conditional probabilities: **use dplyr function**
+
+```{r}
+
+gss_cat_clean |>  count(party, marital) |> group_by(party) |>  mutate(percentage = round(n / sum(n) * 100, 2)) |> select (-n)
+
+# group by party so that the % are computed within each party (using each party as the total)
+
+```
+
+
+
+
+
+**Way 2** for obtaining the conditional probabilities: **create the matrix of counts and THEN use prop.table()**:
+
+
+This second way is better for two reasons:
+
+a) We create a matrix of counts that can be reused when applying the chi-squared test.
+
+b) The output is easier to interpret (easier to interpret the conditional probabilities)
+
+
+
+**CREATE THE MATRIX OF COUNTS**
+
+```{r}
+
+matrix_marital_party <-table( gss_cat_clean$party, gss_cat_clean$marital)
+
+```
+
+
+```{r}
+
+matrix_marital_party
+
+```
+
+
+
+**CREATE A BETTER MATRIX OF COUNTS**
+
+
+Optional but nice to do: Sort the options of party affiliation to show them in this order: "Independent", "Democrat", and "Republican"
+
+```{r}
+
+gss_cat_clean <- gss_cat_clean |>  mutate(party = factor(party, levels = c("Independent", "Democrat", "Republican")))
+
+```
+
+
+
+```{r}
+
+matrix_marital_party <-table( gss_cat_clean$party, gss_cat_clean$marital)
+
+```
+
+
+
+```{r}
+
+matrix_marital_party
+
+```
+
+
+
+**USE PROP.TABLE() ON THE MATRIX OF COUNTS TO GET THE PROBABILITIES**
+
+```{r}
+
+round(prop.table(matrix_marital_party, margin = 1) * 100, 2)
+
+```
+
+
+
+A CAREFUL observation of the previous table clearly highlights a couple of things:
+
+) The largest differences across the political affiliations lie in the chances of being married and never married
+
+) The chances of never married across independents and democrats are ~ 29% whereas among republicans is ~19%.
+
+) The chances of being married across independents and democrats are slightly above 40% whereas among republicans is 57%.
+
+
+These differences across party affiliations SEEM to be noticeable. However, we cannot rule out that they are simply due to sampling variability. We will run a chi-squared test of independence to assess the statistical significance of the observed results.
+
+
+
+**STATISTICAL ASSESSMENT ANALYSIS**
+
+Let's apply the chi-squared test of independence.
+
+
+**Set up the hypotheses**
+
+Ho: Marital status and political party affiliation are independent (party affiliation is NOT associated with marital status).
+
+Ha: Marital status and political party affiliation are dependent (party affiliation is associated with marital status).
+
+
+
+**Run the chi-squared test of independence by using the chisq.test() function**:
+
+```{r}
+
+chisq.test(matrix_marital_party)
+
+```
+
+
+p-value = 2.2e-16
+
+p-value = 2.2 * 10^-16
+
+
+Decision: The p-value is less than alpha (0.05); therefore, we reject Ho and support Ha. 
+
+Conclusion: We can claim marital status and political party affiliation are dependent (party affiliation is associated with marital status)
+
+
+
+Was the use of the chi-square test warranted? Is the validity condition satisfied?
+
+Validity condition: All the expected counts are greater than or equal to 5.
+
+```{r}
+
+chisq.test(matrix_marital_party)$expected
+
+```
+
+All Eij (i.e., the expected counts) are above 5; thus, the assumption for the validity of the test is satisfied.
+
+
+
+
+**Pearson residuals**:
+
+Because we rejected Ho, we can ask: which combinations of marital status and party affiliation deviate most from what we would expect under independence? 
+
+Pearson residuals contain that information:
+
+```{r}
+
+chisq.test(matrix_marital_party)$residuals
+
+```
+
+
+The two largest residuals in absolute value correspond to the combinations of "Republican" and "never married" (negative association) and "Republican" and "Married" (positive association). These two residuals confirm our previous observation that among republicans one find the lowest changes of belonging to the never married category and the highest chances of belonging to the married category.
+
+
+
+
+**Computing Cramer's V: A proxy for practical significance**
+
+```{r}
+
+chi_square_value_gss <- unname (chisq.test(matrix_marital_party)$statistic)
+
+sqrt (chi_square_value_gss/ (sum (matrix_marital_party)*min (ncol(matrix_marital_party)-1, nrow(matrix_marital_party)-1)))
+
+```
+
+
+The value of Cramer's V indicates that marital status and political affiliation have a weak association.
+
+
+
+**OPTIONAL READING**
+
+This is a great example of the difference between statistical significance and practical significance. Here we have a strong statistical relationship between marital status and political affiliation (very (very!!!) low p-value indicating that these two variables are clearly related), but their relationship is weak (low practical significance). 
+
+What do we mean by a weak relationship? It means that if we were to use the values of variable 1 (say, party affiliation) to predict the values of variable 2 (marital status), the predictions won't be much better than the predictions we would get if we simply use the overall proportions of each category of variable 2 in the sample (if we predicted the values of marital status for new people simply using the proportions of each marital status in the sample).
+
+
+Exploratory Analysis
+
+```{r}
+round(prop.table(matrix_smoking_wrinkles, margin = 1) * 100, 2)
+```
+
+EXPLORATORY ANALYSIS
+
+

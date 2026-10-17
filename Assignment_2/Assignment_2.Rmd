@@ -1,0 +1,433 @@
+---
+title: "Assignment_2"
+output: html_document
+---
+
+```{r, include=FALSE}
+library(tidyverse)
+```
+
+# Question 1 (60 points)
+
+Four different designs for a digital computer circuit are being studied to compare the amount of noise present. The following data have been obtained:
+
+| Circuit Design | Noise Observed |
+|:--------------:|:--------------:|
+| Design 1       | 21, 20, 29, 30, 24 |
+| Design 2       | 30, 31, 33, 26, 30 |
+| Design 3       | 27, 26, 25, 35, 39 |
+| Design 4       | 35, 41, 33, 28, 38 |
+
+
+Enter this data in R by following these steps:
+
+- Create a vector called `design` by using this code:
+
+  ```r
+  design <- rep(c("1", "2", "3", "4"), each = 5)
+  ```
+  
+I converted design to a factor because circuit design is a categorical variable. This ensures that R performs the ANOVA in the same way it was done in class.
+
+```{r}
+design <- factor(rep(c("1","2","3","4"), each = 5))
+```
+
+  
+- Create a vector called `noise` and enter all the values from the table. Enter the values by row (i.e., all the values from row 1 followed by all the values from row 2, and so on).
+
+```{r}
+noise <- c(
+21, 20, 29, 30, 24,
+30, 31, 33, 26, 30,
+27, 26, 25, 35, 39,
+35, 41, 33, 28, 38
+)
+```
+
+
+- Create a data frame titled `design_noise_df` with two columns (one column with each of the vectors you just created).
+
+```{r}
+design_noise_df <- data.frame(design, noise)
+```
+
+```{r}
+design_noise_df |> str()
+```
+
+
+
+The goal is to run an ANOVA to find out if circuit design is related to the amount of observed noise.
+
+---
+
+### a) Exploratory Analysis (20 points)
+
+Run an exploratory analysis relevant to this problem. The analysis must include computing summary statistics and doing a **dot plot**. Also, and most importantly, interpret the results of the exploratory analysis.
+
+
+
+**Requirement:** You MUST do the exact same exploratory analysis we did in class. If you do something different (e.g., use different R functions, compute different summary statistics, or do different plots than the ones we used in class), you will receive ZERO points for this part with the following comment:
+
+*Intentionally failed to follow the instructions.*
+
+```{r}
+design_noise_df |>
+  group_by(design) |>
+  summarise(
+    mean_noise = round(mean(noise), 1),
+    median_noise = round(median(noise), 1),
+    sd_noise = round(sd(noise), 1)
+  ) |>
+  arrange(desc(mean_noise))
+```
+```{r}
+design_noise_df |>
+  ggplot(aes(x = design, y = noise)) +
+  geom_dotplot(
+    binaxis = "y",
+    stackdir = "center"
+  ) +
+  labs(
+    x = "Circuit Design",
+    y = "Noise Observed",
+    title = "Noise Level by Circuit Design"
+  )
+```
+
+
+```{r}
+# Box Plot
+design_noise_df |>
+  ggplot(aes(x = design, y = noise, fill = design)) +
+  geom_boxplot() +
+  labs(
+    title = "Observed Noise by Circuit Design",
+    x = "Circuit Design",
+    y = "Observed Noise"
+  ) +
+  theme_minimal()
+```
+
+Design 4 has the highest average noise level (mean = 35.0), while Design 1 has the lowest average noise level (mean = 24.8).
+
+Designs 2 and 3 have similar mean noise levels (30.0 and 30.4 respectively).
+
+The dot plot also suggests that the noise levels vary among the four circuit designs, especially between Designs 1 and 4. Therefore, it appears that circuit design may be related to the amount of noise produced.
+
+---
+
+### b) State the Hypotheses (5 points)
+
+State the hypotheses relevant to this problem.
+
+> Null Hypothesis (H₀):
+  μ1=μ2=μ3=μ4
+
+All circuit designs have the same mean noise level. Circuit design is not related to observed noise.
+
+> Alternative Hypothesis (Hₐ):
+  At least two circuit designs have different mean noise levels.
+
+Circuit design is related to observed noise.
+
+---
+
+### c) Run ANOVA and Make a Conclusion (20 points)
+
+Run ANOVA and make the appropriate conclusion.
+
+```{r}
+anova_design_noise <- aov(noise ~ design,
+                          data = design_noise_df)
+
+```
+
+```{r}
+summary(anova_design_noise)
+```
+
+**Decision**
+
+The PV is 0.0301, which is less than alpha (0.05). Therefore, the data is giving us evidence to reject H₀ and support Hₐ.
+
+**Conclusion**
+
+The difference between at least two of the sample mean noise levels is statistically significant. Therefore, we have evidence to conclude that at least two circuit designs produce different average noise levels. This in turn means that circuit design is related to the amount of observed noise.
+
+---
+
+### d) Conduct a Post-Hoc Test (15 points)
+
+Conduct a post-hoc test and discuss which designs lead to different average noise levels.
+
+Before running the post hoc test, estimate the mean for each design
+
+```{r}
+design_noise_df |>
+  group_by(design) |>
+  summarise(
+    mean_noise = round(mean(noise),1)
+  ) |>
+  arrange(desc(mean_noise))
+```
+#### Tukey Test:
+
+```{r}
+TukeyHSD(anova_design_noise)
+```
+**Interpretation**
+
+The only p-value less than alpha (0.05) is the one for the comparison between Design 4 and Design 1 (p-value = 0.0176).
+
+Therefore, according to Tukey's method, the only statistically significant difference is between the mean noise levels of Design 4 and Design 1.
+
+All the other pairwise comparisons have p-values greater than 0.05 and are not statistically significant.
+
+**Conclusion**
+
+According to the Tukey post-hoc test, the only two designs with statistically different average noise levels are Design 4 and Design 1.
+
+Design 4 has a significantly higher average noise level (mean = 35.0) than Design 1 (mean = 24.8).
+
+No statistically significant differences were found between any other pairs of circuit designs.
+
+#### Additional Post-Hoc Analysis (Bonferroni)
+
+Although the Tukey post-hoc test is sufficient to identify which circuit designs differ significantly in their mean noise levels, I decided to perform a Bonferroni post-hoc test as an additional analysis to confirm the results obtained with Tukey's method.
+
+```{r}
+pairwise.t.test(
+  design_noise_df$noise,
+  design_noise_df$design,
+  p.adjust.method = "bonferroni"
+)
+```
+**Interpretation**
+
+According to the Bonferroni method, the only statistically significant difference is between Design 4 and Design 1 because it is the only comparison with a p-value less than alpha (0.05).
+
+All the other pairwise comparisons have p-values greater than 0.05 and therefore are not statistically significant.
+
+**Conclusion**
+
+According to the Bonferroni post-hoc test, the only two circuit designs with significantly different average noise levels are Design 4 and Design 1.
+
+
+### Additional Visualization (Not Required)
+ understand which circuit designs differ significantly in their average noise levels.
+
+```{r}
+par(mar = c(4.6, 4 , 4.6, 4))
+plot(TukeyHSD(anova_design_noise), las= 1)
+```
+
+**Explanation**
+
+This graph displays the confidence intervals for each pairwise comparison conducted by Tukey's post-hoc test.
+
+The vertical line at 0 represents the situation where there is no difference between the mean noise levels of two designs.
+
+If a confidence interval crosses 0, the difference between those two designs is not statistically significant.
+If a confidence interval does not cross 0, the difference between those two designs is statistically significant.
+
+In this case, the comparison between Design 4 and Design 1 is the only interval that does not cross 0. This agrees with the Tukey test results, which showed a p-value of 0.0176 for the comparison between Design 4 and Design 1.
+
+Therefore, the graph visually confirms that the only statistically significant difference in average noise levels is between Design 4 and Design 1. All other comparisons cross 0 and are not statistically significant.
+
+
+<hr style="border:2px solid black;">
+
+
+# Question 2 (40 points)
+
+Twenty pigs are assigned at random among 4 experimental groups. Each group is fed a different diet. The data are the pig's weight, in kilograms, after being raised on these diets for 10 months. We wish to determine whether the mean pig weights are the same for all 4 diets or not.
+
+Download the CSV file "Pigs_Weights" from Canvas/ Module 3/ Files. Then, read it into R.
+
+> Note: Although we had not yet covered the read.csv() function in this module, I used it to import the CSV file into R so that I could create the data frame needed for the analysis.
+
+```{r}
+pigs_weights_df <- read.csv("Pigs_Weights.csv", header = TRUE)
+```
+I converted Diet to a factor because diet is a categorical variable. This ensures that R treats the four diets as groups and performs the ANOVA in the same way it was done in class.
+
+```{r}
+pigs_weights_df$Diet <- factor(pigs_weights_df$Diet)
+```
+
+
+```{r}
+pigs_weights_df |> str()
+```
+
+
+### a) Identify the Variables (5 points)
+
+##### Dependent Variable
+> Pig weight (in kilograms)
+
+##### Factor
+> Diet
+
+##### Factor Levels
+> D1, D2, D3, and D4
+
+---
+
+### b) State the Hypotheses (5 points)
+
+##### Null Hypothesis (H₀)
+
+H₀: μD1 = μD2 = μD3 = μD4
+
+> All diets lead to the same mean pig weight. Diet is not related to pig weight.
+
+##### Alternative Hypothesis (Hₐ)
+
+Hₐ: At least two mean weights are different.
+
+> Diet is related to pig weight.
+
+---
+
+### c) Compute the Average Weight for Each Diet (10 points)
+
+##### Average Weight by Diet
+
+```{r}
+pigs_weights_df |>
+  group_by(Diet) |>
+  summarise(
+    mean_weight = round(mean(Weight), 1)
+  ) |>
+  arrange(desc(mean_weight))
+```
+
+
+##### Interpretation
+
+Diet D3 has the highest average pig weight (mean = 87.3 kg), while Diet D1 has the lowest average pig weight (mean = 80.7 kg).
+
+Diets D4 and D2 have average pig weights of 86.4 kg and 84.2 kg, respectively.
+
+Based on the sample means, pigs fed Diet D3 appear to be heavier on average than pigs fed the other diets. Likewise, pigs fed Diet D1 appear to be the lightest on average.
+
+##### Can We Conclude that Diet Is Associated with a Real Difference in Pig Weight?
+
+No. Although the sample means are different, we cannot conclude that diet is associated with a real difference in pig weight based solely on these means. The observed differences could be due to random variation among the pigs.
+
+A statistical test such as ANOVA is required to determine whether the differences in mean pig weight are statistically significant or simply due to chance.
+
+---
+
+### d) Run ANOVA and Make the Appropriate Conclusion (20 points)
+
+##### ANOVA Test
+
+```{r}
+anova_pigs <- aov(Weight ~ Diet,
+                  data = pigs_weights_df)
+```
+
+```{r}
+summary(anova_pigs)
+```
+
+
+**Decision**
+
+The p-value is 0.0547, which is greater than alpha (0.05). Therefore, the data is not giving us enough evidence to reject H₀.
+
+**Conclusion**
+
+*Use a significance level of 0.05.*
+
+The difference between the sample mean pig weights is not statistically significant. Therefore, we do not have sufficient evidence to conclude that the mean pig weights differ among the four diets. This in turn means that we cannot conclude that diet is related to pig weight.
+
+However, it is worth noticing that the p-value (0.0547) is very close to alpha (0.05). Further studies with a larger sample size may help determine whether a real difference exists among the diets.
+
+### Optional Additional Analysis (Not Required for This Assignment)
+
+Although the ANOVA test was not statistically significant (p = 0.0547 > 0.05), I performed Tukey and Bonferroni post-hoc tests as an additional analysis to support the ANOVA results. These tests were used to explore whether any specific pair of diets showed evidence of a difference in mean pig weight. However, the main conclusion remains unchanged: there is insufficient evidence at the 0.05 significance level to conclude that diet is related to pig weight.
+
+
+##### Tukey Test
+
+```{r}
+TukeyHSD(anova_pigs)
+```
+**Interpretation**
+
+All pairwise comparisons have adjusted p-values greater than alpha (0.05). Therefore, according to Tukey's method, no statistically significant differences were found between any pair of diets.
+
+However, it is worth noticing that the comparison between D3 and D1 has the smallest p-value (p-value = 0.0537), which is very close to the significance level of 0.05. This result suggests that pigs fed Diet D3 may have higher average weights than pigs fed Diet D1; however, the evidence is not strong enough to conclude that the difference is statistically significant.
+
+The confidence interval for D3-D1 ranges from -0.088 to 13.408, which includes 0. Since 0 is contained within the interval, the difference is not statistically significant.
+
+**Conclusion**
+
+According to Tukey's post-hoc test, no statistically significant differences were detected between any pair of diets at the 0.05 significance level.
+
+Although Diet D3 produced the highest average pig weight and Diet D1 produced the lowest average pig weight, the observed differences were not large enough to be considered statistically significant.
+
+Therefore, the Tukey post-hoc analysis supports the conclusion obtained from the ANOVA test: there is insufficient evidence to conclude that diet is related to pig weight.
+
+##### Bonferroni
+
+```{r}
+pairwise.t.test(
+  pigs_weights_df$Weight,
+  pigs_weights_df$Diet,
+  p.adjust.method = "bonferroni"
+)
+```
+**Interpretation**
+
+According to the Bonferroni method, none of the pairwise comparisons have p-values less than alpha (0.05). Therefore, no statistically significant differences were found between any pair of diets.
+
+The smallest p-value corresponds to the comparison between Diet D3 and Diet D1 (p-value = 0.073). However, this p-value is still greater than 0.05, so the difference is not statistically significant.
+
+All remaining comparisons have even larger p-values and therefore provide even less evidence of a difference in mean pig weight.
+
+**Conclusion**
+
+According to the Bonferroni post-hoc test, no statistically significant differences were detected between any pair of diets.
+
+Similarly to the ANOVA and Tukey analyses, the Bonferroni method does not provide sufficient evidence to conclude that any diet produces a different mean pig weight.
+
+Therefore, the Bonferroni post-hoc analysis supports the conclusions obtained from both the ANOVA test and the Tukey post-hoc test: there is insufficient evidence at the 0.05 significance level to conclude that diet is related to pig weight.
+
+Additional Observation: Although the comparison between Diet D3 and Diet D1 produced the smallest p-value (0.073), it remains greater than alpha (0.05). Further studies with a larger sample size may help determine whether a real difference exists between these two diets.
+
+### Additional Visualization (Not Required)
+
+> The following visualizations are not required for this assignment. However, they were included as supplementary analyses to help visualize and better understand the results obtained from the ANOVA and post-hoc tests.
+
+> These graphs do not change the statistical conclusions presented above. Their purpose is simply to provide a visual representation of the differences among diets and to support the interpretation of the statistical results.
+
+The following graph shows the confidence intervals for the pairwise comparisons obtained from Tukey's method.
+
+```{r}
+par(mar = c(4.6, 4, 4.6, 4))
+plot(TukeyHSD(anova_pigs), las = 1)
+```
+
+
+##### Graph Interpretation
+
+This graph displays the confidence intervals for all pairwise comparisons between diets obtained from Tukey's post-hoc test.
+
+The vertical reference line at 0 represents the situation where there is no difference between the mean weights of two diets.
+
+Each horizontal line represents a confidence interval for the difference in mean pig weight between two diets.
+
+- If a confidence interval crosses 0, the difference between those two diets is not statistically significant.
+- If a confidence interval does not cross 0, the difference between those two diets is statistically significant.
+
+In this graph, all confidence intervals cross the vertical line at 0. This indicates that none of the pairwise comparisons are statistically significant at the 0.05 significance level.
+
+The comparison between Diet D3 and Diet D1 is the closest to being significant because its confidence interval nearly excludes 0 and it had the smallest p-value in the Tukey test (p = 0.0537). However, since the interval still includes 0, the difference is not considered statistically significant.
+
+Therefore, the graph visually supports the results obtained from the ANOVA and Tukey tests, indicating that there is insufficient evidence to conclude that any pair of diets produces different mean pig weights.
