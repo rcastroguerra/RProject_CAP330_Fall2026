@@ -481,4 +481,58 @@ d) Run ANOVA and conclude about the statistical significance of the three effect
 
 WORK INDEPENDENTLY!
 
+3052188897 please bobby munir
+
+
+```{r}
+twoway_temp_mat <- aov(lifetime  ~ material * temperature, data= batt_temp_mat_df)
+
+summary (twoway_temp_mat)
+```
+
+Interpretation of the three effects:
+
+The p values for both factors, Material and Temperature, are less than alpha (0.05). Therefore, we can reject H0 in both cases and conclude:
+
+- At least two materials yield different mean lifetime
+- At least two temperatures yield different mean lifetime
+
+The interaction effect is also significant because the PV for the interaction is less than alpha. This suggests that the effect of the temperature on the lifetime DEPENDS on the type of material. In other words, the temperature affects the lifetime differently depending on the material.
+
+
+**How do we proceed in an exercise where the interaction effect is significant?**
+
+**In this course**, when the interaction is significant, you will ONLY be asked to do and interpret the interaction plot. 
+
+But **what do we do in a real-life analysis** when the interaction is significant? If you are interested in finding out, you may check out the following video (totally optional since we won't apply this in class):
+
+https://youtu.be/usspa9-CwiE?si=pjc7rxCjN47uKPie
+
+Let's do the interaction plot:
+
+```{r}
+interaction.plot (batt_temp_mat_df$temperature, batt_temp_mat_df$material, batt_temp_mat_df$lifetime, xlab ="Temperature", trace.label= "Material", ylab= "Lifetime")
+```
+
+```{r}
+#Change the order of the levels for the Temperature factor
+batt_temp_mat_df$temperature <- factor(batt_temp_mat_df$temperature, levels= c("15", "70", "125"))
+```
+
+```{r}
+interaction.plot (batt_temp_mat_df$temperature, batt_temp_mat_df$material, batt_temp_mat_df$lifetime, xlab ="Temperature", trace.label= "Material", ylab= "Lifetime")
+```
+
+Why does the interaction plot clearly show the presence of interaction between Temperature and Material?
+
+Because the effect on lifetime as we change the temperature is NOT homogeneous across all the materials.
+
+The effect on lifetime as we change the temperature DEPENDS on the material used.
+
+Examples:
+
+Changing from temperature 15 to 70 produces a sharp decrease in lifetime if we are using material 1, but it produces a slight increase in lifetime if we are using material 3.
+
+Changing from temperature 70 to 125 barely changes lifetime if we are using material 1, but it produces a sharp decrease in lifetime if we are using material 3.
+
 

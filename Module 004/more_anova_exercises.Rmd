@@ -1,0 +1,282 @@
+---
+title: "More ANOVA exercises"
+output: 
+---
+
+
+```{r}
+
+library(tidyverse)
+
+```
+
+
+
+
+
+
+**Exercise 1**: The Number of Breaks in Yarn during Weaving
+
+
+Run the following two code cells to get familiar with the data set:
+
+```{r}
+
+?warpbreaks
+
+```
+
+
+```{r}
+
+warpbreaks |> str()
+
+```
+
+
+
+
+a) **EXPLORATORY ANALYSIS**
+
+
+a 1) Compute the mean and standard deviation of breaks:
+
+For each wool type.
+
+For each tension level.
+
+For each wool-tension combination (treatment). 
+
+
+Round to 1 decimal place. 
+
+
+Identify the wool type with the **lowest number** of breaks.
+
+Identify the tension level with the **lowest number** of breaks.
+
+Identify within each tension level, the wool type with the **lowest number** of breaks.
+
+**ANSWER**
+
+
+```{r}
+warpbreaks |> group_by(wool) |> summarize(mean_breaks = round(mean(breaks), 1), sd_breaks   = round(sd(breaks), 1)) |>
+arrange(mean_breaks)
+```
+
+
+```{r}
+warpbreaks |> group_by(tension) |> summarize(mean_breaks = round(mean(breaks), 1), sd_breaks   = round(sd(breaks), 1)) |>
+arrange(mean_breaks)
+```
+
+```{r}
+warpbreaks |> group_by(tension, wool) |> summarize(mean_breaks = round(mean(breaks), 1), sd_breaks   = round(sd(breaks), 1)) |>
+arrange(tension, mean_breaks)
+```
+
+
+optional
+```{r}
+warpbreaks |> group_by(tension, wool) |> summarize(mean_breaks = round(mean(breaks), 1), sd_breaks   = round(sd(breaks), 1)) |>
+arrange(tension, mean_breaks) |> slice(1)
+```
+
+a 2) Do a boxplot showing the breaks for the two wool types within each tension level. Show the options with the lowest number of breaks first (to the left).
+
+
+```{r}
+warpbreaks |> ggplot(aes(x=reorder(wool,breaks,FUN=median), y = breaks, fill = wool)) + geom_boxplot() + facet_wrap(~ tension) + labs(x = "wool", y = "Breaks") + theme(axis.text.x = element_blank(), axis.ticks.x = element_blank(), axis.title.x = element_blank())
+```
+why it happens (according to Claude):
+
+reorder(wool, breaks, FUN = median) is evaluated once, on the whole data frame, before facet_wrap() splits anything. It computes one median per wool level across all tension levels combined, and that gives a single level order for the factor. The overall medians are roughly 26 for A and 24 for B, so B is placed first. Because facet_wrap() uses a shared x scale by default, every facet inherits that order.
+
+within medium tension specifically, the medians are 21 for A and 28 for B, so A should be on the left there. within low tension, B (29) is below A (51), and within high tension, B (17) is below A (24).
+
+```{r}
+warpbreaks |>
+  mutate(wool_tension = reorder(interaction(wool, tension), breaks, FUN = median)) |>
+  ggplot(aes(x = wool_tension, y = breaks, fill = wool)) +
+  geom_boxplot() +
+  facet_wrap(~ tension, scales = "free_x") +
+  labs(x = "wool", y = "Breaks") +
+  theme(axis.text.x = element_blank(),
+        axis.ticks.x = element_blank(),
+        axis.title.x = element_blank())
+```
+The original code ordered wool, which has only two levels, so it could only produce one global order. The fix orders the six wool-and-tension combinations instead, so each tension level gets its own order.
+
+Step 1: interaction(wool, tension)
+
+This creates a factor with six levels, one per wool/tension combination (A.L, B.L, A.M, B.M, A.H, B.H). Each combination now has its own identity, so it can have its own median.
+
+Step 2: reorder(..., breaks, FUN = median)
+
+This sorts those six levels by the median of breaks within each combination:
+
+This is a single order, but it has a useful property. Any two levels from the same tension keep their relative order from this list:
+
+Low: B.L (5th) comes before A.L (6th).
+Medium: A.M (2nd) comes before B.M (4th).
+High: B.H (1st) comes before A.H (3rd).
+
+So medium tension now puts A on the left, which is what you were missing.
+
+Step 3: facet_wrap(~ tension, scales = "free_x")
+
+Each facet only contains data for two of the six levels. With free_x, a facet draws only the levels present in its own data, and it keeps them in the factor's level order. That gives you the correct left-to-right order in every panel.
+
+
+
+
+
+b) Run the following code to do a chart. What info does the chart give you? 
+
+```{r}
+
+interaction.plot ( warpbreaks$tension, warpbreaks$wool, warpbreaks$breaks, xlab ="Tension Level", trace.label= "Wool Type", ylab= "# of breaks")
+
+```
+
+
+
+
+
+
+
+
+c) Run ANOVA and compare your previous observation in b) with the information provided by the ANOVA results.
+
+
+
+```{r}
+twoway_breaks_yarn <- aov(breaks ~ wool * tension, data= warpbreaks)
+
+summary (twoway_breaks_yarn)
+```
+
+
+
+
+
+
+**Exercise 2**: Plant growth data set.
+
+Let's load the "PlantGrowth" dataset by using the data() function from the built-in "utils" package.
+
+```{r}
+
+data(PlantGrowth)
+
+```
+
+
+
+```{r}
+
+PlantGrowth|> str()
+
+```
+
+
+
+```{r}
+
+PlantGrowth |> distinct(group)
+
+```
+
+
+
+
+
+
+Run an ANOVA analysis to find out if the factor "group" is related to the plant weight. Group refers to the specific treatment used to help the plant growth.
+
+
+
+
+
+
+a) **EXPLORATORY ANALYSIS**
+
+Let's get some exploratory statistics: The mean and standard deviation of weight for each growth treatment. Round these numbers to *3 decimal places**. Show the treatment with the largest weight first.
+
+
+Let's do an exploratory plot: A box plot of weight by treatment
+
+
+WORK INDEPENDENTLY !!!
+
+ANSWER
+
+```{r}
+PlantGrowth |> group_by(group) |> summarise(mean_weight = round(mean(weight), 3), sd_weight = round(sd(weight), 3) ) |> arrange(desc(mean_weight))
+```
+
+```{r}
+PlantGrowth |> ggplot(aes(x = reorder(group, -weight, FUN=median), y = weight)) + geom_boxplot() + labs(x = "Growth Treatment", y = "weight")
+```
+
+
+
+
+
+
+b) State the hypotheses
+
+
+WORK INDEPENDENTLY !!!
+
+**one way anova**
+ANSWER
+
+H0: μ c = μ t1 = μ t2 (All treatments lead to the same mean weight) (the growth treatment is NOT related to the plant weight)
+
+Ha: At least two treatments yield a different mean weight (the growth treatment is related to the plant weight)
+
+
+
+
+c) Run the ANOVA test in R and conclude.
+
+
+WORK INDEPENDENTLY !!!
+
+
+```{r}
+one_way_plant_growth <- aov(weight ~ group, data = PlantGrowth)
+summary(one_way_plant_growth)
+```
+Decision: The PV is 0.0159 , which is less than alpha (0.05); therefore, the data is giving us evidence to reject Ho and support Ha.
+
+Conclusion: The difference between at least two of the sample means that we obtained earlier is statistically significant. So, we have evidence to conclude that at least two growth treatments lead to different mean plant weight. This in turn means that growth treatment is related to (associate with) plant weight.
+
+
+
+
+d) Do all three plant treatments lead to different average weight?
+
+
+WORK INDEPENDENTLY !!!
+
+
+ANSWER
+
+```{r}
+PlantGrowth |> group_by(group) |> summarise(mean_weight = round(mean(weight), 3) ) |> arrange (desc(mean_weight))
+```
+
+
+
+```{r}
+TukeyHSD(one_way_plant_growth)
+```
+
+
+
+
+
+

@@ -1,0 +1,368 @@
+---
+title: "Assignmant_3"
+output: html_document
+---
+
+```{r, include=FALSE}
+library(tidyverse)
+```
+
+
+# CAP 3330. Fall 2026
+
+## Assignment 3 (100 points)
+
+## Instructions
+
+Create an R notebook and include all the code and interpretations/explanations needed to answer the two questions below.
+
+---
+
+## Question 1 (60 points)
+
+A researcher is interested in studying three types of fertilization methods (100 lb., 150 lb., and 200 lb.) and two levels of irrigation (A and B) on biomass yield. The possible treatment combinations were randomly assigned to 30 plots of land, where each treatment was assigned the same number of plots. You can find the data you need for this exercise in the file **Biomass.csv** (Canvas/ Module 3/ Resources).
+
+**Note: You MUST read the Biomass.csv file into R using the following way:**
+
+Open a code chunk in your notebook, insert the following code, and run the code chunk:
+
+```r
+biomass_df = read.csv ("Biomass.csv",colClasses = c("numeric","factor","factor")) 
+```
+
+```{r, echo=FALSE}
+biomass_df = read.csv ("Biomass.csv",colClasses = c("numeric","factor","factor")) 
+biomass_df |> str()
+```
+
+
+Once you do that, a data frame called “biomass_df” will be available in R with the data you need to answer this question.
+
+If you attempt to read the file in a different way (for example, the way we do it in class using the Import option from the Environment tab), you will likely read the file incorrectly and your results will be wrong.
+
+### **a) How many replications were taken in this study? Show how you got the answer.**
+
+
+##### There are:
+
+- 3 fertilization methods (100 lb, 150 lb, and 200 lb)
+- 2 irrigation levels (A and B)
+
+Therefore, the number of treatment combinations is:
+
+$$
+ 3×2=6
+$$
+
+Since a total of 30 plots were used and each treatment combination was assigned the same number of plots:
+
+$$
+\frac{30}{6}=5
+$$
+
+#### *Answer*
+
+There are 6 treatment combinations (3 fertilization levels × 2 irrigation levels). Since 30 plots were used and each treatment combination received the same number of plots,
+
+$$
+\frac{30}{6}=5
+$$
+
+Therefore, 5 replications were taken for each treatment combination.
+
+
+
+### **b) Identify:**
+
+- The outcome variable 
+  Biomass Yield
+- The factor (or factors)
+
+    - Factor A: Fertilization Method
+    
+    - Factor B: Irrigation
+    
+- The levels of the factor (or levels of the factors)
+
+    - Factor A: Fertilization Method
+    
+      It has three levels:
+      
+      - 100 lb.
+      - 150 lb.
+      - 200 lb.
+
+    - Factor B: Irrigation
+    
+      It has two levels:
+      
+      - A
+      - B
+
+### **c) Set up all the hypotheses that should be set up to run this ANOVA.**
+
+##### For the Effect of Fertilization Method:
+
+- Ho: μ100 = μ150 = μ200
+
+    The mean biomass yield is the same for all three fertilization methods (100 lb, 150 lb, and 200 lb)
+    
+- Ha: Same as above.
+
+    There is a difference in mean biomass yield for at least two fertilization methods.
+    
+##### For the Effect of Irrigation:
+
+- Ho: μA = μB
+
+    The mean biomass yield is the same for both irrigation levels (A and B)
+
+- Ha: μA ≠ μB
+
+    There is a difference in mean biomass yield between the two irrigation levels.
+    
+##### For the Interaction between Fertilization and Irrigation:
+
+- Ho: No interaction effect 
+
+    The effect of fertilization on biomass yield does **NOT** depend on the irrigation level.
+
+- Ha: There is an interaction effect 
+
+    The effect of fertilization on biomass yield **DEPENDS** on the irrigation level.
+
+### **d) Analyze the results and discuss which effects (among all possible effects) are statistically significant. Justify your answer.**
+
+```{r}
+biomass_anova <- aov(biomass ~ fertilizer * irrigation,
+                     data = biomass_df)
+
+summary(biomass_anova)
+```
+
+#### *Interpretation of the Three Effects*
+
+##### Fertilization Effect:
+
+>The p-value for fertilizer is 0.04508, which is less than alpha (0.05). Therefore, we reject Ho and support Ha. We can claim that at least two fertilization methods yield different average biomass yields.
+
+##### Irrigation Effect:
+
+>The p-value for irrigation is 0.00422, which is less than alpha (0.05). Therefore, we reject Ho and support Ha. We can claim that the two irrigation levels yield different average biomass yields.
+
+##### Interaction Effect:
+
+>The p-value for the interaction is 0.03322, which is less than alpha (0.05). Therefore, we reject Ho and support Ha in the case of the interaction effect.
+
+>The data give us evidence to claim that there is a significant interaction between fertilization and irrigation.
+
+
+#### *Conclusion*
+
+The p-values for fertilizer (0.04508), irrigation (0.00422), and the fertilizer × irrigation interaction (0.03322) are all less than alpha (0.05). Therefore, all three effects are statistically significant.
+
+This means that:
+
+- At least two fertilization methods produce different mean biomass yields.
+- The irrigation levels produce different mean biomass yields.
+- The effect of fertilization on biomass yield depends on the irrigation level used.
+
+### **e) Construct the interaction plot and explain why it clearly shows the presence of interaction in this problem.**
+
+**Note: Stating that “the interaction is evident because the lines are not parallel” (or a similar statement based on observing that the lines are not parallel) does NOT count as a valid explanation.**
+
+```{r}
+interaction.plot(
+  biomass_df$fertilizer,
+  biomass_df$irrigation,
+  biomass_df$biomass,
+  xlab = "Fertilization Method",
+  trace.label = "Irrigation",
+  ylab = "Biomass Yield",
+  las = 1
+)
+```
+
+##### Why does the interaction plot clearly show the presence of interaction between Fertilization and Irrigation?
+
+>Because the effect on biomass yield as we change the fertilization level is not homogeneous across the two irrigation levels.
+
+>The effect of fertilization on biomass yield DEPENDS on the irrigation level used.
+
+##### Examples:
+
+- Changing the fertilizer level from 100 lb. to 200 lb. produces very little change in biomass yield when irrigation A is used.
+- Changing the fertilizer level from 100 lb. to 200 lb. produces a substantial increase in biomass yield when irrigation B is used.
+
+In addition, at the lower fertilizer levels (100 lb. and 150 lb.), irrigation A produces a higher average biomass yield than irrigation B. However, at the highest fertilizer level (200 lb.), irrigation B produces a higher average biomass yield than irrigation A.
+
+Therefore, the effect of fertilization on biomass yield changes depending on the irrigation level used. This demonstrates the presence of an interaction effect between fertilization and irrigation, which is consistent with the ANOVA results showing a statistically significant interaction effect (p = 0.03322 < 0.05).
+
+---
+
+## Question 2 (40 points)
+
+A study is done to determine if there is a difference in the average strength of a filament fiber produced by three machines. Researchers are also interested in studying the possible effect of changing the filament diameter on strength. Researchers decided to do the analysis using an alpha of 0.10.
+
+The data for this exercise can be found in the file **Filament.csv** (Canvas/ Module 3/ Resources). You MUST read the Filament.csv file into R using the following way:
+
+Open a code chunk in your notebook, insert the following code, and run the code chunk:
+
+```r
+Filament_df = read.csv ("Filament.csv",colClasses = c("numeric","factor","factor"))
+```
+
+```{r, echo=FALSE}
+Filament_df = read.csv ("Filament.csv",colClasses = c("numeric","factor","factor"))
+Filament_df |> str()
+```
+
+
+### **a) Identify:**
+
+- The outcome variable
+
+    Strength
+
+    The outcome (dependent) variable is the strength of the filament fiber.
+    
+- The factor (or factors)
+
+    - Factor A: Machine
+    - Factor B: Diameter
+    
+- The levels of the factor (or levels of the factors)
+
+    - Factor A: Machine
+    
+      - It has three levels:
+        
+        - M1
+        - M2
+        - M3
+
+    - Factor B: Diameter
+    
+      - It has three levels:
+      
+        - 20
+        - 24
+        - 28
+
+
+
+
+
+### **b) Analyze the results and discuss which effects (among all possible effects) are statistically significant. Justify your answer.**
+
+```{r}
+filament_anova <- aov(
+  strength ~ machine * diameter,
+  data = Filament_df
+)
+summary(filament_anova)
+```
+#### *Interpretation of the Three Effects*
+
+##### Machine Effect:
+
+>The p-value for machine is 0.0519, which is less than alpha (0.10). Therefore, we reject Ho and support Ha. We can claim that at least two machines yield different average filament strengths.
+
+##### Diameter Effect:
+
+>The p-value for diameter is 0.5364, which is greater than alpha (0.10). Therefore, we do not reject Ho and cannot support Ha. The data do NOT give us evidence to claim that the mean filament strength differs among the diameter levels.
+
+##### Interaction Effect:
+
+>The p-value for the interaction is 0.2377, which is greater than alpha (0.10). Therefore, we do not reject Ho and cannot support Ha in the case of the interaction effect.
+
+>The data do **NOT** give us evidence to claim that the effect of machine on filament strength depends on the diameter.
+
+#### *Conclusion*
+
+The p-value for machine (0.0519) is less than alpha (0.10), whereas the p-values for diameter (0.5364) and machine × diameter (0.2377) are greater than alpha.
+
+##### Therefore:
+
+- The machine effect is statistically significant.
+- The diameter effect is not statistically significant.
+- The interaction effect is not statistically significant.
+
+This means that at least two machines produce different mean filament strengths, but the data do not provide evidence that diameter affects strength or that the effect of machine depends on diameter.
+
+### **c) Conduct a post-hoc test for the machine factor using the Tukey method (only for the machine factor !). Discuss which machines lead to statistically different average strength. Explain and show your work.**
+
+##### The mean strength for each machine:
+
+```{r}
+Filament_df |>
+  group_by(machine) |>
+  summarize(
+    mean_strength = round(mean(strength), 2),
+    sd_strength = round(sd(strength), 2)
+  ) |>
+  arrange(desc(mean_strength))
+```
+
+
+##### Tukey's post-hoc test:
+
+>Since the interaction is not significant and the machine effect is significant, we conduct a Tukey post-hoc test for the machine factor to determine which machines have statistically different mean filament strengths.
+
+```{r}
+TukeyHSD(
+  filament_anova,
+  which = "machine",
+  conf.level = 0.90
+)
+
+```
+Only the comparison M3 - M2 has a p-value smaller than alpha (0.10).
+
+Therefore:
+
+- The difference between M2 and M1 is not statistically significant.
+- The difference between M3 and M1 is not statistically significant.
+- The difference between M3 and M2 is statistically significant.
+
+#### **Conclusion**
+
+Since only the p-value for M3 - M2 (0.0510) is less than alpha (0.10), we conclude that machines M2 and M3 produce statistically different average filament strengths.
+
+The other pairs (M1-M2 and M1-M3) do not show statistically significant differences in average strength because their p-values are greater than alpha (0.10).
+
+Looking at the sample means:
+
+- M2: 43.2
+- M1: 41.4
+- M3: 36.0
+
+Machine M2 produces the highest average strength, while machine M3 produces the lowest average strength. The Tukey test indicates that the difference between these two machines is statistically significant at α = 0.10.
+
+### **Additional Visualization (Not Required)**
+
+>Note: The Tukey plot shown below is not a requirement for this assignment. However, it is included to provide a more visual and intuitive interpretation of the Tukey post-hoc test results. The graph allows us to quickly identify which machine comparisons are statistically significant and which are not.
+
+```{r}
+plot(TukeyHSD(filament_anova, which = "machine", conf.level = 0.90), las=1)
+```
+
+The Tukey plot displays the confidence intervals for the differences in mean filament strength between all pairs of machines.
+
+The vertical dashed line represents a difference of 0. If a confidence interval includes 0, the corresponding difference in means is not statistically significant. If a confidence interval does not include 0, the difference is statistically significant.
+
+From the plot, we observe:
+
+- The confidence interval for M2-M1 includes 0. Therefore, the difference in average filament strength between machines M2 and M1 is not statistically significant.
+- The confidence interval for M3-M1 also includes 0. Therefore, the difference in average filament strength between machines M3 and M1 is not statistically significant.
+- The confidence interval for M3-M2 does not include 0 when using the 90% confidence level (α = 0.10). Therefore, the difference in average filament strength between M3 and M2 is statistically significant.
+
+This visual result agrees with the Tukey test output, where only the comparison M3-M2 had a p-value less than 0.10.
+
+Looking at the sample means:
+
+- M2 = 43.2
+- M1 = 41.4
+- M3 = 36.0
+
+The plot confirms that Machine M2 produces significantly higher average filament strength than Machine M3, while the differences involving Machine M1 are not statistically significant at the 0.10 significance level.
