@@ -1,0 +1,235 @@
+---
+title: "practice_two_means"
+output: html_document
+---
+
+**Traducción al español:**
+
+## Módulo 2
+Comparación de dos medias
+
+*   La prueba t para comparar dos medias
+*   La prueba F para comparar dos varianzas
+
+### **Título: Comparación entre las medias de dos variables**
+
+
+**1. Sobre la población y sus características:**
+*   La letra **\(\mu\) (mu)** representa la **media de la población**.
+*   La letra **\(\sigma\) (sigma)** representa la **desviación estándar de la población**.
+*   El texto explica que estos son "características de la población". Por lo tanto, para conocer sus valores reales, sería necesario calcularlos usando **todos** los datos de esa población.
+
+**2. La realidad práctica (El problema):**
+*   Calcular esto con toda la población **no es factible** (no se puede hacer en la práctica, ya sea por tiempo, costo o porque la población es infinita).
+*   Por lo tanto, la diapositiva establece una regla importante: **"siempre consideraremos que \(\mu\) y \(\sigma\) son desconocidos"**.
+
+**3. La solución (El uso de muestras):**
+*   Dado que no conocemos los valores reales de la población, hacemos conclusiones sobre ellos basándonos en sus "contrapartes" o equivalentes en la muestra:
+    *   **\(\bar{X}\) (X barra):** Es la **media de la muestra** (el promedio de los datos que sí podemos recolectar).
+    *   **\(S\):** Es la **desviación estándar de la muestra**.
+
+**4. El objetivo del módulo (El tema central):**
+*   El propósito de este tema es aprender a sacar conclusiones sobre si las **medias de dos poblaciones distintas (\(\mu_1\) y \(\mu_2\))** son iguales o diferentes.
+*   ¿Cómo lo haremos? Basándonos en las **medias de dos muestras (\(\bar{X}_1\) y \(\bar{X}_2\))** que se toman de esas dos variables o poblaciones.
+
+
+### **Comparison between the means of two variables**
+
+PASOS:
+
+a) Tomar una muestra de cada variable.
+
+b) Obtener la media **\(\bar{X}\)** de la muestra para cada muestra (y también la desviación estándar **\(S\):** de la muestra).
+
+c) Obtener la diferencia entre ambas medias muestrales y decidir si su diferencia es ESTADÍSTICAMENTE significativa para que podamos concluir razonablemente que, a nivel de población, las medias son de hecho diferentes.
+
+Diferencia = **(\(\bar{X}_1\) - \(\bar{X}_2\))**
+
+Para saber si la diferencia entre ambas medias muestrales es ESTADÍSTICAMENTE significativa, podemos realizar una prueba de hipótesis (o calcular un intervalo de confianza (NO CUBIERTO EN ESTE CURSO)).
+
+### **Prueba de hipótesis para la diferencia entre dos medias poblacionales:** *la prueba t de dos muestras.*
+
+Pasos de una prueba de hipótesis
+
+1) Establecer Ho y Ha
+
+    Ho (Hipótesis Nula): Es la afirmación de que no hay ningún efecto, no hay cambio o no hay diferencia entre los grupos que estás comparando.
+    
+    Ha (Hipótesis Alternativa): Es la afirmación de que SÍ hay una diferencia o un efecto.
+
+2) Calcular el estadístico de prueba
+
+    Es un número (un puntaje) que resume qué tan lejos están tus datos observados de lo que la Hipótesis Nula (Ho) dice que debería pasar.
+
+3) Aplicar una regla de decisión (región de rechazo o valor P)
+
+    **La Región de Rechazo (El método visual)**
+    1.  **Eliges un nivel de significancia (\(\alpha\)):** Por convención en estadística, casi siempre se usa **\(\alpha = 0.05\)** (5%). Esto significa que estás dispuesto a aceptar un 5% de probabilidad de equivocarte al rechazar Ho.
+    2.  **Buscas el Valor Crítico:** Con ese \(\alpha\) y los "grados de libertad" (que dependen del tamaño de tus muestras), buscas en una tabla estadística (la tabla de la distribución t) un número llamado **Valor Crítico**.
+    3.  **Defines la Región de Rechazo:** Es una zona en los extremos de la campana de Gauss. Si tu estadístico \(t\) calculado en el paso 2 cae dentro de esa zona, rechazas Ho. Si cae fuera, no la rechazas.
+    4.  **La Regla:**
+      *   Si \(|t \text{ calculado}| > |t \text{ crítico}|\)  **\(\rightarrow\) RECHAZAS Ho** (Hay diferencia significativa).
+      *   Si \(|t \text{ calculado}| \leq |t \text{ crítico}|\) **\(\rightarrow\) NO RECHAZAS Ho** (No hay evidencia suficiente).
+  
+    *Ejemplo:* Si tu valor crítico es 2.0 y tu \(t\) calculado fue 3.52, como 3.52 > 2.0, estás en la región de rechazo. Rechazas Ho.  
+    
+    **Método B: El Valor P (El método moderno y más usado)**
+
+    1.  **Eliges un nivel de significancia (\(\alpha\)):** Por convención en estadística, casi siempre se usa **\(\alpha = 0.05\)** (5%). Esto significa que estás dispuesto a aceptar un 5% de probabilidad de equivocarte al rechazar Ho.
+    2.  **Buscas el Valor Crítico:** Con ese \(\alpha\) y los "grados de libertad" (que dependen del tamaño de tus muestras), buscas en una tabla estadística (la tabla de la distribución t) un número llamado **Valor Crítico**.
+    3.  **Defines la Región de Rechazo:** Es una zona en los extremos de la campana de Gauss. Si tu estadístico \(t\) calculado en el paso 2 cae dentro de esa zona, rechazas Ho. Si cae fuera, no la rechazas.
+    4.  **La Regla:**
+    *   Si \(|t \text{ calculado}| > |t \text{ crítico}|\)  **\(\rightarrow\) RECHAZAS Ho** (Hay diferencia significativa).
+    *   Si \(|t \text{ calculado}| \leq |t \text{ crítico}|\) **\(\rightarrow\) NO RECHAZAS Ho** (No hay evidencia suficiente).
+
+    *Ejemplo:* Si tu valor crítico es 2.0 y tu \(t\) calculado fue 3.52, como 3.52 > 2.0, estás en la región de rechazo. Rechazas Ho.    
+    
+
+4) Tomar la decisión y concluir
+
+    **Parte A: Tomar la decisión (La parte estadística)**
+
+    Aquí solo tienes dos caminos posibles. Usas el valor P que obtuviste en el Paso 3:
+
+    *   **Escenario 1: El valor P es MENOR a 0.05 (o tu \(\alpha\) elegido)**
+        *   **Decisión:** **Rechazar la Hipótesis Nula (Ho).**
+        *   *¿Por qué?* Porque hay menos de un 5% de probabilidad de que esa diferencia haya sido por puro azar. La evidencia es muy fuerte.
+        *   **Conclusión estadística:** Hay evidencia suficiente para decir que las medias de las dos poblaciones **SÍ son diferentes**.
+
+    *   **Escenario 2: El valor P es MAYOR o IGUAL a 0.05**
+        *   **Decisión:** **NO Rechazar la Hipótesis Nula (Ho).** (Ojo: Nunca se dice "Aceptar Ho", se dice "No rechazar" o "Falla al rechazar").
+        *   *¿Por qué?* Porque la diferencia observada pudo haber ocurrido fácilmente por casualidad. No hay evidencia sólida.
+        *   **Conclusión estadística:** **NO** hay evidencia suficiente para decir que las medias son diferentes. (No podemos probar que sean iguales, solo que no tenemos pruebas suficientes para decir que son distintas).
+
+    **Parte B: Concluir (La parte del lenguaje real)**
+
+    Esta es la parte más importante para tu reporte o tarea. No basta con decir "Rechazo Ho". Debes explicar **qué significa eso en el contexto de tu problema**.
+
+    **Ejemplo Práctico:**
+    Imagina que estás comparando la efectividad de dos medicamentos para bajar la presión arterial.
+    *   **Ho:** Los dos medicamentos tienen el mismo efecto (no hay diferencia).
+    *   **Ha:** Los dos medicamentos tienen efectos diferentes.
+
+    **Si Rechazas Ho (Valor P < 0.05), tu conclusión sería:**
+    > "Se encontró una diferencia estadísticamente significativa entre el efecto de los dos medicamentos (\(t = 3.52\), \(p = 0.001\)). Por lo tanto, concluimos que **el Medicamento A es más efectivo que el Medicamento B** para reducir la presión arterial."
+
+    **Si NO Rechazas Ho (Valor P > 0.05), tu conclusión sería:**
+    > "No se encontró una diferencia estadísticamente significativa entre el efecto de los dos medicamentos (\(t = 1.20\), \(p = 0.25\)). Por lo tanto, **no tenemos evidencia suficiente para afirmar que los medicamentos tengan efectos diferentes**; los resultados observados pudieron deberse al azar."
+
+
+
+## **Ho y Ha**
+
+- Una **hipótesis** es una afirmación sobre una característica (por ejemplo, media, desviación estándar, etc.) de una o más variables. Por ejemplo, una hipótesis podría ser *"la ingesta media de sodio de alguien que vive en EE. UU. es como máximo los 2,300 mg recomendados por el USDA".*
+
+- Debido a que la afirmación hecha sobre la variable (o variables) puede no estar respaldada por los datos, generalmente se hace una **contra-afirmación** (counter statement) junto con la **afirmación principal** (main statement).
+
+- Las dos afirmaciones son la hipótesis nula (Ho) y la hipótesis alternativa (Ha).
+
+Aquí tienes el contenido de la imagen y su traducción al español, junto con una breve explicación del ejemplo que usa:
+
+## **Ho y Ha**
+
+- **Hipótesis nula (Ho):** La afirmación que representa el *statu quo*. La aserción que queremos hacer si los *datos NO apoyan* el supuesto *cambio, efecto o resultado no deseado*.
+
+Ej: **Ho:** \(\mu \le 2300\)
+Ho representa el caso donde la ingesta media de sodio cumple con los estándares del USDA (= el statu quo = la situación de "sin problema" / "sin resultado no deseado").
+
+- **Hipótesis alternativa (Ha):** La afirmación que representa la aserción para la cual estamos buscando evidencia (es decir, la afirmación que se refiere a un cambio o situación no deseada).
+
+Ej: **Ha:** \(\mu > 2300\)
+Hay un problema porque la ingesta promedio de sodio en EE. UU. supera el valor recomendado de 2,300 mg.
+
+***
+
+**Explicación del ejemplo (para que te quede claro):**
+En este caso, el gobierno (USDA) recomienda que el consumo de sodio sea de **máximo 2,300 mg**. 
+*   **Ho** dice: "Todo está bien, la gente consume 2,300 mg o menos".
+*   **Ha** dice: "Hay un problema de salud pública, la gente consume más de 2,300 mg".
+El investigador toma una muestra de la población y, mediante la prueba de hipótesis, busca *evidencia* para ver si puede rechazar Ho (decir que todo está bien) y aceptar Ha (decir que sí hay un problema con el consumo de sodio).
+
+
+
+## **Paso 1: Establecer Ho y Ha**
+
+En cada prueba de hipótesis que realizamos, debemos elegir **uno** de los **tres posibles pares** de Ho y Ha (**solo un par** es aplicable).
+
+Ho: \(\mu_1 \le \mu_2\)
+
+Ha: \(\mu_1 > \mu_2\)      (Hipótesis de una cola (cola derecha))
+
+Ho: \(\mu_1 \ge \mu_2\)
+
+Ha: \(\mu_1 < \mu_2\)      (Hipótesis de una cola (cola izquierda))
+
+Ho: \(\mu_1 = \mu_2\)
+
+Ha: \(\mu_1 \neq \mu_2\)      (Hipótesis de dos colas)
+
+
+## **Paso 2: Calcular el estadístico de prueba**
+
+**Caso 1:** NO sabemos si las varianzas de ambas poblaciones son similares o no (es decir, asumimos que ambas poblaciones tienen varianzas diferentes).
+
+\[
+t = \frac{\bar{X}_1 - \bar{X}_2}{\sqrt{\frac{S_1^2}{n_1} + \frac{S_2^2}{n_2}}}
+\]
+
+*   \(\bar{x}_1\): Media muestral del Grupo 1.
+*   \(\bar{x}_2\): Media muestral del Grupo 2.
+*   \(\bar{x}_1 - \bar{x}_2\): Diferencia observada entre las medias muestrales.
+*   \(s_1^2\): Varianza muestral del Grupo 1.
+*   \(s_2^2\): Varianza muestral del Grupo 2.
+*   \(n_1\): Tamaño de la muestra del Grupo 1.
+*   \(n_2\): Tamaño de la muestra del Grupo 2.
+*   \(\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}\): Error estándar de la diferencia entre las medias muestrales.
+
+El valor t obtenido de esta fórmula es un valor de una **distribución de probabilidad t**.
+
+***
+
+**Nota importante sobre esta diapositiva:**
+Esta es la fórmula para la **prueba t de Welch** (o prueba t para varianzas desiguales). Es el "Caso 1". Esto es clave porque, como vimos antes, en R la función `t.test()` usa esta fórmula por defecto. Si en tu investigación no sabes si las varianzas de los dos grupos son iguales, **esta es la fórmula que debes usar** y reportar.
+
+
+#### Ejemplo
+
+```{r}
+# Datos de ejemplo (reemplaza esto con tus datos reales)
+grupo1 <- c(10, 12, 11, 13, 14, 10, 12) 
+grupo2 <- c(8, 9, 7, 10, 8, 9, 11)
+
+# Cantidad de Muestras en cada grupo
+length(grupo1)
+length(grupo2)
+```
+
+Crear Data Frame
+
+sintaxis
+```{verbatim}
+variable <- data.frame(
+  nombre_de_columna = c(datos1, datos2), 
+  nombre_de_columna_2 = c(
+    rep("Etiqueta_Grupo_1", length(datos1)), 
+    rep("Etiqueta_Grupo_2", length(datos2))
+  )
+)
+```
+
+
+```{r}
+dataframe_grupos <- data.frame(
+  column_name_1 = c(grupo1, grupo2), # Combinamos ambos grupos en una sola columna con c()
+  column_name_2 = c(
+    # Creamos la columna de etiquetas. 
+    rep("valor_de_grupo_1", length(grupo1)), # rep() repite la palabra "Grupo 1" tantas veces como datos haya en el grupo1 
+    rep("valor_de_grupo_2", length(grupo2)) # rep() repite la palabra "Grupo 2" tantas veces como datos haya en el grupo2
+  )
+)
+dataframe_grupos |> str()
+dataframe_grupos
+print(dataframe_grupos)
+View(dataframe_grupos)  # Nota: La V de View debe ser mayúscula.
+```
+

@@ -1,0 +1,402 @@
+---
+title: "Simple Linear Regression"
+output: 
+---
+
+
+Let’s find an equation to predict **the median house value of houses in a neighborhood (medv)** based on **the percentage of households with low socio-economic status in the neighborhood (lstat)**.
+
+
+We are going to use the data in the Boston data set (download it from Canvas). Read the Boston.csv file in R. Name it **boston_df**.
+
+
+**NOTE**: THIS IS NOT THE ETHICALLY COMPROMISED BOSTON DATA SET. IT IS A DIFFERENT VERSION !!!
+
+
+```{r, include=FALSE}
+library(tidyverse)
+```
+
+
+
+
+```{r}
+
+# Take a look at the Boston_df
+
+boston_df |> str()
+
+```
+
+
+
+
+Let's define the random variables that we are focusing on:
+
+Y (dependent variable): medv (median house value in the neighborhood) (IT IS GIVEN IN UNITS OF $1000) 
+
+X (independent variable): lstat (percent of households with low socioeconomic status in the neighborhood)
+
+
+
+
+**Check if the linear relationship between these two variables is reasonable**
+
+
+
+1) Obtain the sample correlation coefficient between the independent and dependent variables:
+
+
+```{r}
+
+# Using basic R function
+
+cor (boston_df$lstat, boston_df$medv)
+
+```
+
+
+
+```{r}
+
+# Using tidyverse functions
+
+boston_df |> summarise(r = cor(lstat, medv))
+
+```
+
+
+
+Note: The correlation coefficient is symmetric. So we could swap lstat and medv. See next:
+
+```{r}
+
+cor (boston_df$medv, boston_df$lstat)
+
+```
+
+
+
+
+```{r}
+
+boston_df |> summarise(r = cor(medv, lstat))
+
+```
+
+
+
+
+
+2) Do a scatter plot between independent and dependent variables.
+
+
+```{r}
+
+boston_df |> ggplot(aes(x = lstat, y = medv )) + geom_point() + labs(x="LSTAT (% Households with Low SES)", y= "MEDV (Median Household Value")
+
+```
+
+
+
+
+
+```{r}
+
+# To add the LINEAR regression line to the scatter plot
+
+boston_df |> ggplot(aes(x = lstat, y = medv )) + geom_point() + labs(x="LSTAT (% Households with Low SES)", y= "MEDV (Median Household Value)") + geom_smooth(method= "lm", se = FALSE)
+
+```
+
+
+
+
+
+
+**Interpretation of r and scatter plot**
+
+The value of r suggests a fairly strong negative linear relationship between medv and lstat. We can confirm in the scatter plot that the relationship is indeed negative. 
+
+The scatter plot shows us that the linear relationship is acceptable (it fits the data points quite well), especially, in the range from 5 < lstat < 30. However, towards both the lower and upper ends, the linear equation does not fit the data very well. 
+
+A closer look at the graph shows that the data points exhibit some non-linearity,i.e., the data points follow a non-linear trend. Then, maybe an exponential relationship or a second degree polynomial will do a better job than a linear equation. 
+
+**In conclusion**: It is reasonable to continue with the linear regression analysis. Even if a linear equation might not be the BEST, it might give us good results.
+
+
+GO BACK TO THE SLIDES !!!
+
+
+
+
+
+
+
+**Apply Simple Linear Regression**
+
+We apply linear regression in R by using the lm() function, where lm stands for linear model. It is customary to save the result of applying lm() in a user-defined variable.
+
+```{r}
+
+reg_medv_lstat <- lm(medv ~ lstat, data = boston_df)
+
+# Then, we call the summary() function on the defined object
+
+summary (reg_medv_lstat)
+
+```
+
+
+
+
+The estimated equation is the following:
+
+Predicted medv of the neighborhood = 34.55 - 0.95*(lstat of the neighborhood)
+
+Predicted medv = 34.55 - 0.95*(lstat)
+
+Predicted medv = - 0.95*(lstat) + 34.55 
+
+
+
+
+**Is this equation good?**
+
+**Part 1: Statistical significance**
+
+The t test for B1:
+
+Ho: The slope of the estimated equation is NOT statistically different from zero; thus, there is no linear relationship between lstat and medv.
+
+Ha: The slope of the estimated equation is statistically different from zero; thus, there is a linear relationship between lstat and medv.
+
+
+The PV that results from the test for the b1 coefficient is very small (PV < 2e-16). This PV is less than alpha. Therefore, we can reject Ho and support Ha. The data give us evidence to conclude that there is a statistically significant relationship between lstat and medv.  
+
+
+
+**Is this equation good?**
+
+**Part 2: Practical significance**
+
+
+R squared computation for the YouTube video example:
+
+```{r}
+
+# Percent reduction in SSE from horizontal line to regression line
+
+# (SSE with hori - SSE with reg line)/ SSE with hori
+
+((475.75 - 235)/ 475.75)*100
+
+```
+
+
+**R squared** is 0.5441 (54.4 %)
+
+Interpretation: If we use the linear equation instead of the sample mean to make predictions of medv, we can reduce 54.4 % of the variability in the values of medv (or.... we can reduce 54.4% of the error level when predicting medv) . 
+
+Since we reduce a little more than 50% of the variability compared to using the sample mean, using the equation is better than using the sample mean to make predictions.
+
+Note: In Statistics, the term variability (or error) refers to the difference between the predicted values and real values.
+
+
+
+**The RSE** is 6.216 (= $ 6, 216)
+
+On average, the values of medv deviate from the regression equation by $6,216.
+
+Stated in another way, we can expect the predictions of medv based on the equation to be off by around $6,216.
+
+
+To know whether the value of RSE is small or not, let's compare RSE with the values of medv. Are we going to compare RSE with all the values of medv? 
+
+No, that' unfeasible. A good strategy is to compare RSE with the average of medv. That's precisely what the coefficient of variation does. Let's compute the coefficient of variation:
+
+
+**Coefficient of variation = RSE / sample mean**
+
+```{r}
+
+# As a proportion (hard coded)
+
+6.216/ mean(boston_df$medv)
+
+```
+
+
+
+```{r}
+
+summary (reg_medv_lstat)$sigma
+
+```
+
+
+```{r}
+
+# To retrieve rse programmatically:
+
+summary (reg_medv_lstat)$sigma / mean(boston_df$medv)
+
+```
+
+
+
+
+```{r}
+
+# As a percentage
+
+round ((6.216/ mean(boston_df$medv))*100,2)
+
+```
+
+
+
+
+
+Converted into a %, the coefficient of variation is close to 28%. 
+
+Although there is NOT a universally valid criterion to know when the coefficient of variation is low enough, in this class, we will consider a coefficient of variation <= 20% as a desirable outcome ((we want the magnitude of the error to be at most 20% compared to a typical value of target). A value <= 10 % would be a very desirable outcome.
+
+In this problem, an RSE of $ 6, 216 does NOT seem to be as low as we would desire because the coeff of variation was above 20%. We should attempt to get a smaller RSE (How? Using a different regression equation).
+
+
+
+**Overall conclusion AFTER assessing the statistical and practical significance:**
+
+The equation is statistically significant. But is it practically significant?
+
+It is better than the sample mean to make predictions of medv (this statement is based on the R sq value that we got). However, the RSE is not as good as we would like (we need to try to get a lower RSE by using multiple linear regression or non-linear regression). 
+
+In any case, **for the purpose of this class session**, we are going to assume that we made the decision to use the equation. How are we going to use the equation? Next...
+
+
+
+
+
+**Using the equation to make predictions of medv**
+
+Let's use the equation to predict medv for three new neighborhoods with lstat of 4.5 %, 5%, and 7%.
+
+Let's use the predict() function to do this.
+
+```{r}
+
+predict( reg_medv_lstat, data.frame(lstat = c(4.5, 5, 7)) )
+
+```
+
+
+These are the predicted values of medv GIVEN by the equation for these three new neighborhoods.
+
+OPTIONAL: What if you plug in the values of lstat directly in the equation?
+
+```{r}
+
+34.55 - 0.95*(4.5)
+
+34.55 - 0.95*(5)
+
+34.55 - 0.95*(7)
+
+```
+
+
+
+
+
+
+
+
+BACK TO THE SLIDES TO DISCUSS THE ANALYSIS OF RESIDUALS.
+
+
+
+
+
+**Analysis of residuals to check the validity assumptions**
+
+Residuals are the errors of the equation.
+
+Residuals = actual values of Y - predicted values of Y
+
+You can get the values of the residuals by using the function "residuals()".
+
+```{r}
+
+# Let's use head() to only print the value of the first six residuals (just to keep the output short. You do not want to print 506 residuals )
+
+head ( residuals(reg_medv_lstat) )
+
+```
+
+
+
+You can also get the residuals by subtracting the predicted values from the actual values. Next:
+
+```{r}
+
+head ( boston_df$medv - predict(reg_medv_lstat) )
+
+```
+
+
+
+To check assumptions 1 (linearity) and 4 (all residuals have equal variance) we do a graph to plot the residuals versus the predicted values of Y.
+
+Note: Since we are NOT using columns from a data frame in the next code cell, it is simpler to do it using basic R functions rathern than tidyverse functions.
+
+
+```{r}
+
+plot( predict (reg_medv_lstat), residuals (reg_medv_lstat) )
+
+# abline() allows us to draw a horizontal line at y=0 (because 0 is the mean of the residuals)
+
+abline(h=0)
+
+```
+
+
+
+```{r}
+
+plot(reg_medv_lstat, which = 1)
+
+abline(h=0)
+
+```
+
+
+
+
+Interpretation: In this case, we can clearly see that the residuals show a nonlinear pattern (clear non-linear curve shown by the lowess estimation). The data points seem to follow a parabolic shape; therefore, a quadratic model might be more appropriate than a linear model (**assumption 1 is not satisfied**). We had already observed this nonlinear pattern when we did the original scatter plot. However, this graph shows the non-linear pattern more clearly.
+
+When assumption 1 is not satisfied, it is really hard to evaluate assumption 4 using this plot. So, NO need to assess assumption 4 in this case.
+
+
+
+To check assumption 3 (whether the residuals follow a normal distribution), we are going to conduct a hypothesis test: the Shapiro test to check for normality
+
+Ho: The residuals follow a Normal distribution
+Ha: The residuals do NOT follow a Normal distribution
+
+```{r}
+
+shapiro.test( residuals (reg_medv_lstat) )
+
+```
+
+
+
+PV = 2.2e-16, which is a lot smaller than alpha (0.05). Thus, we reject Ho and support Ha. The data is giving us evidence that the residuals do NOT follow a Normal distribution. Assumption 3 is not satisfied either!
+
+This usually happens. When assumption 1 (the linearity assumption) is not satisfied and a non-linear model is obviously better than a linear model, assumption 3 tends to be compromised too.
+
+
+
+
