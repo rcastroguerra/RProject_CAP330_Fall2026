@@ -1,0 +1,108 @@
+---
+title: "Simple Linear Regression Notebook. Practice"
+output:
+---
+
+
+```{r}
+
+library(tidyverse)
+
+```
+
+
+
+
+**The Credit data set**
+
+In the Credit data set example, we want to predict Balance (i.e., credit card debt)) based on the other variables available in the data set.
+
+Download the "Credit_modified.csv" file from Canvas and read it into an R data frame.
+
+Name it "credit_df".
+
+
+
+Now take a look at the Credit data frame:
+
+```{r}
+
+credit_df |> str()
+
+```
+
+
+
+
+
+
+a) If you were to obtain an equation that only includes ONE quantitative predictor, what would this predictor be?
+
+Hint: You can run the following code chunk to get the correlation coefficient between each quantitative predictor and the outcome. "Limit", which is a quantitative predictor, was also excluded.
+
+
+```{r}
+
+credit_df |> summarise(across(-c(1,3,8,9,10,11), cor, y = Balance)) |> unlist()
+
+```
+
+El predictor con la correlación más alta (en valor absoluto) con Balance es Rating (r ≈ 0.864), lo que indica una relación lineal positiva fuerte. Por lo tanto, si tuvieras que elegir un solo predictor cuantitativo, elegirías Rating, ya que es el que mejor explica la variabilidad de Balance.
+
+
+WORK INDEPENDENTLY!
+
+
+
+
+
+
+
+b) Use the predictor you chose in a) and do a scatter plot displaying the relationship between this predictor and the target. Interpret the plot.
+
+
+
+WORK INDEPENDENTLY!
+
+
+
+```{r}
+credit_df |> ggplot(aes(x = Rating, y = Balance )) + geom_point() + labs(x="Credit Score Rating", y= "Credit Card Balance") +
+geom_smooth(method= "lm", se = FALSE)
+```
+
+
+
+
+
+
+
+
+
+
+
+c) Run the regression between the target and the predictor chosen in a). Write down the equation.
+
+
+WORK INDEPENDENTLY!
+
+
+
+
+
+
+
+
+
+d) Evaluate the magnitude of the prediction error of the equation obtained in c).
+
+Is the error magnitude low (satisfactory) or large (unsatisfactory)? Justify.
+
+
+WORK INDEPENDENTLY!
+
+
+
+
+
+
